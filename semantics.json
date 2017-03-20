@@ -1,0 +1,70 @@
+[
+  {
+    "name": "title",
+    "label": "Title",
+    "importance": "high",
+    "type": "text",
+    "optional": true,
+    "placeholder": "Here you can add an optional title.",
+    "description": "The title you'd like to show before the befort/after image"
+  },
+  {
+    "name": "image1",
+    "label": "Image 1",
+    "importance": "high",
+    "type": "image",
+    "optional": false,
+    "description": "The first image. Please make sure that it has the same size as the second image."
+  },
+  {
+    "name": "label1",
+    "label": "Label for Image 1",
+    "importance": "low",
+    "type": "text",
+    "optional": true,
+    "description": "Label to put on top of image 1"
+  },
+  {
+    "name": "image2",
+    "label": "Image 2",
+    "importance": "high",
+    "type": "image",
+    "optional": false,
+    "description": "The second image. Please make sure that it has the same size as the first one."
+  },
+  {
+    "name": "label2",
+    "label": "Label for Image 2",
+    "importance": "low",
+    "type": "text",
+    "optional": true,
+    "description": "Label to put on top of image 2"
+  },
+  {
+    "name": "behavior",
+    "type": "group",
+    "label": "Behavioral settings",
+    "importance": "low",
+    "description": "These options will let you set some details",
+    "optional": true,
+    "fields": [
+      {
+        "name": "sliderStart",
+        "type": "number",
+        "label": "Slider start position in %",
+        "description": "Sets the start position of the slider",
+        "default": 50,
+        "min": 0,
+        "max": 100,
+        "optional": false
+      },
+      {
+        "name": "vertical",
+        "type": "boolean",
+        "label": "Vertical slider",
+        "description": "Sets the orientation of the slider",
+        "default": true
+      }
+    ]
+  }
+]

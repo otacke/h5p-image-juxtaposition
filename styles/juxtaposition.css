@@ -1,0 +1,21 @@
+.h5p-image-juxtaposition {
+  width: 400px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 4px #ccc;
+}
+.h5p-image-juxtaposition .image-1 {
+  width: 100%;
+  height: auto;
+}
+.h5p-image-juxtaposition .image-2 {
+  width: 100%;
+  height: auto;
+}
+.h5p-image-juxtaposition .title {
+  width: auto;
+  margin: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 24px;
+}
