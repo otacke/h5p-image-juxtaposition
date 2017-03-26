@@ -49,7 +49,7 @@
     "optional": true,
     "fields": [
       {
-        "name": "sliderStart",
+        "name": "startingPosition",
         "type": "number",
         "label": "Slider start position in %",
         "description": "Sets the start position of the slider",

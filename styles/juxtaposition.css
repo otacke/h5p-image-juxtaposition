@@ -1,14 +1,5 @@
 .h5p-image-juxtaposition {
-  /*width: 600px; */
   margin: 0 auto;
-}
-.h5p-image-juxtaposition .left {
-  width: 100%;
-  height: auto;
-}
-.h5p-image-juxtaposition .right {
-  width: 100%;
-  height: auto;
 }
 .h5p-image-juxtaposition .title {
   width: auto;
@@ -16,6 +7,11 @@
   font-size: 20px;
   font-weight: bold;
   line-height: 24px;
+}
+.h5p-image-juxtaposition .missing-images {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 2em;
 }
 
 /* Juxtapose */
@@ -298,67 +294,8 @@ div.jx-image.transition {
 	transition: width .5s ease;
 }
 
-div.jx-handle.transition {
-	transition: left .5s ease;
-}
-
 .vertical div.jx-image.transition {
 	transition: height .5s ease;
-}
-
-.vertical div.jx-handle.transition {
-	transition: top .5s ease;
-}
-
-/* Knight Lab Credit */
-a.jx-knightlab {
-	background-color: #000; /* IE 8 */
-	background-color: rgba(0,0,0,.25);
-	bottom: 0;
-	display: table;
-	height: 14px;
-	line-height: 14px;
-	padding: 1px 4px 1px 5px;
-	position: absolute;
-	right: 0;
-	text-decoration: none;
-	z-index: 10;
-}
-
-a.jx-knightlab div.knightlab-logo {
-	display: inline-block;
-	vertical-align: middle;
-	height: 8px;
-	width: 8px;
-	background-color: #c34528;
-	transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
-	top: -1.25px;
-	position: relative;
-	cursor: pointer;
-}
-
-a.jx-knightlab:hover {
-	background-color: #000; /* IE 8 */
-	background-color: rgba(0,0,0,.35);
-}
-a.jx-knightlab:hover div.knightlab-logo {
-	background-color: #ce4d28;
-}
-
-a.jx-knightlab span.juxtapose-name {
-	display: table-cell;
-	margin: 0;
-	padding: 0;
-	font-family: Helvetica, Arial, sans-serif;
-	font-weight: 300;
-	color: white;
-	font-size: 10px;
-	padding-left: 0.375em;
-	vertical-align: middle;
-	line-height: normal;
-	text-shadow: none;
 }
 
 /* keyboard accessibility */
