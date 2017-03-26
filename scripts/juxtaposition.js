@@ -28,7 +28,7 @@ H5P.ImageJuxtaposition = function ($) {
       image2: null,
       label2: '',
       behavior: {
-        sliderStart: 50,
+        startingPosition: 50,
         sliderOrientation: 'horizontal' }
     }, options);
     this.id = id;
