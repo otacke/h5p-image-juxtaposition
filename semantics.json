@@ -59,11 +59,21 @@
         "optional": false
       },
       {
-        "name": "vertical",
-        "type": "boolean",
-        "label": "Vertical slider",
-        "description": "Sets the orientation of the slider",
-        "default": true
+        "name": "sliderOrientation",
+        "type": "select",
+        "label": "Slider orientation",
+        "description": "Horizontal will move left and right, vertical will move up and down.",
+        "options": [
+            {
+              "value": "horizontal",
+              "label": "Horizontal"
+            },
+            {
+              "value": "vertical",
+              "label": "Vertical"
+            }
+          ],
+        "default": "horizontal"
       }
     ]
   }
