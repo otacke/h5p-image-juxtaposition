@@ -20,12 +20,14 @@ H5P.ImageJuxtaposition = function ($) {
    * Constructor function.
    */
   function C(options, id) {
+    var self = this;
+
     // Extend defaults with provided options
     this.options = $.extend(true, {}, {
       title: '',
-      image1: null,
+      image1: undefined,
       label1: '',
-      image2: null,
+      image2: undefined,
       label2: '',
       behavior: {
         startingPosition: 50,
@@ -42,7 +44,13 @@ H5P.ImageJuxtaposition = function ($) {
     };
     window.juxtapose = window.juxtapose || juxtapose;
     this.sliderID = window.juxtapose.sliders.length;
+
+    // Initialize event inheritance
+    H5P.EventDispatcher.call(this);
   };
+  // Extends the event dispatcher
+  C.prototype = Object.create(H5P.EventDispatcher.prototype);
+  C.prototype.constructor = C;
 
   /**
    * Attach function called by H5P framework to insert H5P content into page
@@ -50,12 +58,14 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} $container
    */
   C.prototype.attach = function ($container) {
+    var self = this;
+    this.container = $container;
     $container.addClass("h5p-image-juxtaposition");
     if (this.options.title) {
       $container.append('<div class="title">' + this.options.title + '</div>');
     }
 
-    if (this.options.image1 === null || this.options.image2 === null) {
+    if (typeof(this.options.image1) === 'undefined' || typeof(this.options.image2) === undefined) {
       $container.append('<div class="missing-images">I really need two background images :)</div>');
       return;
     }
@@ -66,7 +76,7 @@ H5P.ImageJuxtaposition = function ($) {
 
     // Create the slider
     var slider = new JXSlider('.juxtapose-' + this.sliderID, [{
-      src: H5P.getPath(this.options.image1.path, this.id),
+          src: H5P.getPath(this.options.image1.path, this.id),
       label: this.options.label1
     }, {
       src: H5P.getPath(this.options.image2.path, this.id),
@@ -74,7 +84,8 @@ H5P.ImageJuxtaposition = function ($) {
     }], {
       startingPosition: this.options.behavior.startingPosition + '%',
       mode: this.options.behavior.sliderOrientation
-    });
+    },
+    this);
   };
 
   /**
@@ -277,9 +288,10 @@ H5P.ImageJuxtaposition = function ($) {
     return topPercent;
   };
 
-  var JXSlider = function (selector, images, options) {
+  var JXSlider = function (selector, images, options, parent) {
     this.selector = selector;
     this.options = options;
+    this.parent = parent;
 
     if (images.length == 2) {
       this.imgBefore = new Graphic(images[0], this);
@@ -362,30 +374,32 @@ H5P.ImageJuxtaposition = function ($) {
     },
 
     responsivizeIframe: function responsivizeIframe(dims) {
+      var containerWidth = $('.h5p-image-juxtaposition').width();
+      var containerHeight = $('.h5p-image-juxtaposition').width();
       //Check the slider dimensions against the iframe (window) dimensions
-      if (dims.height < window.innerHeight) {
+      if (dims.height < containerHeight) {
         //If the aspect ratio is greater than 1, imgs are landscape, so letterbox top and bottom
         if (dims.ratio >= 1) {
-          this.wrapper.style.paddingTop = parseInt((window.innerHeight - dims.height) / 2) + "px";
+          dims = this.calculateDims(containerWidth, containerHeight);
+          this.wrapper.style.paddingTop = parseInt((containerHeight - dims.height) / 2) + "px";
         }
       }
-      else if (dims.height > window.innerHeight) {
+      else if (dims.height > containerHeight) {
         /* If the image is too tall for the window, which happens at 100% width on large screens,
          * force dimension recalculation based on height instead of width */
-        dims = this.calculateDims(0, window.innerHeight);
-        this.wrapper.style.paddingLeft = parseInt((window.innerWidth - dims.width) / 2) + "px";
+        dims = this.calculateDims(0, containerHeight);
+        this.wrapper.style.paddingLeft = parseInt((containerWidth - dims.width) / 2) + "px";
       }
       return dims;
     },
 
     setWrapperDimensions: function setWrapperDimensions() {
+
       var wrapperWidth = getComputedWidthAndHeight(this.wrapper).width;
       var wrapperHeight = getComputedWidthAndHeight(this.wrapper).height;
+
       var dims = this.calculateDims(wrapperWidth, wrapperHeight);
-      // if window is in iframe, make sure images don't overflow boundaries
-      if (window.location !== window.parent.location) {
-        dims = this.responsivizeIframe(dims);
-      }
+      dims = this.responsivizeIframe(dims);
 
       this.wrapper.style.height = parseInt(dims.height) + "px";
       this.wrapper.style.width = parseInt(dims.width) + "px";
@@ -464,7 +478,7 @@ H5P.ImageJuxtaposition = function ($) {
       }
 
       var self = this;
-      window.addEventListener("resize", function () {
+      window.addEventListener('resize', function () {
         self.setWrapperDimensions();
       });
 
@@ -510,6 +524,7 @@ H5P.ImageJuxtaposition = function ($) {
       window.juxtapose.sliders.push(this);
       self.setWrapperDimensions();
       self.updateSlider(this.options.startingPosition, false);
+      this.parent.trigger('resize');
     }
   };
 

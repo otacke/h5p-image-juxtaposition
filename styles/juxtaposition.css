@@ -1,4 +1,5 @@
 .h5p-image-juxtaposition {
+  width: auto;
   margin: 0 auto;
 }
 .h5p-image-juxtaposition .title {
@@ -16,7 +17,9 @@
 
 /* Juxtapose */
 div.juxtapose {
-	width: 100%;
+  /*width: 100%;*/
+	width: auto;
+  margin: 0 auto;
 	font-family: Helvetica, Arial, sans-serif;
 }
 
