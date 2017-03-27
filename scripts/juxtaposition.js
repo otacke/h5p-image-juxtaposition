@@ -54,6 +54,7 @@ H5P.ImageJuxtaposition = function ($) {
     if (this.options.title) {
       $container.append('<div class="title">' + this.options.title + '</div>');
     }
+
     if (this.options.image1 === null || this.options.image2 === null) {
       $container.append('<div class="missing-images">I really need two background images :)</div>');
       return;
@@ -61,11 +62,9 @@ H5P.ImageJuxtaposition = function ($) {
 
     // The div element will be filled by JXSlider._onLoaded later
     $container.append('<div class="juxtapose"></div>');
+    $container.find('.juxtapose').addClass('juxtapose-' + this.sliderID);
 
-    // TODO: Should we convert this and later stuff to jQuery?
-    var element = document.querySelector('.juxtapose');
-    addClass(element, 'juxtapose-' + this.sliderID);
-
+    // Create the slider
     var slider = new JXSlider('.juxtapose-' + this.sliderID, [{
       src: H5P.getPath(this.options.image1.path, this.id),
       label: this.options.label1
@@ -82,8 +81,8 @@ H5P.ImageJuxtaposition = function ($) {
    * Create Graphics.
    *
    * @private
-   * @param {object} - properties from options.
-   * @return {JXSlider} - slider to attach graphics to.
+   * @param {object} properties from options.
+   * @return {JXSlider} slider to attach graphics to.
    */
   var Graphic = function (properties, slider) {
     var self = this;
@@ -103,8 +102,8 @@ H5P.ImageJuxtaposition = function ($) {
    * Get dimensions of a DOM element.
    *
    * @private
-   * @param {object} - DOMelement.
-   * @return {object} - object containing width and height.
+   * @param {object} DOMelement.
+   * @return {object} object containing width and height.
    */
   var getNaturalDimensions = function (DOMelement) {
     if (DOMelement.naturalWidth && DOMelement.naturalHeight) {
@@ -122,17 +121,31 @@ H5P.ImageJuxtaposition = function ($) {
     };
   };
 
+  /**
+   * Get dimensions for Graphics.
+   *
+   * @private
+   * @param {object} Graphic object.
+   * @return {object} object containing width, height, and ratio.
+   */
   var getImageDimensions = function (img) {
-    var dimensions = {
+    return {
       width: getNaturalDimensions(img).width,
       height: getNaturalDimensions(img).height,
       aspect: function aspect() {
         return this.width / this.height;
       }
     };
-    return dimensions;
   };
 
+  /**
+   * Add a class to a DOM element.
+   * Could be removed if using jQuery
+   *
+   * @private
+   * @param {object} DOM element.
+   * @param {string} className to be added.
+   */
   var addClass = function (element, c) {
     if (element.classList) {
       element.classList.add(c);
@@ -142,6 +155,14 @@ H5P.ImageJuxtaposition = function ($) {
     }
   };
 
+  /**
+   * Remove a class from a DOM element.
+   * Could be removed if using jQuery
+   *
+   * @private
+   * @param {object} DOM element.
+   * @param {string} className to be removed.
+   */
   var removeClass = function (element, c) {
     element.className = element.className.replace(/(\S+)\s*/g, function (w, match) {
       if (match === c) {
@@ -151,6 +172,14 @@ H5P.ImageJuxtaposition = function ($) {
     }).replace(/^\s+/, '');
   };
 
+  /**
+   * Set text to a DOM element.
+   * Could be removed if using jQuery
+   *
+   * @private
+   * @param {object} DOM element.
+   * @param {string} text to be removed.
+   */
   var setText = function (element, text) {
     if (document.body.textContent) {
       element.textContent = text;
@@ -160,6 +189,13 @@ H5P.ImageJuxtaposition = function ($) {
     }
   };
 
+  /**
+   * get computed width and height for a DOM element.
+   *
+   * @private
+   * @param {object} DOM element.
+   * @return {object} width and height.
+   */
   var getComputedWidthAndHeight = function (element) {
     if (window.getComputedStyle) {
       return {
@@ -255,7 +291,7 @@ H5P.ImageJuxtaposition = function ($) {
   };
 
   JXSlider.prototype = {
-    updateSlider: function updateSlider(input) {
+    updateSlider: function updateSlider(input, animate) {
       var leftPercent, rightPercent;
 
       if (this.options.mode === "vertical") {
@@ -355,26 +391,12 @@ H5P.ImageJuxtaposition = function ($) {
       this.wrapper.style.width = parseInt(dims.width) + "px";
     },
 
-    optimizeWrapper: function optimizeWrapper(maxWidth) {
-      if (this.imgBefore.image.naturalWidth >= maxWidth && this.imgAfter.image.naturalWidth >= maxWidth) {
-        this.wrapper.style.width = maxWidth + "px";
-      }
-      else if (this.imgAfter.image.naturalWidth < maxWidth) {
-        this.wrapper.style.width = this.imgAfter.image.naturalWidth + "px";
-      }
-      else {
-        this.wrapper.style.width = this.imgBefore.image.naturalWidth + "px";
-      }
-      this.setWrapperDimensions();
-      return result;
-    },
-
     _onLoaded: function _onLoaded() {
       if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
-
+        // TODO: We might change all this to jQuery to make the code a little easier to read
         this.wrapper = document.querySelector(this.selector);
-
         this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
+
         this.setWrapperDimensions();
 
         this.slider = document.createElement("div");
@@ -487,6 +509,7 @@ H5P.ImageJuxtaposition = function ($) {
 
       window.juxtapose.sliders.push(this);
       self.setWrapperDimensions();
+      self.updateSlider(this.options.startingPosition, false);
     }
   };
 
