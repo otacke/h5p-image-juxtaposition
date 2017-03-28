@@ -505,6 +505,14 @@ H5P.ImageJuxtaposition = function ($) {
           this.removeEventListener('mouseup', arguments.callee);
           animate = false;
         });
+
+        this.addEventListener('mouseleave', function (e) {
+          e = e || window.event;
+          e.preventDefault();
+          e.stopPropagation();
+          this.removeEventListener('mouseup', arguments.callee);
+          animate = false;
+        });
       });
 
       // Event Listeners for Touch Interface
