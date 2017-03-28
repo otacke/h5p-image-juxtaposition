@@ -431,11 +431,13 @@ H5P.ImageJuxtaposition = function ($) {
 
         this.rightImage = document.createElement("div");
         this.rightImage.className = 'jx-image jx-right';
-        this.rightImage.appendChild(this.imgAfter.image);
+        this.rightImageIMG = $(this.imgAfter.image).addClass('jx-rightimg');
+        this.rightImage.appendChild(this.rightImageIMG[0]);
 
         this.leftImage = document.createElement("div");
         this.leftImage.className = 'jx-image jx-left';
-        this.leftImage.appendChild(this.imgBefore.image);
+        this.leftImageIMG = $(this.imgBefore.image).addClass('jx-leftimg');
+        this.leftImage.appendChild(this.leftImageIMG[0]);
 
         this.slider.appendChild(this.handle);
         this.slider.appendChild(this.leftImage);
@@ -530,6 +532,10 @@ H5P.ImageJuxtaposition = function ($) {
       self.setWrapperDimensions();
       self.updateSlider(this.options.startingPosition, false);
       this.parent.trigger('resize');
+
+	  // This is a workaround for horizontal sliders in our beloved IE
+	  $('.jx-leftimg').attr('width', '');
+	  $('.jx-rightimg').attr('width', '');
     }
   };
 
