@@ -46,7 +46,7 @@
         "importance": "low",
         "type": "image",
         "optional": false,
-        "description": "The first image. Please make sure that it has the same size as the first image."
+        "description": "The second image. Please make sure that it has the same size as the first image."
       },
       {
         "name": "labelAfter",

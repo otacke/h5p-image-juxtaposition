@@ -1,0 +1,57 @@
+{
+  "semantics": [
+    {
+      "label": "Titel",
+      "placeholder": "Hier kannst du optional einen Titel angeben.",
+      "description": "Der Titel, den du gerne vor dem Vorher/Nachher-Bild haben möchtest"
+    },
+    {
+      "label": "Ersten Bild",
+      "fields": [
+        {
+          "label": "Erstes Bild",
+          "description": "Das erste Bild. Bitte stelle sicher, dass es dieselbe Größe wie das zweite hat."
+        },
+        {
+          "label": "Beschriftung für das erste Bild",
+          "description": "Beschriftung, die im ersten Bild eingefügt wird"
+        }
+      ]
+    },
+    {
+      "label": "Zweites Bild",
+      "fields": [
+        {
+          "label": "Zweites Bild",
+          "description": "Das zweite Bild. Bitte stelle sicher, dass es dieselbe Größe wie das erste hat."
+        },
+        {
+          "label": "Beschriftung für das zweite Bild",
+          "description": "Beschriftung, die im zweiten Bild eingefügt wird"
+        }
+      ]
+    },
+    {
+      "label": "Verhaltenseinstellungen",
+      "description": "Mit diesem Optionen kannst du ein paar Details einstellen",
+      "fields": [
+        {
+          "label": "Startposition des Schiebereglers in %",
+          "description": "Stelle die Startposition des Schiebereglers ein"
+        },
+        {
+          "label": "Richtung des Schiebereglers",
+          "description": "Horizontal für links und rechts, vertikal für hoch und runter",
+          "options": [
+            {
+              "label": "Horizontal"
+            },
+            {
+              "label": "Vertikal"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

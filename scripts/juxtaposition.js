@@ -1,9 +1,3 @@
-/*
- * TODO: clean up code
- * TODO: localization
- * TODO: possibly: implement fullscreen mode, https://h5p.org/using-fullscreen
- */
-
 /* This h5p content library is based on ...
  * juxtapose - v1.1.2 - 2015-07-16
  * Copyright (c) 2015 Alex Duner and Northwestern University Knight Lab
