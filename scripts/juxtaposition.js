@@ -30,16 +30,6 @@ H5P.ImageJuxtaposition = function ($) {
     }, options);
     this.id = id;
 
-    /*
-     * Someone might try to create a site with more than one slider, and we
-     * might want to cover that.
-     */
-    var juxtapose = {
-      sliders: []
-    };
-    window.juxtapose = window.juxtapose || juxtapose;
-    this.sliderID = window.juxtapose.sliders.length;
-
     // Initialize event inheritance
     H5P.EventDispatcher.call(this);
   };
@@ -67,11 +57,10 @@ H5P.ImageJuxtaposition = function ($) {
 
     // The div element will be filled by JXSlider._onLoaded later
     $container.append('<div class="juxtapose"></div>');
-    $container.find('.juxtapose').addClass('juxtapose-' + this.sliderID);
 
     // Create the slider
-    var slider = new JXSlider('.juxtapose-' + this.sliderID, [{
-          src: H5P.getPath(this.options.imageBefore.imageBefore.path, this.id),
+    var slider = new JXSlider('.juxtapose', [{
+      src: H5P.getPath(this.options.imageBefore.imageBefore.path, this.id),
       label: this.options.imageBefore.labelBefore
     }, {
       src: H5P.getPath(this.options.imageAfter.imageAfter.path, this.id),
@@ -289,7 +278,7 @@ H5P.ImageJuxtaposition = function ($) {
     this.options = options;
     this.parent = parent;
 
-    if (images.length == 2) {
+    if (images.length === 2) {
       this.imgBefore = new Graphic(images[0], this);
       this.imgAfter = new Graphic(images[1], this);
     }
@@ -300,7 +289,7 @@ H5P.ImageJuxtaposition = function ($) {
 
   JXSlider.prototype = {
     updateSlider: function updateSlider(input, animate) {
-      var leftPercent, rightPercent;
+      var leftPercent, rightPercent, leftPercentNum;
 
       if (this.options.mode === "vertical") {
         leftPercent = getTopPercent(this.slider, input);
@@ -313,6 +302,7 @@ H5P.ImageJuxtaposition = function ($) {
       leftPercentNum = parseFloat(leftPercent);
       rightPercent = 100 - leftPercentNum + "%";
 
+      // set handler position and image areas
       if (leftPercentNum > 0 && leftPercentNum < 100) {
         if (this.options.mode === "vertical") {
           this.handle.style.top = leftPercent;
@@ -342,13 +332,6 @@ H5P.ImageJuxtaposition = function ($) {
 
       setText(label, labelText);
       element.appendChild(label);
-    },
-
-    /**
-     * sets the slider position
-     */
-    setStartingPosition: function setStartingPosition(s) {
-      this.options.startingPosition = s;
     },
 
     /**
@@ -411,6 +394,9 @@ H5P.ImageJuxtaposition = function ($) {
       this.wrapper.style.width = parseInt(dims.width) + "px";
     },
 
+    /**
+     * Create the DOM elements after images have loaded.
+     */
     _onLoaded: function _onLoaded() {
       if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
         // TODO: We might change all this to jQuery to make the code a little easier to read
@@ -467,6 +453,9 @@ H5P.ImageJuxtaposition = function ($) {
       }
     },
 
+    /**
+     * Initialize Slider after DOM has been filled
+     */
     _init: function _init() {
 
       if (this.checkImages() === false) {
@@ -535,15 +524,14 @@ H5P.ImageJuxtaposition = function ($) {
         });
       });
 
-      window.juxtapose.sliders.push(this);
       self.setWrapperDimensions();
       self.updateSlider(this.options.startingPosition, false);
       this.parent.trigger('resize');
       this.originalRatio = $('.jx-leftimg').width() / $('.h5p-image-juxtaposition').width();
 
-	  // This is a workaround for our beloved IE
+      // This is a workaround for our beloved IE
       $('.jx-leftimg').attr({width: '', height:''});
-	  $('.jx-rightimg').attr({width: '', height:''});
+	    $('.jx-rightimg').attr({width: '', height:''});
     }
   };
 
