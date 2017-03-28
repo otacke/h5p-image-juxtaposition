@@ -3,16 +3,19 @@
  * Copyright (c) 2015 Alex Duner and Northwestern University Knight Lab
  * License: Mozilla Public License 2.0, https://www.mozilla.org/en-US/MPL/2.0/
  * original source code: https://github.com/NUKnightLab/juxtapose
+ *
+ * TODO: Convert DOM Elements to jQuery elements
  */
 var H5P = H5P || {};
 
 H5P.ImageJuxtaposition = function ($) {
   /**
    * Constructor function.
+   *
+   * @param {object} options from semantics.json.
+   * @param {number} content id.
    */
   function C(options, id) {
-    var self = this;
-
     // Extend defaults with provided options
     this.options = $.extend(true, {}, {
       title: '',
@@ -32,25 +35,25 @@ H5P.ImageJuxtaposition = function ($) {
 
     // Initialize event inheritance
     H5P.EventDispatcher.call(this);
-  };
+  }
+
   // Extends the event dispatcher
   C.prototype = Object.create(H5P.EventDispatcher.prototype);
   C.prototype.constructor = C;
 
   /**
-   * Attach function called by H5P framework to insert H5P content into page
+   * Attach function called by H5P framework to insert H5P content into page.
    *
-   * @param {jQuery} $container
+   * @param {jQuery} container to attach to.
    */
   C.prototype.attach = function ($container) {
-    var self = this;
     this.container = $container;
     $container.addClass("h5p-image-juxtaposition");
     if (this.options.title) {
       $container.append('<div class="title">' + this.options.title + '</div>');
     }
 
-    if (typeof(this.options.imageBefore.imageBefore) === 'undefined' || typeof(this.options.imageAfter.imageAfter) === undefined) {
+    if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === undefined) {
       $container.append('<div class="missing-images">I really need two background images :)</div>');
       return;
     }
@@ -68,8 +71,7 @@ H5P.ImageJuxtaposition = function ($) {
     }], {
       startingPosition: this.options.behavior.startingPosition + '%',
       mode: this.options.behavior.sliderOrientation
-    },
-    this);
+    }, this);
   };
 
   /**
@@ -151,23 +153,6 @@ H5P.ImageJuxtaposition = function ($) {
   };
 
   /**
-   * Remove a class from a DOM element.
-   * Could be removed if using jQuery
-   *
-   * @private
-   * @param {object} DOM element.
-   * @param {string} className to be removed.
-   */
-  var removeClass = function (element, c) {
-    element.className = element.className.replace(/(\S+)\s*/g, function (w, match) {
-      if (match === c) {
-        return '';
-      }
-      return w;
-    }).replace(/^\s+/, '');
-  };
-
-  /**
    * Set text to a DOM element.
    * Could be removed if using jQuery
    *
@@ -186,7 +171,7 @@ H5P.ImageJuxtaposition = function ($) {
 
   /**
    * get computed width and height for a DOM element.
-   * could be removed when using jQuery
+   * could probably be removed if using jQuery
    *
    * @private
    * @param {object} DOM element.
@@ -200,8 +185,8 @@ H5P.ImageJuxtaposition = function ($) {
       };
     }
     else {
-      w = element.getBoundingClientRect().right - element.getBoundingClientRect().left;
-      h = element.getBoundingClientRect().bottom - element.getBoundingClientRect().top;
+      var w = element.getBoundingClientRect().right - element.getBoundingClientRect().left;
+      var h = element.getBoundingClientRect().bottom - element.getBoundingClientRect().top;
       return {
         width: parseInt(w, 10) || 0,
         height: parseInt(h, 10) || 0
@@ -209,6 +194,13 @@ H5P.ImageJuxtaposition = function ($) {
     }
   };
 
+  /**
+   * Get pageX from event.
+   *
+   * @private
+   * @param {object} event.
+   * @return {number} pageX.
+   */
   var getPageX = function (e) {
     var pageX;
     if (e.pageX) {
@@ -223,6 +215,13 @@ H5P.ImageJuxtaposition = function ($) {
     return pageX;
   };
 
+  /**
+   * Get pageY from event.
+   *
+   * @private
+   * @param {object} event.
+   * @return {number} pageY.
+   */
   var getPageY = function (e) {
     var pageY;
     if (e.pageY) {
@@ -237,7 +236,15 @@ H5P.ImageJuxtaposition = function ($) {
     return pageY;
   };
 
+  /**
+   * Get position for handle bar
+   *
+   * @private
+   * @param {object} slider DOM object.
+   * @return {number} position.
+   */
   var getLeftPercent = function (slider, input) {
+    var leftPercent;
     if (typeof input === "string" || typeof input === "number") {
       leftPercent = parseInt(input, 10);
     }
@@ -255,7 +262,15 @@ H5P.ImageJuxtaposition = function ($) {
     return leftPercent;
   };
 
+  /**
+   * Get position for handle bar
+   *
+   * @private
+   * @param {object} slider DOM object.
+   * @return {number} position.
+   */
   var getTopPercent = function (slider, input) {
+    var topPercent;
     if (typeof input === "string" || typeof input === "number") {
       topPercent = parseInt(input, 10);
     }
@@ -273,6 +288,9 @@ H5P.ImageJuxtaposition = function ($) {
     return topPercent;
   };
 
+  /**
+   * The JXSlider.
+   */
   var JXSlider = function (selector, images, options, parent) {
     this.selector = selector;
     this.options = options;
@@ -287,6 +305,9 @@ H5P.ImageJuxtaposition = function ($) {
     }
   };
 
+  /**
+   * The JXSlider prototype functions.
+   */
   JXSlider.prototype = {
     updateSlider: function updateSlider(input, animate) {
       var leftPercent, rightPercent, leftPercentNum;
@@ -323,7 +344,7 @@ H5P.ImageJuxtaposition = function ($) {
 
     /**
      * Set the label for an image
-     * Could be removed when using jQuery
+     * Could be simplified and removed if using jQuery
      */
     displayLabel: function displayLabel(element, labelText) {
       var label = document.createElement("div");
@@ -338,7 +359,7 @@ H5P.ImageJuxtaposition = function ($) {
      * Check whether both images habe the same aspect ratio
      */
     checkImages: function checkImages() {
-      return (getImageDimensions(this.imgBefore.image).aspect() == getImageDimensions(this.imgAfter.image).aspect()) ? true : false;
+      return getImageDimensions(this.imgBefore.image).aspect() === getImageDimensions(this.imgAfter.image).aspect() ? true : false;
     },
 
     /**
@@ -364,29 +385,24 @@ H5P.ImageJuxtaposition = function ($) {
      */
     setWrapperDimensions: function setWrapperDimensions() {
       // this might benefit from jQuery
-      var dims = this.calculateDims(
-        getComputedWidthAndHeight(this.wrapper).width,
-        getComputedWidthAndHeight(this.wrapper).height
-      );
+      var dims = this.calculateDims(getComputedWidthAndHeight(this.wrapper).width, getComputedWidthAndHeight(this.wrapper).height);
       var containerWidth = $('.h5p-image-juxtaposition').width();
-      var containerHeight = $('.h5p-image-juxtaposition').width();
 
       // The plugin is responsive, and this will upscale images in portrait mode
-      if (($('.jx-leftimg').width() / containerWidth) < this.originalRatio) {
+      if ($('.jx-leftimg').width() / containerWidth < this.originalRatio) {
         dims.width = containerWidth * this.originalRatio;
       }
 
       // Rescale to account for responsive container resizing
       // Landscape
-      if (dims.height < containerHeight) {
+      if (dims.width < containerWidth) {
         if (dims.ratio >= 1) {
-          dims = this.calculateDims(containerWidth, containerHeight);
+          dims = this.calculateDims(containerWidth, 0);
         }
       }
       // Portrait
-      else if (dims.height > containerHeight) {
-        dims = this.calculateDims(0, containerHeight);
-        this.wrapper.style.paddingLeft = parseInt((containerWidth - dims.width) / 2) + "px";
+      else if (dims.width > containerWidth) {
+        dims = this.calculateDims(0, containerWidth);
       }
 
       // Update wrapper size
@@ -496,7 +512,7 @@ H5P.ImageJuxtaposition = function ($) {
           e = e || window.event;
           e.preventDefault();
           e.stopPropagation();
-          this.removeEventListener('mouseup', arguments.callee);
+          //this.removeEventListener('mouseup', arguments.callee);
           animate = false;
         });
 
@@ -504,7 +520,7 @@ H5P.ImageJuxtaposition = function ($) {
           e = e || window.event;
           e.preventDefault();
           e.stopPropagation();
-          this.removeEventListener('mouseup', arguments.callee);
+          //this.removeEventListener('mouseup', arguments.callee);
           animate = false;
         });
       });
@@ -529,9 +545,9 @@ H5P.ImageJuxtaposition = function ($) {
       this.parent.trigger('resize');
       this.originalRatio = $('.jx-leftimg').width() / $('.h5p-image-juxtaposition').width();
 
-      // This is a workaround for our beloved IE
-      $('.jx-leftimg').attr({width: '', height:''});
-	    $('.jx-rightimg').attr({width: '', height:''});
+      // This is a workaround for our beloved IE that would otherwise distort the images
+      $('.jx-leftimg').attr({ width: '', height: '' });
+      $('.jx-rightimg').attr({ width: '', height: '' });
     }
   };
 
