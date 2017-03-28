@@ -1,7 +1,6 @@
 /*
  * TODO: clean up code
  * TODO: localization
- * TODO: make options look nicer, e.g. with a list of exactly 2 items
  * TODO: possibly: implement fullscreen mode, https://h5p.org/using-fullscreen
  */
 
@@ -23,10 +22,14 @@ H5P.ImageJuxtaposition = function ($) {
     // Extend defaults with provided options
     this.options = $.extend(true, {}, {
       title: '',
-      image1: undefined,
-      label1: '',
-      image2: undefined,
-      label2: '',
+      imageBefore: {
+        imageBefore: undefined,
+        labelBefore: ''
+      },
+      imageAfter: {
+        imageAfter: undefined,
+        labelAfter: ''
+      },
       behavior: {
         startingPosition: 50,
         sliderOrientation: 'horizontal' }
@@ -63,7 +66,7 @@ H5P.ImageJuxtaposition = function ($) {
       $container.append('<div class="title">' + this.options.title + '</div>');
     }
 
-    if (typeof(this.options.image1) === 'undefined' || typeof(this.options.image2) === undefined) {
+    if (typeof(this.options.imageBefore.imageBefore) === 'undefined' || typeof(this.options.imageAfter.imageAfter) === undefined) {
       $container.append('<div class="missing-images">I really need two background images :)</div>');
       return;
     }
@@ -74,11 +77,11 @@ H5P.ImageJuxtaposition = function ($) {
 
     // Create the slider
     var slider = new JXSlider('.juxtapose-' + this.sliderID, [{
-          src: H5P.getPath(this.options.image1.path, this.id),
-      label: this.options.label1
+          src: H5P.getPath(this.options.imageBefore.imageBefore.path, this.id),
+      label: this.options.imageBefore.labelBefore
     }, {
-      src: H5P.getPath(this.options.image2.path, this.id),
-      label: this.options.label2
+      src: H5P.getPath(this.options.imageAfter.imageAfter.path, this.id),
+      label: this.options.imageAfter.labelAfter
     }], {
       startingPosition: this.options.behavior.startingPosition + '%',
       mode: this.options.behavior.sliderOrientation
