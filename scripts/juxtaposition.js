@@ -326,13 +326,9 @@ H5P.ImageJuxtaposition = function ($) {
         }
         this.sliderPosition = leftPercent;
       }
-    },
 
-    /**
-     * get current slider position
-     */
-    getPosition: function getPosition() {
-      return this.sliderPosition;
+      // update aria
+      this.controller.setAttribute('aria-valuenow', leftPercentNum);
     },
 
     /**
@@ -532,10 +528,8 @@ H5P.ImageJuxtaposition = function ($) {
       this.parent.trigger('resize');
 
 	  // This is a workaround for our beloved IE
-      $('.jx-leftimg').attr('width', '');
-      $('.jx-rightimg').attr('width', '');
-      $('.jx-leftimg').attr('height', '');
-      $('.jx-rightimg').attr('height', '');
+      $('.jx-leftimg').attr({width: '', height:''});
+	  $('.jx-rightimg').attr({width: '', height:''});
     }
   };
 
