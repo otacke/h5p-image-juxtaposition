@@ -388,6 +388,11 @@ H5P.ImageJuxtaposition = function ($) {
       var containerWidth = $('.h5p-image-juxtaposition').width();
       var containerHeight = $('.h5p-image-juxtaposition').width();
 
+      // The plugin is responsive, and this will upscale images in portrait mode
+      if (($('.jx-leftimg').width() / containerWidth) < this.originalRatio) {
+        dims.width = containerWidth * this.originalRatio;
+      }
+
       // Rescale to account for responsive container resizing
       // Landscape
       if (dims.height < containerHeight) {
@@ -534,6 +539,7 @@ H5P.ImageJuxtaposition = function ($) {
       self.setWrapperDimensions();
       self.updateSlider(this.options.startingPosition, false);
       this.parent.trigger('resize');
+      this.originalRatio = $('.jx-leftimg').width() / $('.h5p-image-juxtaposition').width();
 
 	  // This is a workaround for our beloved IE
       $('.jx-leftimg').attr({width: '', height:''});
