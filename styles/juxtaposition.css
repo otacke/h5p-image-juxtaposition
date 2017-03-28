@@ -177,7 +177,7 @@ div.jx-image {
 	position: absolute;
 	height: 100%;
 	display: inline-block;
-	top: 0;
+	/* top: 0; */
 	overflow: hidden;
 	-webkit-backface-visibility: hidden;
 }
@@ -189,7 +189,11 @@ div.jx-image {
 }
 
 div.jx-image img {
-	height: 100%;
+}
+
+.vertical div.jx-image img {
+	height: initial;
+	width: 100%;
 	z-index: 5;
 	position: absolute;
 	margin-bottom: 0;
@@ -200,9 +204,16 @@ div.jx-image img {
 	max-width: initial;
 }
 
-.vertical div.jx-image img {
-	height: initial;
-	width: 100%;
+.horizontal div.jx-image img {
+	height: 100%;
+	z-index: 5;
+	position: absolute;
+	margin-bottom: 0;
+
+	max-height: none;
+	max-width: none;
+	max-height: initial;
+	max-width: initial;
 }
 
 div.jx-image.jx-left {

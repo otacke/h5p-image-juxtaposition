@@ -422,9 +422,7 @@ H5P.ImageJuxtaposition = function ($) {
         this.slider.className = 'jx-slider';
         this.wrapper.appendChild(this.slider);
 
-        if (this.options.mode != "horizontal") {
-          addClass(this.slider, this.options.mode);
-        }
+        addClass(this.slider, this.options.mode);
 
         this.handle = document.createElement("div");
         this.handle.className = 'jx-handle';
@@ -533,9 +531,11 @@ H5P.ImageJuxtaposition = function ($) {
       self.updateSlider(this.options.startingPosition, false);
       this.parent.trigger('resize');
 
-	  // This is a workaround for horizontal sliders in our beloved IE
-	  $('.jx-leftimg').attr('width', '');
-	  $('.jx-rightimg').attr('width', '');
+	  // This is a workaround for our beloved IE
+      $('.jx-leftimg').attr('width', '');
+      $('.jx-rightimg').attr('width', '');
+      $('.jx-leftimg').attr('height', '');
+      $('.jx-rightimg').attr('height', '');
     }
   };
 
