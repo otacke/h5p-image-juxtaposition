@@ -1,9 +1,7 @@
 /*
  * TODO: clean up code
- * TODO: style the output
  * TODO: localization
  * TODO: make options look nicer, e.g. with a list of exactly 2 items
- * TODO: test with all kinds of images (small, big, different sizes, etc.)
  * TODO: possibly: implement fullscreen mode, https://h5p.org/using-fullscreen
  */
 
@@ -202,6 +200,7 @@ H5P.ImageJuxtaposition = function ($) {
 
   /**
    * get computed width and height for a DOM element.
+   * could be removed when using jQuery
    *
    * @private
    * @param {object} DOM element.
@@ -332,10 +331,17 @@ H5P.ImageJuxtaposition = function ($) {
       }
     },
 
+    /**
+     * get current slider position
+     */
     getPosition: function getPosition() {
       return this.sliderPosition;
     },
 
+    /**
+     * Set the label for an image
+     * Could be removed when using jQuery
+     */
     displayLabel: function displayLabel(element, labelText) {
       var label = document.createElement("div");
       label.className = 'jx-label';
@@ -345,19 +351,23 @@ H5P.ImageJuxtaposition = function ($) {
       element.appendChild(label);
     },
 
+    /**
+     * sets the slider position
+     */
     setStartingPosition: function setStartingPosition(s) {
       this.options.startingPosition = s;
     },
 
+    /**
+     * Check whether both images habe the same aspect ratio
+     */
     checkImages: function checkImages() {
-      if (getImageDimensions(this.imgBefore.image).aspect() == getImageDimensions(this.imgAfter.image).aspect()) {
-        return true;
-      }
-      else {
-        return false;
-      }
+      return (getImageDimensions(this.imgBefore.image).aspect() == getImageDimensions(this.imgAfter.image).aspect()) ? true : false;
     },
 
+    /**
+     * Calculate the image dimensions
+     */
     calculateDims: function calculateDims(width, height) {
       var ratio = getImageDimensions(this.imgBefore.image).aspect();
       if (width) {
@@ -373,34 +383,32 @@ H5P.ImageJuxtaposition = function ($) {
       };
     },
 
-    responsivizeIframe: function responsivizeIframe(dims) {
+    /**
+     * Update the wrapper dimensions
+     */
+    setWrapperDimensions: function setWrapperDimensions() {
+      // this might benefit from jQuery
+      var dims = this.calculateDims(
+        getComputedWidthAndHeight(this.wrapper).width,
+        getComputedWidthAndHeight(this.wrapper).height
+      );
       var containerWidth = $('.h5p-image-juxtaposition').width();
       var containerHeight = $('.h5p-image-juxtaposition').width();
-      //Check the slider dimensions against the iframe (window) dimensions
+
+      // Rescale to account for responsive container resizing
+      // Landscape
       if (dims.height < containerHeight) {
-        //If the aspect ratio is greater than 1, imgs are landscape, so letterbox top and bottom
         if (dims.ratio >= 1) {
           dims = this.calculateDims(containerWidth, containerHeight);
-          this.wrapper.style.paddingTop = parseInt((containerHeight - dims.height) / 2) + "px";
         }
       }
+      // Portrait
       else if (dims.height > containerHeight) {
-        /* If the image is too tall for the window, which happens at 100% width on large screens,
-         * force dimension recalculation based on height instead of width */
         dims = this.calculateDims(0, containerHeight);
         this.wrapper.style.paddingLeft = parseInt((containerWidth - dims.width) / 2) + "px";
       }
-      return dims;
-    },
 
-    setWrapperDimensions: function setWrapperDimensions() {
-
-      var wrapperWidth = getComputedWidthAndHeight(this.wrapper).width;
-      var wrapperHeight = getComputedWidthAndHeight(this.wrapper).height;
-
-      var dims = this.calculateDims(wrapperWidth, wrapperHeight);
-      dims = this.responsivizeIframe(dims);
-
+      // Update wrapper size
       this.wrapper.style.height = parseInt(dims.height) + "px";
       this.wrapper.style.width = parseInt(dims.width) + "px";
     },
