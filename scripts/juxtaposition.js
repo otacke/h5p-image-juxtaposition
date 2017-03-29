@@ -50,19 +50,19 @@ H5P.ImageJuxtaposition = function ($) {
     this.container = $container;
     $container.addClass("h5p-image-juxtaposition");
     if (this.options.title) {
-      $container.append('<div class="title">' + this.options.title + '</div>');
+      $container.append('<div class="h5p-image-juxtaposition-title">' + this.options.title + '</div>');
     }
 
     if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === undefined) {
-      $container.append('<div class="missing-images">I really need two background images :)</div>');
+      $container.append('<div class="h5p-image-juxtaposition-missing-images">I really need two background images :)</div>');
       return;
     }
 
     // The div element will be filled by JXSlider._onLoaded later
-    $container.append('<div class="juxtapose"></div>');
+    $container.append('<div class="h5p-image-juxtaposition-juxtapose"></div>');
 
     // Create the slider
-    var slider = new JXSlider('.juxtapose', [{
+    var slider = new JXSlider('.h5p-image-juxtaposition-juxtapose', [{
       src: H5P.getPath(this.options.imageBefore.imageBefore.path, this.id),
       label: this.options.imageBefore.labelBefore
     }, {
@@ -353,7 +353,7 @@ H5P.ImageJuxtaposition = function ($) {
      */
     displayLabel: function displayLabel(element, labelText) {
       var label = document.createElement("div");
-      label.className = 'jx-label';
+      label.className = 'h5p-image-juxtaposition-label';
       label.setAttribute('unselectable', 'on');
       label.setAttribute('onselectstart', 'return false;');
       label.setAttribute('onmousedown', 'return false;');
@@ -397,7 +397,7 @@ H5P.ImageJuxtaposition = function ($) {
       var containerWidth = $('.h5p-image-juxtaposition').width();
 
       // The plugin is responsive, and this will upscale images in portrait mode
-      if ($('.jx-leftimg').width() / containerWidth < this.originalRatio) {
+      if ($('.h5p-image-juxtaposition-leftimg').width() / containerWidth < this.originalRatio) {
         dims.width = containerWidth * this.originalRatio;
       }
 
@@ -430,22 +430,22 @@ H5P.ImageJuxtaposition = function ($) {
         this.setWrapperDimensions();
 
         this.slider = document.createElement("div");
-        this.slider.className = 'jx-slider';
+        this.slider.className = 'h5p-image-juxtaposition-slider';
         this.slider.setAttribute('draggable', 'false');
         this.wrapper.appendChild(this.slider);
 
         // set orientation
-        addClass(this.slider, this.options.mode);
+        addClass(this.slider, 'h5p-image-juxtaposition-' + this.options.mode);
 
         this.handle = document.createElement("div");
-        this.handle.className = 'jx-handle';
+        this.handle.className = 'h5p-image-juxtaposition-handle';
         this.handle.setAttribute('draggable', 'false');
 
         this.rightImage = document.createElement("div");
-        this.rightImage.className = 'jx-image jx-right';
+        this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
         this.rightImage.setAttribute('draggable', 'false');
         this.rightImageIMG = $(this.imgAfter.image)
-          .addClass('jx-rightimg')
+          .addClass('h5p-image-juxtaposition-rightimg')
           // prevent dragging, etc. when leaving iframe
           .attr({
             draggable: 'false',
@@ -456,10 +456,10 @@ H5P.ImageJuxtaposition = function ($) {
         this.rightImage.appendChild(this.rightImageIMG[0]);
 
         this.leftImage = document.createElement("div");
-        this.leftImage.className = 'jx-image jx-left';
+        this.leftImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-left';
         this.leftImage.setAttribute('draggable', 'false');
         this.leftImageIMG = $(this.imgBefore.image)
-          .addClass('jx-leftimg')
+          .addClass('h5p-image-juxtaposition-leftimg')
           // prevent dragging, etc. when leaving iframe
           .attr({
             draggable: 'false',
@@ -478,13 +478,13 @@ H5P.ImageJuxtaposition = function ($) {
         this.control = document.createElement("div");
         this.controller = document.createElement("div");
 
-        this.leftArrow.className = 'jx-arrow jx-left';
+        this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
         this.leftArrow.setAttribute('draggable', 'false');
-        this.rightArrow.className = 'jx-arrow jx-right';
+        this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
         this.rightArrow.setAttribute('draggable', 'false');
-        this.control.className = 'jx-control';
+        this.control.className = 'h5p-image-juxtaposition-control';
         this.control.setAttribute('draggable', 'false');
-        this.controller.className = 'jx-controller';
+        this.controller.className = 'h5p-image-juxtaposition-controller';
         this.controller.setAttribute('draggable', 'false');
 
         this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
@@ -575,11 +575,11 @@ H5P.ImageJuxtaposition = function ($) {
       self.setWrapperDimensions();
       self.updateSlider(this.options.startingPosition, false);
       this.parent.trigger('resize');
-      this.originalRatio = $('.jx-leftimg').width() / $('.h5p-image-juxtaposition').width();
+      this.originalRatio = $('.h5p-image-juxtaposition-leftimg').width() / $('.h5p-image-juxtaposition').width();
 
       // This is a workaround for our beloved IE that would otherwise distort the images
-      $('.jx-leftimg').attr({ width: '', height: '' });
-      $('.jx-rightimg').attr({ width: '', height: '' });
+      $('.h5p-image-juxtaposition-leftimg').attr({ width: '', height: '' });
+      $('.h5p-image-juxtaposition-rightimg').attr({ width: '', height: '' });
     }
   };
 

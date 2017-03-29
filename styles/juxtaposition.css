@@ -9,26 +9,26 @@
   -webkit-user-select: none;
   user-select: none;
 }
-.h5p-image-juxtaposition .title {
+.h5p-image-juxtaposition .h5p-image-juxtaposition-title {
   width: auto;
   margin: 16px;
   font-size: 20px;
   font-weight: bold;
   line-height: 24px;
 }
-.h5p-image-juxtaposition .missing-images {
+.h5p-image-juxtaposition .h5p-image-juxtaposition-missing-images {
   font-size: 1.5em;
   text-align: center;
   padding: 2em;
 }
 
-/* Juxtapose */
-div.juxtapose {
+/* From Juxtapose */
+div.h5p-image-juxtaposition-juxtapose {
 	width: auto;
 	font-family: Helvetica, Arial, sans-serif;
 }
 
-div.jx-slider {
+div.h5p-image-juxtaposition-slider {
 	width: 100%;
 	height: 100%;
 	position: relative;
@@ -36,8 +36,7 @@ div.jx-slider {
 	cursor: pointer;
 }
 
-
-div.jx-handle {
+div.h5p-image-juxtaposition-handle {
 	position: absolute;
 	height: 100%;
 	width: 40px;
@@ -46,7 +45,7 @@ div.jx-handle {
 	margin-left: -20px;
 }
 
-.vertical div.jx-handle {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle {
 	height: 40px;
 	width: 100%;
 	cursor: row-resize;
@@ -54,7 +53,7 @@ div.jx-handle {
 	margin-left: 0;
 }
 
-div.jx-control {
+div.h5p-image-juxtaposition-control {
 	height: 100%;
 	margin-right: auto;
 	margin-left: auto;
@@ -62,7 +61,7 @@ div.jx-control {
 	background-color: #f3f3f3;
 }
 
-.vertical div.jx-control {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-control {
 	height: 3px;
 	width: 100%;
 	background-color: #f3f3f3;
@@ -71,7 +70,7 @@ div.jx-control {
 	transform: translateY(-50%);
 }
 
-div.jx-controller {
+div.h5p-image-juxtaposition-controller {
 	position: absolute;
 	margin: auto;
 	top: 0;
@@ -82,7 +81,7 @@ div.jx-controller {
 	background-color: #f3f3f3;
 }
 
-.vertical div.jx-controller {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-controller {
 	height: 9px;
 	width: 100px;
 	margin-left: auto;
@@ -91,7 +90,7 @@ div.jx-controller {
 	position: relative;
 }
 
-.horizontal div.jx-arrow {
+.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-arrow {
 	position: absolute;
 	margin: auto;
 	top: 0;
@@ -101,7 +100,7 @@ div.jx-controller {
 	transition: all .2s ease;
 }
 
-.vertical div.jx-arrow {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-arrow {
 	position: absolute;
 	margin: 0 auto;
 	left: 0;
@@ -111,21 +110,21 @@ div.jx-controller {
 	transition: all .2s ease;
 }
 
-.horizontal div.jx-arrow.jx-left {
+.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: 2px;
 	border-style: solid;
 	border-width: 8px 8px 8px 0;
 	border-color: transparent #f3f3f3 transparent transparent;
 }
 
-.horizontal div.jx-arrow.jx-right {
+.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: 2px;
 	border-style: solid;
 	border-width: 8px 0 8px 8px;
 	border-color: transparent transparent transparent #f3f3f3;
 }
 
-.vertical div.jx-arrow.jx-left {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: 0px;
 	top: 2px;
 	border-style: solid;
@@ -133,7 +132,7 @@ div.jx-controller {
 	border-color: transparent transparent #f3f3f3 transparent;
 }
 
-.vertical div.jx-arrow.jx-right {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: 0px;
 	top: initial;
 	bottom: 2px;
@@ -142,30 +141,30 @@ div.jx-controller {
 	border-color: #f3f3f3 transparent transparent transparent;
 }
 
-div.jx-handle:hover div.jx-arrow.jx-left,
-div.jx-handle:active div.jx-arrow.jx-left {
+div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left,
+div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: -1px;
 }
 
-div.jx-handle:hover div.jx-arrow.jx-right,
-div.jx-handle:active div.jx-arrow.jx-right {
+div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right,
+div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: -1px;
 }
 
-.vertical div.jx-handle:hover div.jx-arrow.jx-left,
-.vertical div.jx-handle:active div.jx-arrow.jx-left {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left,
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: 0px;
 	top: 0px;
 }
 
-.vertical div.jx-handle:hover div.jx-arrow.jx-right,
-.vertical div.jx-handle:active div.jx-arrow.jx-right {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right,
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: 0px;
 	bottom: 0px;
 }
 
 
-div.jx-image {
+div.h5p-image-juxtaposition-image {
 	position: absolute;
 	height: 100%;
 	display: inline-block;
@@ -174,16 +173,16 @@ div.jx-image {
 	-webkit-backface-visibility: hidden;
 }
 
-.vertical div.jx-image {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image {
 	width: 100%;
 	left: 0;
 	top: initial;
 }
 
-div.jx-image img {
+div.h5p-image-juxtaposition-image img {
 }
 
-.vertical div.jx-image img {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image img {
 	height: initial;
 	width: 100%;
 	z-index: 5;
@@ -196,7 +195,7 @@ div.jx-image img {
 	max-width: initial;
 }
 
-.horizontal div.jx-image img {
+.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-image img {
 	height: 100%;
 	z-index: 5;
 	position: absolute;
@@ -208,46 +207,45 @@ div.jx-image img {
 	max-width: initial;
 }
 
-div.jx-image.jx-left {
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
 	left: 0;
 	background-position: left;
 }
 
-div.jx-image.jx-left img {
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
 	left: 0;
 }
 
-div.jx-image.jx-right {
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
 	right: 0;
 	background-position: right;
 }
 
-div.jx-image.jx-right img {
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
 	right: 0;
 	bottom: 0;
 }
 
 
-.veritcal div.jx-image.jx-left {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
 	top: 0;
 	background-position: top;
 }
 
-.veritcal div.jx-image.jx-left img {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
 	top: 0;
 }
 
-.vertical div.jx-image.jx-right {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
 	bottom: 0;
 	background-position: bottom;
 }
 
-.veritcal div.jx-image.jx-right img {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
 	bottom: 0;
 }
 
-
-div.jx-image div.jx-label {
+div.h5p-image-juxtaposition-image div.h5p-image-juxtaposition-label {
 	font-size: 1em;
 	padding: .25em .75em;
 	position: relative;
@@ -262,29 +260,29 @@ div.jx-image div.jx-label {
 	vertical-align: middle;
 }
 
-div.jx-image.jx-left div.jx-label {
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left div.h5p-image-juxtaposition-label {
 	float: left;
 	left: 0;
 }
 
-div.jx-image.jx-right div.jx-label {
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right div.h5p-image-juxtaposition-label {
 	float: right;
 	right: 0;
 }
 
-.vertical div.jx-image div.jx-label {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image div.h5p-image-juxtaposition-label {
 	display: table;
 	position: absolute;
 }
 
-.vertical div.jx-image.jx-right div.jx-label {
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right div.h5p-image-juxtaposition-label {
 	left: 0;
 	bottom: 0;
 	top: initial;
 }
 
-div.jx-controller:focus,
-div.jx-image.jx-left div.jx-label:focus,
-div.jx-image.jx-right div.jx-label:focus {
+div.h5p-image-juxtaposition-controller:focus,
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left div.h5p-image-juxtaposition-label:focus,
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right div.h5p-image-juxtaposition-label:focus {
   outline:none;
 }
