@@ -72,6 +72,11 @@ H5P.ImageJuxtaposition = function ($) {
       startingPosition: this.options.behavior.startingPosition + '%',
       mode: this.options.behavior.sliderOrientation
     }, this);
+
+    // This is needed for Chrome to detect the mouseup outside the iframe
+    $(window).mouseup(function() {
+      slider.mouseup();
+    });
   };
 
   /**
@@ -349,6 +354,9 @@ H5P.ImageJuxtaposition = function ($) {
     displayLabel: function displayLabel(element, labelText) {
       var label = document.createElement("div");
       label.className = 'jx-label';
+      label.setAttribute('unselectable', 'on');
+      label.setAttribute('onselectstart', 'return false;');
+      label.setAttribute('onmousedown', 'return false;');
       label.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
 
       setText(label, labelText);
@@ -423,21 +431,42 @@ H5P.ImageJuxtaposition = function ($) {
 
         this.slider = document.createElement("div");
         this.slider.className = 'jx-slider';
+        this.slider.setAttribute('draggable', 'false');
         this.wrapper.appendChild(this.slider);
 
+        // set orientation
         addClass(this.slider, this.options.mode);
 
         this.handle = document.createElement("div");
         this.handle.className = 'jx-handle';
+        this.handle.setAttribute('draggable', 'false');
 
         this.rightImage = document.createElement("div");
         this.rightImage.className = 'jx-image jx-right';
-        this.rightImageIMG = $(this.imgAfter.image).addClass('jx-rightimg');
+        this.rightImage.setAttribute('draggable', 'false');
+        this.rightImageIMG = $(this.imgAfter.image)
+          .addClass('jx-rightimg')
+          // prevent dragging, etc. when leaving iframe
+          .attr({
+            draggable: 'false',
+            unselectable: 'on',
+            onselectstart: 'return false;',
+            onmousedown: 'return false;'
+          });
         this.rightImage.appendChild(this.rightImageIMG[0]);
 
         this.leftImage = document.createElement("div");
         this.leftImage.className = 'jx-image jx-left';
-        this.leftImageIMG = $(this.imgBefore.image).addClass('jx-leftimg');
+        this.leftImage.setAttribute('draggable', 'false');
+        this.leftImageIMG = $(this.imgBefore.image)
+          .addClass('jx-leftimg')
+          // prevent dragging, etc. when leaving iframe
+          .attr({
+            draggable: 'false',
+            unselectable: 'on',
+            onselectstart: 'return false;',
+            onmousedown: 'return false;'
+          });
         this.leftImage.appendChild(this.leftImageIMG[0]);
 
         this.slider.appendChild(this.handle);
@@ -450,9 +479,13 @@ H5P.ImageJuxtaposition = function ($) {
         this.controller = document.createElement("div");
 
         this.leftArrow.className = 'jx-arrow jx-left';
+        this.leftArrow.setAttribute('draggable', 'false');
         this.rightArrow.className = 'jx-arrow jx-right';
+        this.rightArrow.setAttribute('draggable', 'false');
         this.control.className = 'jx-control';
+        this.control.setAttribute('draggable', 'false');
         this.controller.className = 'jx-controller';
+        this.controller.setAttribute('draggable', 'false');
 
         this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
         this.controller.setAttribute('role', 'slider');
@@ -467,6 +500,13 @@ H5P.ImageJuxtaposition = function ($) {
 
         this._init();
       }
+    },
+
+    /**
+     * Trigger mouseup manually (from outside).
+     */
+    mouseup: function () {
+      this.slider.dispatchEvent(new CustomEvent('mouseup'));
     },
 
     /**
@@ -496,7 +536,7 @@ H5P.ImageJuxtaposition = function ($) {
       // Event Listeners for Mouse Interface
       this.slider.addEventListener("mousedown", function (e) {
         e = e || window.event;
-        e.preventDefault();
+        // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
         self.updateSlider(e, true);
         var animate = true;
 
@@ -512,15 +552,7 @@ H5P.ImageJuxtaposition = function ($) {
           e = e || window.event;
           e.preventDefault();
           e.stopPropagation();
-          //this.removeEventListener('mouseup', arguments.callee);
-          animate = false;
-        });
-
-        this.addEventListener('mouseleave', function (e) {
-          e = e || window.event;
-          e.preventDefault();
-          e.stopPropagation();
-          //this.removeEventListener('mouseup', arguments.callee);
+          this.removeEventListener('mouseup', arguments.callee);
           animate = false;
         });
       });

@@ -1,6 +1,13 @@
 .h5p-image-juxtaposition {
   width: auto;
   margin: 0 auto;
+  /* Will prevent flickering when sliding */
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .h5p-image-juxtaposition .title {
   width: auto;
@@ -37,18 +44,6 @@ div.jx-handle {
 	cursor: col-resize;
 	z-index: 15;
 	margin-left: -20px;
-}
-
-div.jx-arrow {
-	// box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.3);
-}
-
-div.jx-controller {
-	// box-shadow:
-	// 	0 4px 0px 0px #f3f3f3,
-	// 	0 -4px 0px 0px #f3f3f3,
-	// 	0px 0px 4px 1px rgba(0,0,0,0.3),
-	// 	0px 0px 4px 1px rgba(0,0,0,0.3);
 }
 
 .vertical div.jx-handle {
@@ -288,25 +283,8 @@ div.jx-image.jx-right div.jx-label {
 	top: initial;
 }
 
-/* Animation */
-
-div.jx-image.transition {
-	transition: width .5s ease;
-}
-
-.vertical div.jx-image.transition {
-	transition: height .5s ease;
-}
-
-/* keyboard accessibility */
 div.jx-controller:focus,
 div.jx-image.jx-left div.jx-label:focus,
-div.jx-image.jx-right div.jx-label:focus,
-a.jx-knightlab:focus {
-	background: #eae34a;
-	color: #000;
-}
-a.jx-knightlab:focus span.juxtapose-name{
-	color: #000;
-	border: none;
+div.jx-image.jx-right div.jx-label:focus {
+  outline:none;
 }
