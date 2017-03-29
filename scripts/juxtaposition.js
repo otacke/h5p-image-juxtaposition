@@ -53,7 +53,7 @@ H5P.ImageJuxtaposition = function ($) {
       $container.append('<div class="h5p-image-juxtaposition-title">' + this.options.title + '</div>');
     }
 
-    if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === undefined) {
+    if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === 'undefined') {
       $container.append('<div class="h5p-image-juxtaposition-missing-images">I really need two background images :)</div>');
       return;
     }
