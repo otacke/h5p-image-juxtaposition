@@ -264,6 +264,12 @@ H5P.ImageJuxtaposition = function ($) {
       var relativeX = pageX - offset.left;
       leftPercent = relativeX / width * 100;
     }
+    if (leftPercent === 0) {
+      leftPercent = 0.01;
+    }
+    if (leftPercent === 100) {
+      leftPercent = 99.99;
+    }
     return leftPercent;
   };
 
@@ -289,6 +295,12 @@ H5P.ImageJuxtaposition = function ($) {
       var pageY = getPageY(input);
       var relativeY = pageY - offset.top;
       topPercent = relativeY / width * 100;
+    }
+    if (topPercent === 0) {
+      topPercent = 0.01;
+    }
+    if (topPercent === 100) {
+      topPercent = 99.99;
     }
     return topPercent;
   };
