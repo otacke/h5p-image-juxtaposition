@@ -428,6 +428,8 @@ H5P.ImageJuxtaposition = function ($) {
       // Update wrapper size
       this.wrapper.style.height = parseInt(dims.height) + "px";
       this.wrapper.style.width = parseInt(dims.width) + "px";
+
+      this.parent.trigger('resize');
     },
 
     /**
@@ -586,7 +588,6 @@ H5P.ImageJuxtaposition = function ($) {
 
       self.setWrapperDimensions();
       self.updateSlider(this.options.startingPosition, false);
-      this.parent.trigger('resize');
       this.originalRatio = $('.h5p-image-juxtaposition-leftimg').width() / $('.h5p-image-juxtaposition').width();
 
       // This is a workaround for our beloved IE that would otherwise distort the images
