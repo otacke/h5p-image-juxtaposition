@@ -5,7 +5,7 @@
   "minorVersion": 0,
   "patchVersion": 0,
   "runnable": 1,
-  "embedTypes": ["iframe"],
+  "embedTypes": ["embed"],
   "author": "Oliver Tacke",
   "license": "MPL",
   "machineName": "H5P.ImageJuxtaposition",
