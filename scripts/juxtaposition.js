@@ -175,31 +175,6 @@ H5P.ImageJuxtaposition = function ($) {
   };
 
   /**
-   * get computed width and height for a DOM element.
-   * could probably be removed if using jQuery
-   *
-   * @private
-   * @param {object} DOM element.
-   * @return {object} width and height.
-   */
-  var getComputedWidthAndHeight = function (element) {
-    if (window.getComputedStyle) {
-      return {
-        width: parseInt(getComputedStyle(element).width, 10),
-        height: parseInt(getComputedStyle(element).height, 10)
-      };
-    }
-    else {
-      var w = element.getBoundingClientRect().right - element.getBoundingClientRect().left;
-      var h = element.getBoundingClientRect().bottom - element.getBoundingClientRect().top;
-      return {
-        width: parseInt(w, 10) || 0,
-        height: parseInt(h, 10) || 0
-      };
-    }
-  };
-
-  /**
    * Get pageX from event.
    *
    * @private
@@ -402,34 +377,20 @@ H5P.ImageJuxtaposition = function ($) {
 
     /**
      * Update the wrapper dimensions
+     * TODO: enhance for other scaling methods, e.g. for fullscreen
      */
     setWrapperDimensions: function setWrapperDimensions() {
-      // this might benefit from jQuery
-      var dims = this.calculateDims(getComputedWidthAndHeight(this.wrapper).width, getComputedWidthAndHeight(this.wrapper).height);
-      var containerWidth = $('.h5p-image-juxtaposition').width();
+      var targetWidth = Math.floor(window.innerWidth - 2);
+      var targetHeight = Math.floor(targetWidth / this.imageRatio);
 
-      // The plugin is responsive, and this will upscale images in portrait mode
-      if ($('.h5p-image-juxtaposition-leftimg').width() / containerWidth < this.originalRatio) {
-        dims.width = containerWidth * this.originalRatio;
+      this.wrapper.style.width = targetWidth + 'px';
+      this.wrapper.style.height = targetHeight + 'px';
+
+      // resize iframe if image's height is too small or too high
+      if (((window.innerHeight - $('ul.h5p-actions').outerHeight()) > 0) &&
+        ((window.innerHeight - $('ul.h5p-actions').outerHeight() - 1) !== targetHeight)) {
+        this.parent.trigger('resize');
       }
-
-      // Rescale to account for responsive container resizing
-      // Landscape
-      if (dims.width < containerWidth) {
-        if (dims.ratio >= 1) {
-          dims = this.calculateDims(containerWidth, 0);
-        }
-      }
-      // Portrait
-      else if (dims.width > containerWidth) {
-        dims = this.calculateDims(0, containerWidth);
-      }
-
-      // Update wrapper size
-      this.wrapper.style.height = parseInt(dims.height) + "px";
-      this.wrapper.style.width = parseInt(dims.width) + "px";
-
-      this.parent.trigger('resize');
     },
 
     /**
@@ -437,7 +398,9 @@ H5P.ImageJuxtaposition = function ($) {
      */
     _onLoaded: function _onLoaded() {
       if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
-        // TODO: We might change all this to jQuery to make the code a little easier to read
+
+        this.imageRatio = getImageDimensions(this.imgBefore.image).aspect();
+
         this.wrapper = document.querySelector(this.selector);
         this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
 
@@ -532,8 +495,6 @@ H5P.ImageJuxtaposition = function ($) {
         console.warn(this, "Check that the two images have the same aspect ratio for the slider to work correctly.");
       }
 
-      this.updateSlider(this.options.startingPosition, false);
-
       // Display labels
       if (this.imgBefore.label) {
         this.displayLabel(this.leftImage, this.imgBefore.label);
@@ -551,7 +512,6 @@ H5P.ImageJuxtaposition = function ($) {
       this.slider.addEventListener("mousedown", function (e) {
         e = e || window.event;
         // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
-        self.updateSlider(e, true);
         var animate = true;
 
         this.addEventListener("mousemove", function (e) {
@@ -586,9 +546,7 @@ H5P.ImageJuxtaposition = function ($) {
         });
       });
 
-      self.setWrapperDimensions();
       self.updateSlider(this.options.startingPosition, false);
-      this.originalRatio = $('.h5p-image-juxtaposition-leftimg').width() / $('.h5p-image-juxtaposition').width();
 
       // This is a workaround for our beloved IE that would otherwise distort the images
       $('.h5p-image-juxtaposition-leftimg').attr({ width: '', height: '' });

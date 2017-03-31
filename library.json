@@ -11,7 +11,8 @@
   "machineName": "H5P.ImageJuxtaposition",
   "coreApi": {
     "majorVersion": 1,
-    "minorVersion": 0
+    "minorVersion": 0,
+    "patchVersion": 1
   },
   "preloadedJs": [
     { "path": "scripts/juxtaposition.js" }
