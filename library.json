@@ -3,7 +3,7 @@
   "description": "Displays an interactive before/after image",
   "majorVersion": 1,
   "minorVersion": 0,
-  "patchVersion": 0,
+  "patchVersion": 1,
   "runnable": 1,
   "embedTypes": ["iframe"],
   "author": "Oliver Tacke",
@@ -11,8 +11,7 @@
   "machineName": "H5P.ImageJuxtaposition",
   "coreApi": {
     "majorVersion": 1,
-    "minorVersion": 0,
-    "patchVersion": 1
+    "minorVersion": 0
   },
   "preloadedJs": [
     { "path": "scripts/juxtaposition.js" }
