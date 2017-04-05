@@ -404,8 +404,6 @@ H5P.ImageJuxtaposition = function ($) {
         this.wrapper = document.querySelector(this.selector);
         this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
 
-        this.setWrapperDimensions();
-
         this.slider = document.createElement("div");
         this.slider.className = 'h5p-image-juxtaposition-slider';
         this.slider.setAttribute('draggable', 'false');
@@ -547,6 +545,7 @@ H5P.ImageJuxtaposition = function ($) {
       });
 
       self.updateSlider(this.options.startingPosition, false);
+      self.setWrapperDimensions();
 
       // This is a workaround for our beloved IE that would otherwise distort the images
       $('.h5p-image-juxtaposition-leftimg').attr({ width: '', height: '' });
