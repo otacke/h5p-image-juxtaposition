@@ -45,12 +45,21 @@ div.h5p-image-juxtaposition-handle {
 	margin-left: -20px;
 }
 
+div.h5p-image-juxtaposition-handle.transition {
+	transition: left .5s ease;
+}
+
+
 .h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle {
 	height: 40px;
 	width: 100%;
 	cursor: row-resize;
 	margin-top: -20px;
 	margin-left: 0;
+}
+
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle.transition {
+  transition: top .5s ease;
 }
 
 div.h5p-image-juxtaposition-control {
@@ -212,6 +221,10 @@ div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
 	background-position: left;
 }
 
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left.transition {
+  transition: width .5s ease;
+}
+
 div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
 	left: 0;
 }
@@ -221,15 +234,22 @@ div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
 	background-position: right;
 }
 
+div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right.transition {
+  transition: width .5s ease;
+}
+
 div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
 	right: 0;
 	bottom: 0;
 }
 
-
 .h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
 	top: 0;
 	background-position: top;
+}
+
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left.transition {
+  transition: height .5s ease;
 }
 
 .h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
@@ -239,6 +259,10 @@ div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
 .h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
 	bottom: 0;
 	background-position: bottom;
+}
+
+.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right.transition {
+  transition: height .5s ease;
 }
 
 .h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {

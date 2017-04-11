@@ -317,6 +317,17 @@ H5P.ImageJuxtaposition = function ($) {
 
       // set handler position and image areas
       if (leftPercentNum > 0 && leftPercentNum < 100) {
+        // add animation effect
+        if (animate === true) {
+          $('.h5p-image-juxtaposition-handle').addClass('transition');
+          $('.h5p-image-juxtaposition-left').addClass('transition');
+          $('.h5p-image-juxtaposition-right').addClass('transition');
+        } else {
+          $('.h5p-image-juxtaposition-handle').removeClass('transition');
+          $('.h5p-image-juxtaposition-left').removeClass('transition');
+          $('.h5p-image-juxtaposition-right').removeClass('transition');
+        }
+
         if (this.options.mode === "vertical") {
           this.handle.style.top = leftPercent;
           this.leftImage.style.height = leftPercent;
@@ -510,6 +521,7 @@ H5P.ImageJuxtaposition = function ($) {
       this.slider.addEventListener("mousedown", function (e) {
         e = e || window.event;
         // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
+        self.updateSlider(e, true);
         var animate = true;
 
         this.addEventListener("mousemove", function (e) {
