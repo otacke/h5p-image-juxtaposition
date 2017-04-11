@@ -542,18 +542,57 @@ H5P.ImageJuxtaposition = function ($) {
       });
 
       // Event Listeners for Touch Interface
-      this.slider.addEventListener("touchstart", function (e) {
+      this.slider.addEventListener('touchstart', function (e) {
         e = e || window.event;
         e.preventDefault();
         e.stopPropagation();
         self.updateSlider(e, true);
 
-        this.addEventListener("touchmove", function (e) {
+        this.addEventListener('touchmove', function (e) {
           e = e || window.event;
           e.preventDefault();
           e.stopPropagation();
-          self.updateSlider(event, false);
+          self.updateSlider(e, false);
         });
+      });
+
+      // Event Listeners for Keyboard on handle
+      this.handle.addEventListener('keydown', function (e) {
+        e = e || window.event;
+        var key = e.which || e.keyCode;
+        var ariaValue = parseFloat(this.style.left);
+        var position = 0;
+
+        // handler left
+        if (key === 37) {
+          position = Math.max(0, ariaValue - 1);
+          self.updateSlider(position, false);
+          self.controller.setAttribute('aria-valuenow', position);
+        }
+
+        // handler right
+        if (key === 39) {
+          position = Math.min(100, ariaValue + 1);
+          self.updateSlider(position, false);
+          self.controller.setAttribute('aria-valuenow', position);
+        }
+      });
+
+      // Event Listeners for Keyboard on images
+      this.leftImage.addEventListener('keydown', function (e) {
+        var key = e.which || e.keyCode;
+        if ((key === 13) || (key === 32)) {
+          self.updateSlider('90%', true);
+          self.controller.setAttribute('aria-valuenow', 90);
+        }
+      });
+
+      this.rightImage.addEventListener('keydown', function (e) {
+        var key = e.which || e.keyCode;
+        if ((key === 13) || (key === 32)) {
+          self.updateSlider('10%', true);
+          self.controller.setAttribute('aria-valuenow', 10);
+        }
       });
 
       self.updateSlider(this.options.startingPosition, false);
