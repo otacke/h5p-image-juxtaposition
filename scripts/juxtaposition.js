@@ -560,7 +560,7 @@ H5P.ImageJuxtaposition = function ($) {
       this.handle.addEventListener('keydown', function (e) {
         e = e || window.event;
         var key = e.which || e.keyCode;
-        var ariaValue = parseFloat(this.style.left);
+        var ariaValue = parseFloat(this.style.left || this.style.top);
         var position = 0;
 
         // handler left
