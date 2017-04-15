@@ -6,7 +6,7 @@
     "type": "text",
     "optional": true,
     "placeholder": "Here you can add an optional title.",
-    "description": "The title you'd like to show before the befort/after image"
+    "description": "The title you'd like to show before the before/after image"
   },
   {
     "name": "imageBefore",
