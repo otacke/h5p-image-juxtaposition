@@ -50,7 +50,7 @@ H5P.ImageJuxtaposition = function ($) {
     this.container = $container;
     $container.addClass("h5p-image-juxtaposition");
     if (this.options.title) {
-      $container.append('<div class="h5p-image-juxtaposition-title">' + this.options.title + '</div>');
+      $container.append('<div class="h5p-image-juxtaposition-title"><h2>' + this.options.title + '</h2></div>');
     }
 
     if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === 'undefined') {
