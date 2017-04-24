@@ -29,9 +29,13 @@ H5P.ImageJuxtaposition = function ($) {
       },
       behavior: {
         startingPosition: 50,
-        sliderOrientation: 'horizontal' }
+        sliderOrientation: 'horizontal',
+        sliderColor: '#f3f3f3'
+      }
     }, options);
     this.id = id;
+
+    console.log(this.options);
 
     // Initialize event inheritance
     H5P.EventDispatcher.call(this);
@@ -70,7 +74,8 @@ H5P.ImageJuxtaposition = function ($) {
       label: this.options.imageAfter.labelAfter
     }], {
       startingPosition: this.options.behavior.startingPosition + '%',
-      mode: this.options.behavior.sliderOrientation
+      mode: this.options.behavior.sliderOrientation,
+      sliderColor: this.options.behavior.sliderColor
     }, this);
 
     // This is needed for Chrome to detect the mouseup outside the iframe
@@ -468,10 +473,22 @@ H5P.ImageJuxtaposition = function ($) {
         this.leftArrow.setAttribute('draggable', 'false');
         this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
         this.rightArrow.setAttribute('draggable', 'false');
+
+        if (this.options.mode === 'horizontal') {
+          this.leftArrow.style.borderRightColor = this.options.sliderColor;
+          this.rightArrow.style.borderLeftColor = this.options.sliderColor;
+        }
+        else {
+          this.leftArrow.style.borderBottomColor = this.options.sliderColor;
+          this.rightArrow.style.borderTopColor = this.options.sliderColor;
+        }
+
         this.control.className = 'h5p-image-juxtaposition-control';
         this.control.setAttribute('draggable', 'false');
+        this.control.style.backgroundColor = this.options.sliderColor;
         this.controller.className = 'h5p-image-juxtaposition-controller';
         this.controller.setAttribute('draggable', 'false');
+        this.controller.style.backgroundColor = this.options.sliderColor;
 
         this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
         this.controller.setAttribute('role', 'slider');

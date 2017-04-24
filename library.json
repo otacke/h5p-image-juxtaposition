@@ -18,5 +18,12 @@
   ],
   "preloadedCss": [
     { "path": "styles/juxtaposition.css" }
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.ColorSelector",
+      "majorVersion": 1,
+      "minorVersion": 2
+    }
   ]
 }

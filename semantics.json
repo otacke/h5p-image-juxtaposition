@@ -92,6 +92,19 @@
             }
           ],
         "default": "horizontal"
+      },
+      {
+        "name": "sliderColor",
+        "type": "text",
+        "label": "Slider color",
+        "importance": "medium",
+        "description": "The color of the slider",
+        "optional": true,
+        "default": "#f3f3f3",
+        "widget": "colorSelector",
+        "spectrum": {
+          "showInput": true
+        }
       }
     ]
   }
