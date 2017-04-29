@@ -32,12 +32,12 @@
       ]
     },
     {
-      "label": "Verhaltenseinstellungen",
-      "description": "Mit diesem Optionen kannst du ein paar Details einstellen",
+      "label": "Interaktionseinstellungen",
+      "description": "Mit diesem Optionen kannst du ein paar Details einstellen.",
       "fields": [
         {
           "label": "Startposition des Schiebereglers in %",
-          "description": "Stelle die Startposition des Schiebereglers ein"
+          "description": "Stellt die Startposition des Schiebereglers ein"
         },
         {
           "label": "Richtung des Schiebereglers",
@@ -47,9 +47,14 @@
               "label": "Horizontal"
             },
             {
-              "label": "Vertikal"
+              "label": "Vertical"
             }
-          ]
+          ],
+          "default": "horizontal"
+        },
+        {
+          "label": "Farbe des Schiebereglers",
+          "description": "Die Farbe des Schiebereglers"
         }
       ]
     }
