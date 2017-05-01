@@ -14,10 +14,17 @@
     "minorVersion": 0
   },
   "preloadedJs": [
-    { "path": "scripts/juxtaposition.js" }
+    {
+      "path": "scripts/juxtaposition.js"
+    },
+    {
+      "path": "scripts/imageSlider.js"
+    }
   ],
   "preloadedCss": [
-    { "path": "styles/juxtaposition.css" }
+    {
+      "path": "styles/juxtaposition.css"
+    }
   ],
   "editorDependencies": [
     {
