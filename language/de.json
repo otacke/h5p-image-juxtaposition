@@ -55,6 +55,14 @@
         {
           "label": "Farbe des Schiebereglers",
           "description": "Die Farbe des Schiebereglers"
+        },
+        {
+          "label": "Maximale Breite",
+          "description": "Ohne Angabe werden die Bilder bis zur maximalen Breite der Seite skaliert. Das kann hier begrenzt werden."
+        },
+        {
+          "label": "Maximale Höhe",
+          "description": "Ohne Angabe werden die Bilder bis zur maximalen Höhe der Seite skaliert. Das kann hier begrenzt werden."
         }
       ]
     }
