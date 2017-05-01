@@ -115,8 +115,15 @@
         targetWidth = Math.floor(targetHeight * this.imageRatio);
       }
 
+      //this.wrapper.style.width = targetWidth + 'px';
       this.wrapper.style.padding = '0 ' + (window.innerWidth - 2 - targetWidth) / 2 + 'px';
       this.wrapper.style.height = targetHeight + 'px';
+
+      // The InternetExplorer needs this explicit width and height for images
+      this.imgBefore.image.setAttribute('width', targetWidth);
+      this.imgBefore.image.setAttribute('height', targetHeight);
+      this.imgAfter.image.setAttribute('width', targetWidth);
+      this.imgAfter.image.setAttribute('height', targetHeight);
 
       // resize iframe if image's height is too small or too high
       var windowHeight = window.innerHeight;
