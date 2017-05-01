@@ -99,8 +99,15 @@
      */
     setWrapperDimensions: function setWrapperDimensions() {
       // Scale Images
-      var maximumWidth = Math.min(this.options.maximumWidth, parseInt(document.querySelector(this.selector).offsetWidth));
-      var maximumHeight = this.options.maximumHeight;
+      var maximumWidth, maximumHeight;
+      if (H5P.isFullscreen) {
+        maximumWidth = screen.width;
+        maximumHeight = screen.height;
+      }
+      else {
+        maximumWidth = Math.min(this.options.maximumWidth, parseInt(document.querySelector(this.selector).offsetWidth));
+        maximumHeight = this.options.maximumHeight;
+      }
       var maxRatio = maximumWidth / maximumHeight;
 
       var targetWidth;

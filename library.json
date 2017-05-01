@@ -5,6 +5,7 @@
   "minorVersion": 1,
   "patchVersion": 0,
   "runnable": 1,
+  "fullscreen": 1,
   "embedTypes": ["iframe"],
   "author": "Oliver Tacke",
   "license": "MPL",

@@ -31,10 +31,10 @@ H5P.ImageJuxtaposition = function ($) {
     container.className = 'h5p-image-juxtaposition';
 
     if (this.options.title) {
-      var title = document.createElement('div');
-      title.className = 'h5p-image-juxtaposition-title';
-      title.innerHTML = '<h2>' + this.options.title + '</h2>';
-      container.appendChild(title);
+      this.title = document.createElement('div');
+      this.title.className = 'h5p-image-juxtaposition-title';
+      this.title.innerHTML = '<h2>' + this.options.title + '</h2>';
+      container.appendChild(this.title);
     }
 
     if (!this.options.imageBefore  || !this.options.imageAfter) {
@@ -64,6 +64,18 @@ H5P.ImageJuxtaposition = function ($) {
       maximumWidth: this.options.maximumWidth,
       maximumHeight: this.options.maximumHeight
     }, this);
+
+    // In Fullscreen mode, don't show the title.
+    this.on('enterFullScreen', function() {
+      if (this.title) {
+        this.title.style.display = 'none';
+      }
+    });
+    this.on('exitFullScreen', function() {
+      if (this.title) {
+        this.title.style.display = '';
+      }
+    });
   };
 
   /**
