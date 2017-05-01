@@ -1,185 +1,34 @@
+/* This h5p content library is based on ...
+ * juxtapose - v1.1.2 - 2015-07-16
+ * Copyright (c) 2015 Alex Duner and Northwestern University Knight Lab
+ * License: Mozilla Public License 2.0, https://www.mozilla.org/en-US/MPL/2.0/
+ * original source code: https://github.com/NUKnightLab/juxtapose
+ *
+ * There's not much left of the original code though ...
+ */
+
 (function (ImageJuxtaposition) {
-  //'use strict';
-
-  /**
-   * Create Graphics.
-   *
-   * @private
-   * @param {object} properties from options.
-   * @param {ImageSlider} slider to attach graphics to.
-   */
-  var Graphic = function (properties, slider) {
-    'use strict';
-    var that = this;
-    this.image = new Image();
-
-    this.loaded = false;
-    this.image.onload = function () {
-      that.loaded = true;
-      slider._onLoaded();
-    };
-
-    this.image.src = properties.src;
-    this.label = properties.label || false;
-  };
-
-  /**
-   * Get dimensions for Graphics.
-   *
-   * @private
-   * @param {object} Graphic object.
-   * @return {object} object containing width, height, and ratio.
-   */
-  var getImageDimensions = function (img) {
-    return {
-      width: getNaturalDimensions(img).width,
-      height: getNaturalDimensions(img).height,
-      aspect: function aspect() {
-        return this.width / this.height;
-      }
-    };
-  };
-
-  /**
-   * Get dimensions of a DOM element.
-   *
-   * @private
-   * @param {object} DOMelement.
-   * @return {object} object containing width and height.
-   */
-  var getNaturalDimensions = function (DOMelement) {
-    if (DOMelement.naturalWidth && DOMelement.naturalHeight) {
-      return {
-        width: DOMelement.naturalWidth,
-        height: DOMelement.naturalHeight
-      };
-    }
-    // http://www.jacklmoore.com/notes/naturalwidth-and-naturalheight-in-ie/
-    var img = new Image();
-    img.src = DOMelement.src;
-    return {
-      width: img.width,
-      height: img.height
-    };
-  };
-
-  /**
-   * Get position for handle bar
-   *
-   * @private
-   * @param {object} slider DOM object.
-   * @return {number} position.
-   */
-  var getLeftPercent = function (slider, input) {
-    var leftPercent;
-    if (typeof input === "string" || typeof input === "number") {
-      leftPercent = parseInt(input, 10);
-    }
-    else {
-      var sliderRect = slider.getBoundingClientRect();
-      var offset = {
-        top: sliderRect.top + document.body.scrollTop,
-        left: sliderRect.left + document.body.scrollLeft
-      };
-      var width = slider.offsetWidth;
-      var pageX = getPageX(input);
-      var relativeX = pageX - offset.left;
-      leftPercent = relativeX / width * 100;
-    }
-    if (leftPercent === 0) {
-      leftPercent = 0.01;
-    }
-    if (leftPercent === 100) {
-      leftPercent = 99.99;
-    }
-    return leftPercent;
-  };
-
-  /**
-   * Get position for handle bar
-   *
-   * @private
-   * @param {object} slider DOM object.
-   * @return {number} position.
-   */
-  var getTopPercent = function (slider, input) {
-    var topPercent;
-    if (typeof input === "string" || typeof input === "number") {
-      topPercent = parseInt(input, 10);
-    }
-    else {
-      var sliderRect = slider.getBoundingClientRect();
-      var offset = {
-        top: sliderRect.top + document.body.scrollTop,
-        left: sliderRect.left + document.body.scrollLeft
-      };
-      var width = slider.offsetHeight;
-      var pageY = getPageY(input);
-      var relativeY = pageY - offset.top;
-      topPercent = relativeY / width * 100;
-    }
-    if (topPercent === 0) {
-      topPercent = 0.01;
-    }
-    if (topPercent === 100) {
-      topPercent = 99.99;
-    }
-    return topPercent;
-  };
-
-  /**
-   * Get pageX from event.
-   *
-   * @private
-   * @param {object} event.
-   * @return {number} pageX.
-   */
-  var getPageX = function (e) {
-    var pageX;
-    if (e.pageX) {
-      pageX = e.pageX;
-    }
-    else if (e.touches) {
-      pageX = e.touches[0].pageX;
-    }
-    else {
-      pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-    }
-    return pageX;
-  };
-
-  /**
-   * Get pageY from event.
-   *
-   * @private
-   * @param {object} event.
-   * @return {number} pageY.
-   */
-  var getPageY = function (e) {
-    var pageY;
-    if (e.pageY) {
-      pageY = e.pageY;
-    }
-    else if (e.touches) {
-      pageY = e.touches[0].pageY;
-    }
-    else {
-      pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    return pageY;
-  };
+  'use strict';
 
   /**
    * ImageSlider
    *
    * @class H5P.ImageJuxtaposition.ImageSlider
    * @param {string} selector - Class name of parent node.
-   * @param {Object} images - Array containing the images.
-   * @param {Object} options - Options.
-   * @param {Object} parent - Parent class.
+   * @param {object} images - Array containing the images.
+   * @param {string} images.label - Label to put on top of the image.
+   * @param {string} images.src - Path to the image.
+   * @param {object} options - Options.
+   * @param {number} options.maximumHeight - Maximum height for the images.
+   * @param {number} options.maximumWidth - Maximum width for the images.
+   * @param {string} options.mode - Direction for the slider.
+   * @param {string} options.sliderColor - Color for the slider handle.
+   * @param {number} options.startingPosition - StartingPosition of the slider.
+   * @param {object} parent - Parent class.
    */
   ImageJuxtaposition.ImageSlider = function (selector, images, options, parent) {
     this.selector = selector;
+    this.images = images;
     this.options = options;
     this.parent = parent;
 
@@ -195,25 +44,23 @@
   };
 
   ImageJuxtaposition.ImageSlider.prototype = {
+    /**
+     * Update the Slider.
+     *
+     * @param {event|number} input - Click position.
+     * @param {boolean} animate - If true, movement will be animated.
+     */
     updateSlider: function updateSlider(input, animate) {
       if ((this.mousedown === false) && (input.type === 'mousemove')) {
         return;
       }
-      var leftPercent, rightPercent, leftPercentNum;
-
-      if (this.options.mode === "vertical") {
-        leftPercent = getTopPercent(this.slider, input);
-      }
-      else {
-        leftPercent = getLeftPercent(this.slider, input);
-      }
-
-      leftPercent = leftPercent.toFixed(2) + "%";
-      leftPercentNum = parseFloat(leftPercent);
-      rightPercent = 100 - leftPercentNum + "%";
+      var firstPercent, secondPercent;
+      firstPercent = getFirstPercentage(this.slider, input, this.options.mode);
+      firstPercent = parseFloat(firstPercent.toFixed(2));
+      secondPercent = 100 - firstPercent;
 
       // set handler position and image areas
-      if (leftPercentNum > 0 && leftPercentNum < 100) {
+      if (firstPercent > 0 && firstPercent < 100) {
         // add animation effect
         var handle = document.querySelector('.h5p-image-juxtaposition-handle');
         var left = document.querySelector('.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left');
@@ -223,68 +70,28 @@
           handle.classList.add('transition');
           left.classList.add('transition');
           right.classList.add('transition');
-        } else {
+        }
+        else {
           handle.classList.remove('transition');
           left.classList.remove('transition');
           right.classList.remove('transition');
         }
 
         if (this.options.mode === "vertical") {
-          this.handle.style.top = leftPercent;
-          this.leftImage.style.height = leftPercent;
-          this.rightImage.style.height = rightPercent;
+          this.handle.style.top = firstPercent + '%';
+          this.leftImage.style.height = firstPercent + '%';
+          this.rightImage.style.height = secondPercent + '%';
         }
         else {
-          this.handle.style.left = leftPercent;
-          this.leftImage.style.width = leftPercent;
-          this.rightImage.style.width = rightPercent;
+          this.handle.style.left = firstPercent + '%';
+          this.leftImage.style.width = firstPercent + '%';
+          this.rightImage.style.width = secondPercent + '%';
         }
-        this.sliderPosition = leftPercent;
+        this.sliderPosition = firstPercent;
       }
 
       // update aria
-      this.controller.setAttribute('aria-valuenow', leftPercentNum);
-    },
-
-    /**
-     * Set the label for an image
-     * Could be simplified and removed if using jQuery
-     */
-    displayLabel: function displayLabel(element, labelText) {
-      var label = document.createElement("div");
-      label.className = 'h5p-image-juxtaposition-label';
-      label.setAttribute('unselectable', 'on');
-      label.setAttribute('onselectstart', 'return false;');
-      label.setAttribute('onmousedown', 'return false;');
-      label.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
-      label.innerText = labelText;
-
-      element.appendChild(label);
-    },
-
-    /**
-     * Check whether both images habe the same aspect ratio
-     */
-    checkImages: function checkImages() {
-      return getImageDimensions(this.imgBefore.image).aspect() === getImageDimensions(this.imgAfter.image).aspect() ? true : false;
-    },
-
-    /**
-     * Calculate the image dimensions
-     */
-    calculateDims: function calculateDims(width, height) {
-      var ratio = getImageDimensions(this.imgBefore.image).aspect();
-      if (width) {
-        height = width / ratio;
-      }
-      else if (height) {
-        width = height * ratio;
-      }
-      return {
-        width: width,
-        height: height,
-        ratio: ratio
-      };
+      this.controller.setAttribute('aria-valuenow', firstPercent);
     },
 
     /**
@@ -327,22 +134,6 @@
     _onLoaded: function _onLoaded() {
       if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
 
-        this.imageRatio = getImageDimensions(this.imgBefore.image).aspect();
-
-        // Right Image (incl. actual image)
-        this.imgAfter.image.className = 'h5p-image-juxtaposition-rightimg';
-        // prevent dragging, etc. when leaving iframe
-        this.imgAfter.image.setAttribute('draggable', 'false');
-        this.imgAfter.image.setAttribute('unselectable', 'on');
-        this.imgAfter.image.setAttribute('onselectstart', 'return false;');
-        this.imgAfter.image.setAttribute('onmousedown', 'return false;');
-
-        this.rightImage = document.createElement("div");
-        this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
-        this.rightImage.setAttribute('draggable', 'false');
-        this.rightImage.appendChild(this.imgAfter.image);
-
-        // Left Image (incl. actual image)
         this.imgBefore.image.className = 'h5p-image-juxtaposition-leftimg';
         // prevent dragging, etc. when leaving iframe
         this.imgBefore.image.setAttribute('draggable', 'false');
@@ -355,7 +146,40 @@
         this.leftImage.setAttribute('draggable', 'false');
         this.leftImage.appendChild(this.imgBefore.image);
 
-        // leftArrow + rightArrow
+        if (this.imgBefore.label) {
+          var leftLabel = document.createElement("div");
+          leftLabel.className = 'h5p-image-juxtaposition-label';
+          leftLabel.setAttribute('unselectable', 'on');
+          leftLabel.setAttribute('onselectstart', 'return false;');
+          leftLabel.setAttribute('onmousedown', 'return false;');
+          leftLabel.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
+          leftLabel.innerText = this.imgBefore.label;
+          this.leftImage.appendChild(leftLabel);
+        }
+
+        this.imgAfter.image.className = 'h5p-image-juxtaposition-rightimg';
+        // prevent dragging, etc. when leaving iframe
+        this.imgAfter.image.setAttribute('draggable', 'false');
+        this.imgAfter.image.setAttribute('unselectable', 'on');
+        this.imgAfter.image.setAttribute('onselectstart', 'return false;');
+        this.imgAfter.image.setAttribute('onmousedown', 'return false;');
+
+        this.rightImage = document.createElement("div");
+        this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
+        this.rightImage.setAttribute('draggable', 'false');
+        this.rightImage.appendChild(this.imgAfter.image);
+
+        if (this.imgAfter.label) {
+          var rightLabel = document.createElement("div");
+          rightLabel.className = 'h5p-image-juxtaposition-label';
+          rightLabel.setAttribute('unselectable', 'on');
+          rightLabel.setAttribute('onselectstart', 'return false;');
+          rightLabel.setAttribute('onmousedown', 'return false;');
+          rightLabel.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
+          rightLabel.innerText = this.imgAfter.label;
+          this.rightImage.appendChild(rightLabel);
+        }
+
         this.leftArrow = document.createElement("div");
         this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
         this.leftArrow.setAttribute('draggable', 'false');
@@ -372,7 +196,6 @@
           this.rightArrow.style.borderTopColor = this.options.sliderColor;
         }
 
-        // Control (incl. controller)
         this.controller = document.createElement("div");
         this.controller.className = 'h5p-image-juxtaposition-controller';
         this.controller.setAttribute('draggable', 'false');
@@ -389,7 +212,6 @@
         this.control.style.backgroundColor = this.options.sliderColor;
         this.control.appendChild(this.controller);
 
-        // Handle (leftArrow + control + rightArrow)
         this.handle = document.createElement("div");
         this.handle.className = 'h5p-image-juxtaposition-handle';
         this.handle.setAttribute('draggable', 'false');
@@ -397,7 +219,6 @@
         this.handle.appendChild(this.control);
         this.handle.appendChild(this.rightArrow);
 
-        // Slider (handle + leftImage + rightImage)
         this.slider = document.createElement("div");
         this.slider.className = 'h5p-image-juxtaposition-slider';
         this.slider.classList.add('h5p-image-juxtaposition-' + this.options.mode);
@@ -406,9 +227,8 @@
         this.slider.appendChild(this.leftImage);
         this.slider.appendChild(this.rightImage);
 
-        // Wrapper
         this.wrapper = document.querySelector(this.selector);
-        this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
+        this.wrapper.style.width = this.imgBefore.width;
         this.wrapper.appendChild(this.slider);
 
         this._init();
@@ -419,20 +239,14 @@
      * Initialize Slider after DOM has been filled
      */
     _init: function _init() {
+      var that = this;
 
-      if (this.checkImages() === false) {
+      if (this.imgBefore.ratio !== this.imgAfter.ratio) {
         console.warn(this, "Check that the two images have the same aspect ratio for the slider to work correctly.");
       }
+      this.imageRatio = this.imgBefore.ratio;
 
-      // Display labels
-      if (this.imgBefore.label) {
-        this.displayLabel(this.leftImage, this.imgBefore.label);
-      }
-      if (this.imgAfter.label) {
-        this.displayLabel(this.rightImage, this.imgAfter.label);
-      }
-
-      var that = this;
+      // Resize listener
       window.addEventListener('resize', function () {
         that.setWrapperDimensions();
       });
@@ -443,10 +257,9 @@
           that.updateSlider(e, false);
         }
       });
-      document.addEventListener('mouseup', function (e) {
+      document.addEventListener('mouseup', function () {
         that.mousedown = false;
       });
-      // Event Listeners for Mouse Interface
       this.slider.addEventListener("mousedown", function (e) {
         e = e || window.event;
         that.mousedown = true;
@@ -517,6 +330,110 @@
       document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('width', '');
       document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('height', '');
     }
+  };
+
+  /**
+   * Create Graphics.
+   *
+   * @private
+   * @param {object} properties from options.
+   * @param {ImageSlider} slider to attach graphics to.
+   */
+  var Graphic = function (properties, slider) {
+    var that = this;
+    this.image = new Image();
+    this.width = 0;
+    this.height = 0;
+    this.ratio = 0;
+    this.loaded = false;
+
+    this.image.onload = function () {
+      that.loaded = true;
+      that.width = this.naturalWidth;
+      that.height = this.naturalHeight;
+      that.ratio = this.naturalWidth / this.naturalHeight;
+      slider._onLoaded();
+    };
+
+    this.image.src = properties.src;
+    this.label = properties.label || false;
+  };
+
+  /**
+   * Get the percentage that should be displayed of the first image.
+   *
+   * @param {object} slider - Slider DOM element.
+   * @param {event|number} position - Click position.
+   * @param {string} mode - Slider orientation.
+   * @return {number} Percentage of first image to be displayed.
+   */
+  var getFirstPercentage = function (slider, position, mode) {
+    var firstPercent;
+    if (typeof position === 'string' || typeof position === 'number') {
+      firstPercent = parseInt(position, 10);
+    }
+    else {
+      var sliderRect = slider.getBoundingClientRect();
+      var offset = {
+        top: sliderRect.top + document.body.scrollTop,
+        left: sliderRect.left + document.body.scrollLeft
+      };
+      var width, pagePos, relativePos;
+      if (mode === 'vertical') {
+        width = slider.offsetHeight;
+        pagePos = getCoordinates(position).y;
+        relativePos = pagePos - offset.top;
+      }
+      else {
+        width = slider.offsetWidth;
+        pagePos = getCoordinates(position).x;
+        relativePos = pagePos - offset.left;
+      }
+      firstPercent = relativePos / width * 100;
+    }
+    if (firstPercent === 0) {
+      firstPercent = 0.01;
+    }
+    if (firstPercent === 100) {
+      firstPercent = 99.99;
+    }
+    return firstPercent;
+  };
+
+  /**
+   * Get coordinates from event.
+   *
+   * @private
+   * @param {object} e - Event.
+   * @return {object} Coordinates.
+   */
+  var getCoordinates = function (e) {
+    var pageX, pageY;
+
+    if (e.pageX) {
+      pageX = e.pageX;
+    }
+    else if (e.touches) {
+      pageX = e.touches[0].pageX;
+    }
+    else {
+      pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+    }
+
+    if (e.pageY) {
+      pageY = e.pageY;
+    }
+    else if (e.touches) {
+      pageY = e.touches[0].pageY;
+    }
+    else {
+      pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    }
+
+    return {
+      x: pageX,
+      y: pageY
+    };
   };
 
 })(H5P.ImageJuxtaposition);

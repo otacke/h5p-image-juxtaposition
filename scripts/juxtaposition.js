@@ -1,51 +1,16 @@
-/* This h5p content library is based on ...
- * juxtapose - v1.1.2 - 2015-07-16
- * Copyright (c) 2015 Alex Duner and Northwestern University Knight Lab
- * License: Mozilla Public License 2.0, https://www.mozilla.org/en-US/MPL/2.0/
- * original source code: https://github.com/NUKnightLab/juxtapose
- *
- * There's not much left of the original code though ...
- */
 var H5P = H5P || {};
 
 H5P.ImageJuxtaposition = function ($) {
   'use strict';
+
   /**
    * Constructor function.
    *
-   * @param {object} options from semantics.json.
-   * @param {number} content id.
+   * @param {object} options - Options from semantics.json.
+   * @param {number} content - Id.
    */
   function ImageJuxtaposition(options, id) {
-    var that = this;
-
-    // Sanitize options
-    this.options = options;
-    if (!this.options.title) {
-      this.options.title = '';
-    }
-    if (!this.options.imageBefore.labelBefore) {
-      this.options.imageBefore.labelBefore = '';
-    }
-    if (!this.options.imageAfter.labelAfter) {
-      this.options.imageAfter.labelAfter = '';
-    }
-    if (!this.options.behavior.startingPosition) {
-      this.options.behavior.startingPosition = 50;
-    }
-    if (!this.options.behavior.sliderOrientation) {
-      this.options.behavior.sliderOrientation = 'horizontal';
-    }
-    if (!this.options.behavior.sliderColor) {
-      this.options.behavior.sliderColor = '#f3f3f3';
-    }
-    if (!this.options.behavior.maximumWidth) {
-      this.options.behavior.maximumWidth = screen.width;
-    }
-    if (!this.options.behavior.maximumHeight) {
-      this.options.behavior.maximumHeight = screen.height;
-    }
-
+    this.options = sanitizeOptions(options);
     this.id = id;
 
     // Initialize event inheritance
@@ -59,12 +24,10 @@ H5P.ImageJuxtaposition = function ($) {
   /**
    * Attach function called by H5P framework to insert H5P content into page.
    *
-   * @param {jQuery} container to attach to.
+   * @param {jQuery} $container - Container to attach to.
    */
   ImageJuxtaposition.prototype.attach = function ($container) {
-    var that = this;
     var container = $container.get(0);
-
     container.className = 'h5p-image-juxtaposition';
 
     if (this.options.title) {
@@ -74,7 +37,7 @@ H5P.ImageJuxtaposition = function ($) {
       container.appendChild(title);
     }
 
-    if (!this.options.imageBefore.imageBefore  || !this.options.imageAfter.imageAfter) {
+    if (!this.options.imageBefore  || !this.options.imageAfter) {
       var message = document.createElement('div');
       message.className = 'h5p-image-juxtaposition-missing-images';
       message.innerHTML = 'I really need two background images :)';
@@ -89,18 +52,41 @@ H5P.ImageJuxtaposition = function ($) {
 
     // Create the slider
     var slider = new H5P.ImageJuxtaposition.ImageSlider('.h5p-image-juxtaposition-juxtapose', [{
-      src: H5P.getPath(this.options.imageBefore.imageBefore.path, this.id),
-      label: this.options.imageBefore.labelBefore
+      src: H5P.getPath(this.options.imageBefore.path, this.id),
+      label: this.options.labelBefore
     }, {
-      src: H5P.getPath(this.options.imageAfter.imageAfter.path, this.id),
-      label: this.options.imageAfter.labelAfter
+      src: H5P.getPath(this.options.imageAfter.path, this.id),
+      label: this.options.labelAfter
     }], {
-      startingPosition: this.options.behavior.startingPosition + '%',
-      mode: this.options.behavior.sliderOrientation,
-      sliderColor: this.options.behavior.sliderColor,
-      maximumWidth: this.options.behavior.maximumWidth,
-      maximumHeight: this.options.behavior.maximumHeight
+      startingPosition: this.options.startingPosition + '%',
+      mode: this.options.sliderOrientation,
+      sliderColor: this.options.sliderColor,
+      maximumWidth: this.options.maximumWidth,
+      maximumHeight: this.options.maximumHeight
     }, this);
+  };
+
+  /**
+   * Sanitize the options.
+   *
+   * @param {object} options - Options from semantics.json.
+   * @return {object} output - Sanitized options.
+   */
+  var sanitizeOptions = function (options) {
+    var output = {};
+
+    output.title = options.title || '';
+    output.imageBefore = options.imageBefore.imageBefore;
+    output.labelBefore = options.imageBefore.labelBefore || '';
+    output.imageAfter = options.imageAfter.imageAfter;
+    output.labelAfter = options.imageAfter.labelAfter || '';
+    output.startingPosition = options.behavior.startingPosition || 50;
+    output.sliderOrientation = options.behavior.sliderOrientation || 'horizontal';
+    output.sliderColor = options.behavior.sliderColor || '#f3f3f3';
+    output.maximumWidth = options.behavior.maximumWidth || screen.width;
+    output.maximumHeight = options.behavior.maximumHeight || screen.height;
+
+    return output;
   };
 
   return ImageJuxtaposition;
