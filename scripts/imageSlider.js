@@ -9,6 +9,7 @@
    * @param {ImageSlider} slider to attach graphics to.
    */
   var Graphic = function (properties, slider) {
+    'use strict';
     var that = this;
     this.image = new Image();
 
@@ -185,7 +186,6 @@
     this.mousedown = false;
 
     if (images.length === 2) {
-      console.log('TODO: include Graphic');
       this.imgBefore = new Graphic(images[0], this);
       this.imgAfter = new Graphic(images[1], this);
     }

@@ -9,6 +9,7 @@
 var H5P = H5P || {};
 
 H5P.ImageJuxtaposition = function ($) {
+  'use strict';
   /**
    * Constructor function.
    *
@@ -16,7 +17,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {number} content id.
    */
   function ImageJuxtaposition(options, id) {
-    that = this;
+    var that = this;
 
     // Sanitize options
     this.options = options;
@@ -61,7 +62,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} container to attach to.
    */
   ImageJuxtaposition.prototype.attach = function ($container) {
-    that = this;
+    var that = this;
     var container = $container.get(0);
 
     container.className = 'h5p-image-juxtaposition';
