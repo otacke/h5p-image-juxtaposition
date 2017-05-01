@@ -5,6 +5,7 @@
  * original source code: https://github.com/NUKnightLab/juxtapose
  *
  * TODO: Convert DOM Elements to jQuery elements
+ * TODO: Clean up code: Slider class to own file, message handling, mouse movement
  */
 var H5P = H5P || {};
 
@@ -16,6 +17,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {number} content id.
    */
   function C(options, id) {
+    self = this;
     // Extend defaults with provided options
     this.options = $.extend(true, {}, {
       title: '',
@@ -30,12 +32,12 @@ H5P.ImageJuxtaposition = function ($) {
       behavior: {
         startingPosition: 50,
         sliderOrientation: 'horizontal',
-        sliderColor: '#f3f3f3'
+        sliderColor: '#f3f3f3',
+        maximumWidth: screen.width,
+        maximumHeight: screen.height
       }
     }, options);
     this.id = id;
-
-    console.log(this.options);
 
     // Initialize event inheritance
     H5P.EventDispatcher.call(this);
@@ -51,7 +53,9 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} container to attach to.
    */
   C.prototype.attach = function ($container) {
+    self = this;
     this.container = $container;
+
     $container.addClass("h5p-image-juxtaposition");
     if (this.options.title) {
       $container.append('<div class="h5p-image-juxtaposition-title"><h2>' + this.options.title + '</h2></div>');
@@ -75,7 +79,9 @@ H5P.ImageJuxtaposition = function ($) {
     }], {
       startingPosition: this.options.behavior.startingPosition + '%',
       mode: this.options.behavior.sliderOrientation,
-      sliderColor: this.options.behavior.sliderColor
+      sliderColor: this.options.behavior.sliderColor,
+      maximumWidth: this.options.behavior.maximumWidth,
+      maximumHeight: this.options.behavior.maximumHeight
     }, this);
 
     // This is needed for Chrome to detect the mouseup outside the iframe
@@ -396,10 +402,26 @@ H5P.ImageJuxtaposition = function ($) {
      * TODO: enhance for other scaling methods, e.g. for fullscreen
      */
     setWrapperDimensions: function setWrapperDimensions() {
-      var targetWidth = Math.floor(window.innerWidth - 2);
-      var targetHeight = Math.floor(targetWidth / this.imageRatio);
+      // Scale Images
 
-      this.wrapper.style.width = targetWidth + 'px';
+      var maximumWidth = Math.min(this.options.maximumWidth, parseInt(document.querySelector(this.selector).offsetWidth));
+      var maximumHeight = this.options.maximumHeight;
+      var maxRatio = maximumWidth / maximumHeight;
+
+      var targetWidth;
+      var targetHeight;
+
+      if (maxRatio < this.imageRatio) {
+        targetWidth = Math.min(Math.floor(window.innerWidth - 2), maximumWidth);
+        targetHeight = Math.floor(targetWidth / this.imageRatio);
+      }
+      else {
+        targetHeight = maximumHeight;
+        targetWidth = Math.floor(targetHeight * this.imageRatio);
+      }
+
+      //this.wrapper.style.width = targetWidth + 'px';
+      this.wrapper.style.padding = '0 ' + (window.innerWidth - 2 - targetWidth) / 2 + 'px';
       this.wrapper.style.height = targetHeight + 'px';
 
       // resize iframe if image's height is too small or too high

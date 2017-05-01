@@ -105,6 +105,22 @@
         "spectrum": {
           "showInput": true
         }
+      },
+      {
+        "name": "maximumWidth",
+        "type": "number",
+        "label": "Maximum width",
+        "description": "By default, images will be scaled to maximum width of the page. You can limit the width here.",
+        "min": 150,
+        "optional": true
+      },
+      {
+        "name": "maximumHeight",
+        "type": "number",
+        "label": "Maximum height",
+        "description": "By default, images will be scaled to maximum height of the page. You can limit the height here.",
+        "min": 150,
+        "optional": true
       }
     ]
   }
