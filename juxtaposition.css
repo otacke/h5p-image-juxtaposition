@@ -11,8 +11,10 @@
 }
 .h5p-image-juxtaposition .h5p-image-juxtaposition-title {
   width: auto;
-  overflow-y: auto;
-  margin-left: 16px;
+  margin: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 24px;
 }
 .h5p-image-juxtaposition .h5p-image-juxtaposition-missing-images {
   font-size: 1.5em;
@@ -46,6 +48,7 @@ div.h5p-image-juxtaposition-handle {
 div.h5p-image-juxtaposition-handle.transition {
 	transition: left .5s ease;
 }
+
 
 .h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle {
 	height: 40px;

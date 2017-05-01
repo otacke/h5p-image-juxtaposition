@@ -17,26 +17,35 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {number} content id.
    */
   function C(options, id) {
-    self = this;
-    // Extend defaults with provided options
-    this.options = $.extend(true, {}, {
-      title: '',
-      imageBefore: {
-        imageBefore: undefined,
-        labelBefore: ''
-      },
-      imageAfter: {
-        imageAfter: undefined,
-        labelAfter: ''
-      },
-      behavior: {
-        startingPosition: 50,
-        sliderOrientation: 'horizontal',
-        sliderColor: '#f3f3f3',
-        maximumWidth: screen.width,
-        maximumHeight: screen.height
-      }
-    }, options);
+    that = this;
+
+    // Sanitize options
+    this.options = options;
+    if (!this.options.title) {
+      this.options.title = '';
+    }
+    if (!this.options.imageBefore.labelBefore) {
+      this.options.imageBefore.labelBefore = '';
+    }
+    if (!this.options.imageAfter.labelAfter) {
+      this.options.imageAfter.labelAfter = '';
+    }
+    if (!this.options.behavior.startingPosition) {
+      this.options.behavior.startingPosition = 50;
+    }
+    if (!this.options.behavior.sliderOrientation) {
+      this.options.behavior.sliderOrientation = 'horizontal';
+    }
+    if (!this.options.behavior.sliderColor) {
+      this.options.behavior.sliderColor = '#f3f3f3';
+    }
+    if (!this.options.behavior.maximumWidth) {
+      this.options.behavior.maximumWidth = screen.width;
+    }
+    if (!this.options.behavior.maximumHeight) {
+      this.options.behavior.maximumHeight = screen.height;
+    }
+
     this.id = id;
 
     // Initialize event inheritance
@@ -53,21 +62,30 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} container to attach to.
    */
   C.prototype.attach = function ($container) {
-    self = this;
-    this.container = $container;
+    that = this;
+    var container = $container.get(0);
 
-    $container.addClass("h5p-image-juxtaposition");
+    container.className = 'h5p-image-juxtaposition';
+
     if (this.options.title) {
-      $container.append('<div class="h5p-image-juxtaposition-title"><h2>' + this.options.title + '</h2></div>');
+      var title = document.createElement('div');
+      title.className = 'h5p-image-juxtaposition-title';
+      title.innerHTML = '<h2>' + this.options.title + '</h2>';
+      container.appendChild(title);
     }
 
-    if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === 'undefined') {
-      $container.append('<div class="h5p-image-juxtaposition-missing-images">I really need two background images :)</div>');
+    if (!this.options.imageBefore.imageBefore  || !this.options.imageAfter.imageAfter) {
+      var message = document.createElement('div');
+      message.className = 'h5p-image-juxtaposition-missing-images';
+      message.innerHTML = 'I really need two background images :)';
+      container.appendChild(message);
       return;
     }
 
     // The div element will be filled by JXSlider._onLoaded later
-    $container.append('<div class="h5p-image-juxtaposition-juxtapose"></div>');
+    var wrapper = document.createElement('div');
+    wrapper.className = 'h5p-image-juxtaposition-juxtapose';
+    container.appendChild(wrapper);
 
     // Create the slider
     var slider = new JXSlider('.h5p-image-juxtaposition-juxtapose', [{
@@ -85,7 +103,7 @@ H5P.ImageJuxtaposition = function ($) {
     }, this);
 
     // This is needed for Chrome to detect the mouseup outside the iframe
-    $(window).mouseup(function() {
+    window.addEventListener('mouseup', function() {
       slider.mouseup();
     });
   };
@@ -98,12 +116,12 @@ H5P.ImageJuxtaposition = function ($) {
    * @return {JXSlider} slider to attach graphics to.
    */
   var Graphic = function (properties, slider) {
-    var self = this;
+    var that = this;
     this.image = new Image();
 
     this.loaded = false;
     this.image.onload = function () {
-      self.loaded = true;
+      that.loaded = true;
       slider._onLoaded();
     };
 
@@ -329,14 +347,18 @@ H5P.ImageJuxtaposition = function ($) {
       // set handler position and image areas
       if (leftPercentNum > 0 && leftPercentNum < 100) {
         // add animation effect
+        var handle = document.querySelector('.h5p-image-juxtaposition-handle');
+        var left = document.querySelector('.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left');
+        var right = document.querySelector('.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right');
+
         if (animate === true) {
-          $('.h5p-image-juxtaposition-handle').addClass('transition');
-          $('.h5p-image-juxtaposition-left').addClass('transition');
-          $('.h5p-image-juxtaposition-right').addClass('transition');
+          handle.classList.add('transition');
+          left.classList.add('transition');
+          right.classList.add('transition');
         } else {
-          $('.h5p-image-juxtaposition-handle').removeClass('transition');
-          $('.h5p-image-juxtaposition-left').removeClass('transition');
-          $('.h5p-image-juxtaposition-right').removeClass('transition');
+          handle.classList.remove('transition');
+          left.classList.remove('transition');
+          right.classList.remove('transition');
         }
 
         if (this.options.mode === "vertical") {
@@ -403,7 +425,6 @@ H5P.ImageJuxtaposition = function ($) {
      */
     setWrapperDimensions: function setWrapperDimensions() {
       // Scale Images
-
       var maximumWidth = Math.min(this.options.maximumWidth, parseInt(document.querySelector(this.selector).offsetWidth));
       var maximumHeight = this.options.maximumHeight;
       var maxRatio = maximumWidth / maximumHeight;
@@ -420,13 +441,15 @@ H5P.ImageJuxtaposition = function ($) {
         targetWidth = Math.floor(targetHeight * this.imageRatio);
       }
 
-      //this.wrapper.style.width = targetWidth + 'px';
       this.wrapper.style.padding = '0 ' + (window.innerWidth - 2 - targetWidth) / 2 + 'px';
       this.wrapper.style.height = targetHeight + 'px';
 
       // resize iframe if image's height is too small or too high
-      if (((window.innerHeight - $('ul.h5p-actions').outerHeight()) > 0) &&
-        ((window.innerHeight - $('ul.h5p-actions').outerHeight() - 1) !== targetHeight)) {
+      var windowHeight = window.innerHeight;
+      var titleHeight = (document.querySelector('.h5p-image-juxtaposition-title')) ? document.querySelector('.h5p-image-juxtaposition-title').offsetHeight : 0;
+      var actionBarHeight = document.querySelector('.h5p-actions').offsetHeight;
+
+      if (titleHeight + targetHeight + actionBarHeight + 1 !== windowHeight) {
         this.parent.trigger('resize');
       }
     },
@@ -439,60 +462,37 @@ H5P.ImageJuxtaposition = function ($) {
 
         this.imageRatio = getImageDimensions(this.imgBefore.image).aspect();
 
-        this.wrapper = document.querySelector(this.selector);
-        this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
-
-        this.slider = document.createElement("div");
-        this.slider.className = 'h5p-image-juxtaposition-slider';
-        this.slider.setAttribute('draggable', 'false');
-        this.wrapper.appendChild(this.slider);
-
-        // set orientation
-        addClass(this.slider, 'h5p-image-juxtaposition-' + this.options.mode);
-
-        this.handle = document.createElement("div");
-        this.handle.className = 'h5p-image-juxtaposition-handle';
-        this.handle.setAttribute('draggable', 'false');
+        // Right Image (incl. actual image)
+        this.imgAfter.image.className = 'h5p-image-juxtaposition-rightimg';
+        // prevent dragging, etc. when leaving iframe
+        this.imgAfter.image.setAttribute('draggable', 'false');
+        this.imgAfter.image.setAttribute('unselectable', 'on');
+        this.imgAfter.image.setAttribute('onselectstart', 'return false;');
+        this.imgAfter.image.setAttribute('onmousedown', 'return false;');
 
         this.rightImage = document.createElement("div");
         this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
         this.rightImage.setAttribute('draggable', 'false');
-        this.rightImageIMG = $(this.imgAfter.image)
-          .addClass('h5p-image-juxtaposition-rightimg')
-          // prevent dragging, etc. when leaving iframe
-          .attr({
-            draggable: 'false',
-            unselectable: 'on',
-            onselectstart: 'return false;',
-            onmousedown: 'return false;'
-          });
-        this.rightImage.appendChild(this.rightImageIMG[0]);
+        this.rightImage.appendChild(this.imgAfter.image);
+
+        // Left Image (incl. actual image)
+        this.imgBefore.image.className = 'h5p-image-juxtaposition-leftimg';
+        // prevent dragging, etc. when leaving iframe
+        this.imgBefore.image.setAttribute('draggable', 'false');
+        this.imgBefore.image.setAttribute('unselectable', 'on');
+        this.imgBefore.image.setAttribute('onselectstart', 'return false;');
+        this.imgBefore.image.setAttribute('onmousedown', 'return false;');
 
         this.leftImage = document.createElement("div");
         this.leftImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-left';
         this.leftImage.setAttribute('draggable', 'false');
-        this.leftImageIMG = $(this.imgBefore.image)
-          .addClass('h5p-image-juxtaposition-leftimg')
-          // prevent dragging, etc. when leaving iframe
-          .attr({
-            draggable: 'false',
-            unselectable: 'on',
-            onselectstart: 'return false;',
-            onmousedown: 'return false;'
-          });
-        this.leftImage.appendChild(this.leftImageIMG[0]);
+        this.leftImage.appendChild(this.imgBefore.image);
 
-        this.slider.appendChild(this.handle);
-        this.slider.appendChild(this.leftImage);
-        this.slider.appendChild(this.rightImage);
-
+        // leftArrow + rightArrow
         this.leftArrow = document.createElement("div");
-        this.rightArrow = document.createElement("div");
-        this.control = document.createElement("div");
-        this.controller = document.createElement("div");
-
         this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
         this.leftArrow.setAttribute('draggable', 'false');
+        this.rightArrow = document.createElement("div");
         this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
         this.rightArrow.setAttribute('draggable', 'false');
 
@@ -505,23 +505,44 @@ H5P.ImageJuxtaposition = function ($) {
           this.rightArrow.style.borderTopColor = this.options.sliderColor;
         }
 
-        this.control.className = 'h5p-image-juxtaposition-control';
-        this.control.setAttribute('draggable', 'false');
-        this.control.style.backgroundColor = this.options.sliderColor;
+        // Control (incl. controller)
+        this.controller = document.createElement("div");
         this.controller.className = 'h5p-image-juxtaposition-controller';
         this.controller.setAttribute('draggable', 'false');
         this.controller.style.backgroundColor = this.options.sliderColor;
-
         this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
         this.controller.setAttribute('role', 'slider');
         this.controller.setAttribute('aria-valuenow', parseInt(this.options.startingPosition));
         this.controller.setAttribute('aria-valuemin', 0);
         this.controller.setAttribute('aria-valuemax', 100);
 
+        this.control = document.createElement("div");
+        this.control.className = 'h5p-image-juxtaposition-control';
+        this.control.setAttribute('draggable', 'false');
+        this.control.style.backgroundColor = this.options.sliderColor;
+        this.control.appendChild(this.controller);
+
+        // Handle (leftArrow + control + rightArrow)
+        this.handle = document.createElement("div");
+        this.handle.className = 'h5p-image-juxtaposition-handle';
+        this.handle.setAttribute('draggable', 'false');
         this.handle.appendChild(this.leftArrow);
         this.handle.appendChild(this.control);
         this.handle.appendChild(this.rightArrow);
-        this.control.appendChild(this.controller);
+
+        // Slider (handle + leftImage + rightImage)
+        this.slider = document.createElement("div");
+        this.slider.className = 'h5p-image-juxtaposition-slider';
+        this.slider.classList.add('h5p-image-juxtaposition-' + this.options.mode);
+        this.slider.setAttribute('draggable', 'false');
+        this.slider.appendChild(this.handle);
+        this.slider.appendChild(this.leftImage);
+        this.slider.appendChild(this.rightImage);
+
+        // Wrapper
+        this.wrapper = document.querySelector(this.selector);
+        this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
+        this.wrapper.appendChild(this.slider);
 
         this._init();
       }
@@ -551,23 +572,23 @@ H5P.ImageJuxtaposition = function ($) {
         this.displayLabel(this.rightImage, this.imgAfter.label);
       }
 
-      var self = this;
+      var that = this;
       window.addEventListener('resize', function () {
-        self.setWrapperDimensions();
+        that.setWrapperDimensions();
       });
 
       // Event Listeners for Mouse Interface
       this.slider.addEventListener("mousedown", function (e) {
         e = e || window.event;
         // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
-        self.updateSlider(e, true);
+        that.updateSlider(e, true);
         var animate = true;
 
         this.addEventListener("mousemove", function (e) {
           e = e || window.event;
           e.preventDefault();
           if (animate) {
-            self.updateSlider(e, false);
+            that.updateSlider(e, false);
           }
         });
 
@@ -585,13 +606,13 @@ H5P.ImageJuxtaposition = function ($) {
         e = e || window.event;
         e.preventDefault();
         e.stopPropagation();
-        self.updateSlider(e, true);
+        that.updateSlider(e, true);
 
         this.addEventListener('touchmove', function (e) {
           e = e || window.event;
           e.preventDefault();
           e.stopPropagation();
-          self.updateSlider(e, false);
+          that.updateSlider(e, false);
         });
       });
 
@@ -605,15 +626,15 @@ H5P.ImageJuxtaposition = function ($) {
         // handler left
         if (key === 37) {
           position = Math.max(0, ariaValue - 1);
-          self.updateSlider(position, false);
-          self.controller.setAttribute('aria-valuenow', position);
+          that.updateSlider(position, false);
+          that.controller.setAttribute('aria-valuenow', position);
         }
 
         // handler right
         if (key === 39) {
           position = Math.min(100, ariaValue + 1);
-          self.updateSlider(position, false);
-          self.controller.setAttribute('aria-valuenow', position);
+          that.updateSlider(position, false);
+          that.controller.setAttribute('aria-valuenow', position);
         }
       });
 
@@ -621,25 +642,27 @@ H5P.ImageJuxtaposition = function ($) {
       this.leftImage.addEventListener('keydown', function (e) {
         var key = e.which || e.keyCode;
         if ((key === 13) || (key === 32)) {
-          self.updateSlider('90%', true);
-          self.controller.setAttribute('aria-valuenow', 90);
+          that.updateSlider('90%', true);
+          that.controller.setAttribute('aria-valuenow', 90);
         }
       });
 
       this.rightImage.addEventListener('keydown', function (e) {
         var key = e.which || e.keyCode;
         if ((key === 13) || (key === 32)) {
-          self.updateSlider('10%', true);
-          self.controller.setAttribute('aria-valuenow', 10);
+          that.updateSlider('10%', true);
+          that.controller.setAttribute('aria-valuenow', 10);
         }
       });
 
-      self.updateSlider(this.options.startingPosition, false);
-      self.setWrapperDimensions();
+      that.updateSlider(this.options.startingPosition, false);
+      that.setWrapperDimensions();
 
       // This is a workaround for our beloved IE that would otherwise distort the images
-      $('.h5p-image-juxtaposition-leftimg').attr({ width: '', height: '' });
-      $('.h5p-image-juxtaposition-rightimg').attr({ width: '', height: '' });
+      document.querySelector('.h5p-image-juxtaposition-leftimg').setAttribute('width', '');
+      document.querySelector('.h5p-image-juxtaposition-leftimg').setAttribute('height', '');
+      document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('width', '');
+      document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('height', '');
     }
   };
 
