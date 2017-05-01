@@ -182,6 +182,8 @@
     this.options = options;
     this.parent = parent;
 
+    this.mousedown = false;
+
     if (images.length === 2) {
       console.log('TODO: include Graphic');
       this.imgBefore = new Graphic(images[0], this);
@@ -194,6 +196,9 @@
 
   ImageJuxtaposition.ImageSlider.prototype = {
     updateSlider: function updateSlider(input, animate) {
+      if ((this.mousedown === false) && (input.type === 'mousemove')) {
+        return;
+      }
       var leftPercent, rightPercent, leftPercentNum;
 
       if (this.options.mode === "vertical") {
@@ -284,7 +289,6 @@
 
     /**
      * Update the wrapper dimensions
-     * TODO: enhance for other scaling methods, e.g. for fullscreen
      */
     setWrapperDimensions: function setWrapperDimensions() {
       // Scale Images
@@ -412,13 +416,6 @@
     },
 
     /**
-     * Trigger mouseup manually (from outside).
-     */
-    mouseup: function () {
-      this.slider.dispatchEvent(new CustomEvent('mouseup'));
-    },
-
-    /**
      * Initialize Slider after DOM has been filled
      */
     _init: function _init() {
@@ -441,27 +438,20 @@
       });
 
       // Event Listeners for Mouse Interface
+      document.addEventListener("mousemove", function (e) {
+        if (that.animate) {
+          that.updateSlider(e, false);
+        }
+      });
+      document.addEventListener('mouseup', function (e) {
+        that.mousedown = false;
+      });
+      // Event Listeners for Mouse Interface
       this.slider.addEventListener("mousedown", function (e) {
         e = e || window.event;
-        // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
+        that.mousedown = true;
         that.updateSlider(e, true);
-        var animate = true;
-
-        this.addEventListener("mousemove", function (e) {
-          e = e || window.event;
-          e.preventDefault();
-          if (animate) {
-            that.updateSlider(e, false);
-          }
-        });
-
-        this.addEventListener('mouseup', function (e) {
-          e = e || window.event;
-          e.preventDefault();
-          e.stopPropagation();
-          this.removeEventListener('mouseup', arguments.callee);
-          animate = false;
-        });
+        that.animate = true;
       });
 
       // Event Listeners for Touch Interface

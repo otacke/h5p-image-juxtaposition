@@ -100,11 +100,6 @@ H5P.ImageJuxtaposition = function ($) {
       maximumWidth: this.options.behavior.maximumWidth,
       maximumHeight: this.options.behavior.maximumHeight
     }, this);
-
-    // This is needed for Chrome to detect the mouseup outside the iframe
-    window.addEventListener('mouseup', function() {
-      slider.mouseup();
-    });
   };
 
   return ImageJuxtaposition;
