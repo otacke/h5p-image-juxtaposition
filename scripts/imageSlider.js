@@ -98,45 +98,52 @@
      * Update the wrapper dimensions
      */
     setWrapperDimensions: function setWrapperDimensions() {
-      // Scale Images
       var maximumWidth, maximumHeight;
+      var targetWidth, targetHeight;
+
+      // Get maximum width and height that can be displayed.
       if (H5P.isFullscreen) {
-        maximumWidth = screen.width;
-        maximumHeight = screen.height;
+        maximumWidth = parseInt(window.getComputedStyle(this.parent.container).width);
+        maximumHeight = parseInt(window.getComputedStyle(this.parent.container).height);
       }
       else {
         maximumWidth = Math.min(this.options.maximumWidth, parseInt(document.querySelector(this.selector).offsetWidth));
         maximumHeight = this.options.maximumHeight;
       }
+
+      // Scale to width or to height.
       var maxRatio = maximumWidth / maximumHeight;
-
-      var targetWidth;
-      var targetHeight;
-
-      if (maxRatio < this.imageRatio) {
+      if (maxRatio <= this.imageRatio) {
         targetWidth = Math.min(Math.floor(window.innerWidth - 2), maximumWidth);
-        targetHeight = Math.floor(targetWidth / this.imageRatio);
+        targetHeight = Math.round(targetWidth / this.imageRatio);
       }
       else {
         targetHeight = maximumHeight;
-        targetWidth = Math.floor(targetHeight * this.imageRatio);
+        targetWidth = Math.round(targetHeight * this.imageRatio);
       }
 
-      //this.wrapper.style.width = targetWidth + 'px';
-      this.wrapper.style.padding = '0 ' + (window.innerWidth - 2 - targetWidth) / 2 + 'px';
-      this.wrapper.style.height = targetHeight + 'px';
+      // Add passepartout - we don't need one at the top/bottom if not on fullscreen.
+      if (H5P.isFullscreen) {
+        this.wrapper.style.paddingTop = Math.floor((parseInt(window.getComputedStyle(this.parent.container).height) - targetHeight) / 2) + 'px ';
+        this.wrapper.style.paddingBottom = this.wrapper.style.paddingTop;
+      } else {
+        this.wrapper.style.paddingTop = 0;
+        this.wrapper.style.paddingBottom = 0;
+      }
+      this.wrapper.style.paddingLeft = Math.floor((window.innerWidth - 2 - targetWidth) / 2) + 'px';
+      this.wrapper.style.paddingRight = this.wrapper.style.paddingLeft;
 
+      this.wrapper.style.height = targetHeight + 'px';
       // The InternetExplorer needs this explicit width and height for images
       this.imgBefore.image.setAttribute('width', targetWidth);
       this.imgBefore.image.setAttribute('height', targetHeight);
       this.imgAfter.image.setAttribute('width', targetWidth);
       this.imgAfter.image.setAttribute('height', targetHeight);
 
-      // resize iframe if image's height is too small or too high
+      // Resize iframe if image's height is too small or too high.
       var windowHeight = window.innerHeight;
       var titleHeight = (document.querySelector('.h5p-image-juxtaposition-title')) ? document.querySelector('.h5p-image-juxtaposition-title').offsetHeight : 0;
       var actionBarHeight = document.querySelector('.h5p-actions').offsetHeight;
-
       if (titleHeight + targetHeight + actionBarHeight + 1 !== windowHeight) {
         this.parent.trigger('resize');
       }

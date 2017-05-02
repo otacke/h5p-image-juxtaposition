@@ -27,28 +27,28 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} $container - Container to attach to.
    */
   ImageJuxtaposition.prototype.attach = function ($container) {
-    var container = $container.get(0);
-    container.className = 'h5p-image-juxtaposition';
+    this.container = $container.get(0);
+    this.container.className = 'h5p-image-juxtaposition';
 
     if (this.options.title) {
       this.title = document.createElement('div');
       this.title.className = 'h5p-image-juxtaposition-title';
       this.title.innerHTML = '<h2>' + this.options.title + '</h2>';
-      container.appendChild(this.title);
+      this.container.appendChild(this.title);
     }
 
     if (!this.options.imageBefore  || !this.options.imageAfter) {
       var message = document.createElement('div');
       message.className = 'h5p-image-juxtaposition-missing-images';
       message.innerHTML = 'I really need two background images :)';
-      container.appendChild(message);
+      this.container.appendChild(message);
       return;
     }
 
     // The div element will be filled by Slider._onLoaded later
     var wrapper = document.createElement('div');
     wrapper.className = 'h5p-image-juxtaposition-juxtapose';
-    container.appendChild(wrapper);
+    this.container.appendChild(wrapper);
 
     // Create the slider
     var slider = new H5P.ImageJuxtaposition.ImageSlider('.h5p-image-juxtaposition-juxtapose', [{
