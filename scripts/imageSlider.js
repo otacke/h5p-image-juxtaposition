@@ -54,18 +54,18 @@
       if ((this.mousedown === false) && (input.type === 'mousemove')) {
         return;
       }
-      var firstPercent, secondPercent;
-      firstPercent = getFirstPercentage(this.slider, input, this.options.mode);
-      firstPercent = parseFloat(firstPercent.toFixed(2));
-      secondPercent = 100 - firstPercent;
 
-      // set handler position and image areas
+      var firstPercent = getFirstPercentage(this.slider, input, this.options.mode);
+      firstPercent = parseFloat(firstPercent.toFixed(2));
+      var secondPercent = 100 - firstPercent;
+
+      // Set handler position and image areas.
       if (firstPercent > 0 && firstPercent < 100) {
-        // add animation effect
         var handle = document.querySelector('.h5p-image-juxtaposition-handle');
         var left = document.querySelector('.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left');
         var right = document.querySelector('.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right');
 
+        // Add animation effect.
         if (animate === true) {
           handle.classList.add('transition');
           left.classList.add('transition');
@@ -77,6 +77,7 @@
           right.classList.remove('transition');
         }
 
+        // Set position.
         if (this.options.mode === "vertical") {
           this.handle.style.top = firstPercent + '%';
           this.leftImage.style.height = firstPercent + '%';
@@ -90,7 +91,7 @@
         this.sliderPosition = firstPercent;
       }
 
-      // update aria
+      // Update ARIA.
       this.controller.setAttribute('aria-valuenow', firstPercent);
     },
 
@@ -155,7 +156,7 @@
 
       this.wrapper.style.height = targetHeight + 'px';
 
-      // The InternetExplorer needs this explicit width and height for images
+      // The InternetExplorer needs this explicit width and height for images.
       this.imgBefore.image.setAttribute('width', targetWidth);
       this.imgBefore.image.setAttribute('height', targetHeight);
       this.imgAfter.image.setAttribute('width', targetWidth);
@@ -176,8 +177,9 @@
     _onLoaded: function _onLoaded() {
       if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
 
+        // Create the DOM.
         this.imgBefore.image.className = 'h5p-image-juxtaposition-leftimg';
-        // prevent dragging, etc. when leaving iframe
+        // Prevent dragging, etc. when leaving iframe.
         this.imgBefore.image.setAttribute('draggable', 'false');
         this.imgBefore.image.setAttribute('unselectable', 'on');
         this.imgBefore.image.setAttribute('onselectstart', 'return false;');
@@ -200,7 +202,7 @@
         }
 
         this.imgAfter.image.className = 'h5p-image-juxtaposition-rightimg';
-        // prevent dragging, etc. when leaving iframe
+        // Prevent dragging, etc. when leaving iframe.
         this.imgAfter.image.setAttribute('draggable', 'false');
         this.imgAfter.image.setAttribute('unselectable', 'on');
         this.imgAfter.image.setAttribute('onselectstart', 'return false;');
@@ -242,7 +244,7 @@
         this.controller.className = 'h5p-image-juxtaposition-controller';
         this.controller.setAttribute('draggable', 'false');
         this.controller.style.backgroundColor = this.options.sliderColor;
-        this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
+        this.controller.setAttribute('tabindex', 0);
         this.controller.setAttribute('role', 'slider');
         this.controller.setAttribute('aria-valuenow', parseInt(this.options.startingPosition));
         this.controller.setAttribute('aria-valuemin', 0);
@@ -278,7 +280,7 @@
     },
 
     /**
-     * Initialize Slider after DOM has been filled
+     * Initialize Slider after DOM has been filled.
      */
     _init: function _init() {
       var that = this;
@@ -288,7 +290,7 @@
       }
       this.imageRatio = this.imgBefore.ratio;
 
-      // Resize listener
+      // Resize listener.
       window.addEventListener('resize', function () {
         that.setWrapperDimensions();
       });
@@ -331,14 +333,14 @@
         var ariaValue = parseFloat(this.style.left || this.style.top);
         var position = 0;
 
-        // handler left
+        // Handler left
         if (key === 37) {
           position = Math.max(0, ariaValue - 1);
           that.updateSlider(position, false);
           that.controller.setAttribute('aria-valuenow', position);
         }
 
-        // handler right
+        // Handler right
         if (key === 39) {
           position = Math.min(100, ariaValue + 1);
           that.updateSlider(position, false);
@@ -346,7 +348,7 @@
         }
       });
 
-      // Event Listeners for Keyboard on images
+      // Event Listeners for Keyboard on images (Space/Return)
       this.leftImage.addEventListener('keydown', function (e) {
         var key = e.which || e.keyCode;
         if ((key === 13) || (key === 32)) {
@@ -378,8 +380,8 @@
    * Create Graphics.
    *
    * @private
-   * @param {object} properties from options.
-   * @param {ImageSlider} slider to attach graphics to.
+   * @param {object} properties - From options.
+   * @param {ImageSlider} slider - Slider to attach graphics to.
    */
   var Graphic = function (properties, slider) {
     var that = this;

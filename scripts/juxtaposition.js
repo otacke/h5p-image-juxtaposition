@@ -13,11 +13,11 @@ H5P.ImageJuxtaposition = function ($) {
     this.options = sanitizeOptions(options);
     this.id = id;
 
-    // Initialize event inheritance
+    // Initialize event inheritance.
     H5P.EventDispatcher.call(this);
   }
 
-  // Extends the event dispatcher
+  // Extend the event dispatcher.
   ImageJuxtaposition.prototype = Object.create(H5P.EventDispatcher.prototype);
   ImageJuxtaposition.prototype.constructor = ImageJuxtaposition;
 
@@ -45,25 +45,31 @@ H5P.ImageJuxtaposition = function ($) {
       return;
     }
 
-    // The div element will be filled by Slider._onLoaded later
+    // The div element will be filled by Slider._onLoaded later.
     var wrapper = document.createElement('div');
     wrapper.className = 'h5p-image-juxtaposition-juxtapose';
     this.container.appendChild(wrapper);
 
-    // Create the slider
-    var slider = new H5P.ImageJuxtaposition.ImageSlider('.h5p-image-juxtaposition-juxtapose', [{
-      src: H5P.getPath(this.options.imageBefore.path, this.id),
-      label: this.options.labelBefore
-    }, {
-      src: H5P.getPath(this.options.imageAfter.path, this.id),
-      label: this.options.labelAfter
-    }], {
-      startingPosition: this.options.startingPosition + '%',
-      mode: this.options.sliderOrientation,
-      sliderColor: this.options.sliderColor,
-      maximumWidth: this.options.maximumWidth,
-      maximumHeight: this.options.maximumHeight
-    }, this);
+    // Create the slider.
+    var slider = new H5P.ImageJuxtaposition.ImageSlider('.h5p-image-juxtaposition-juxtapose',
+      [
+        {
+          src: H5P.getPath(this.options.imageBefore.path, this.id),
+          label: this.options.labelBefore
+        },
+        {
+          src: H5P.getPath(this.options.imageAfter.path, this.id),
+          label: this.options.labelAfter
+        }
+      ],
+      {
+        startingPosition: this.options.startingPosition + '%',
+        mode: this.options.sliderOrientation,
+        sliderColor: this.options.sliderColor,
+        maximumWidth: this.options.maximumWidth,
+        maximumHeight: this.options.maximumHeight
+      },
+      this);
 
     // In Fullscreen mode, don't show the title.
     this.on('enterFullScreen', function() {
