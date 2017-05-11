@@ -165,7 +165,8 @@
       // Resize iframe if image's height is too small or too high.
       var windowHeight = window.innerHeight;
       var titleHeight = (document.querySelector('.h5p-image-juxtaposition-title')) ? document.querySelector('.h5p-image-juxtaposition-title').offsetHeight : 0;
-      var actionBarHeight = document.querySelector('.h5p-actions').offsetHeight;
+      var actionBar = document.querySelector('.h5p-actions');
+      var actionBarHeight = actionBar ? actionBar.offsetHeight : -1;
       if (titleHeight + targetHeight + actionBarHeight + 1 !== windowHeight) {
         this.parent.trigger('resize');
       }
