@@ -179,7 +179,7 @@
       if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
 
         // Create the DOM.
-        this.imgBefore.image.className = 'h5p-image-juxtaposition-leftimg';
+        this.imgBefore.image.classList.add('h5p-image-juxtaposition-leftimg');
         // Prevent dragging, etc. when leaving iframe.
         this.imgBefore.image.setAttribute('draggable', 'false');
         this.imgBefore.image.setAttribute('unselectable', 'on');
@@ -187,13 +187,13 @@
         this.imgBefore.image.setAttribute('onmousedown', 'return false;');
 
         this.leftImage = document.createElement("div");
-        this.leftImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-left';
+        this.leftImage.classList.add('h5p-image-juxtaposition-image h5p-image-juxtaposition-left');
         this.leftImage.setAttribute('draggable', 'false');
         this.leftImage.appendChild(this.imgBefore.image);
 
         if (this.imgBefore.label) {
           var leftLabel = document.createElement("div");
-          leftLabel.className = 'h5p-image-juxtaposition-label';
+          leftLabel.classList.add('h5p-image-juxtaposition-label');
           leftLabel.setAttribute('unselectable', 'on');
           leftLabel.setAttribute('onselectstart', 'return false;');
           leftLabel.setAttribute('onmousedown', 'return false;');
@@ -202,7 +202,7 @@
           this.leftImage.appendChild(leftLabel);
         }
 
-        this.imgAfter.image.className = 'h5p-image-juxtaposition-rightimg';
+        this.imgAfter.image.classList.add('h5p-image-juxtaposition-rightimg');
         // Prevent dragging, etc. when leaving iframe.
         this.imgAfter.image.setAttribute('draggable', 'false');
         this.imgAfter.image.setAttribute('unselectable', 'on');
@@ -210,13 +210,13 @@
         this.imgAfter.image.setAttribute('onmousedown', 'return false;');
 
         this.rightImage = document.createElement("div");
-        this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
+        this.rightImage.classList.add('h5p-image-juxtaposition-image h5p-image-juxtaposition-right');
         this.rightImage.setAttribute('draggable', 'false');
         this.rightImage.appendChild(this.imgAfter.image);
 
         if (this.imgAfter.label) {
           var rightLabel = document.createElement("div");
-          rightLabel.className = 'h5p-image-juxtaposition-label';
+          rightLabel.classList.add('h5p-image-juxtaposition-label');
           rightLabel.setAttribute('unselectable', 'on');
           rightLabel.setAttribute('onselectstart', 'return false;');
           rightLabel.setAttribute('onmousedown', 'return false;');
@@ -226,10 +226,10 @@
         }
 
         this.leftArrow = document.createElement("div");
-        this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
+        this.leftArrow.classList.add('h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left');
         this.leftArrow.setAttribute('draggable', 'false');
         this.rightArrow = document.createElement("div");
-        this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
+        this.rightArrow.classList.add('h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right');
         this.rightArrow.setAttribute('draggable', 'false');
 
         if (this.options.mode === 'horizontal') {
@@ -242,7 +242,7 @@
         }
 
         this.controller = document.createElement("div");
-        this.controller.className = 'h5p-image-juxtaposition-controller';
+        this.controller.classList.add('h5p-image-juxtaposition-controller');
         this.controller.setAttribute('draggable', 'false');
         this.controller.style.backgroundColor = this.options.sliderColor;
         this.controller.setAttribute('tabindex', 0);
@@ -252,20 +252,20 @@
         this.controller.setAttribute('aria-valuemax', 100);
 
         this.control = document.createElement("div");
-        this.control.className = 'h5p-image-juxtaposition-control';
+        this.control.classList.add('h5p-image-juxtaposition-control');
         this.control.setAttribute('draggable', 'false');
         this.control.style.backgroundColor = this.options.sliderColor;
         this.control.appendChild(this.controller);
 
         this.handle = document.createElement("div");
-        this.handle.className = 'h5p-image-juxtaposition-handle';
+        this.handle.classList.add('h5p-image-juxtaposition-handle');
         this.handle.setAttribute('draggable', 'false');
         this.handle.appendChild(this.leftArrow);
         this.handle.appendChild(this.control);
         this.handle.appendChild(this.rightArrow);
 
         this.slider = document.createElement("div");
-        this.slider.className = 'h5p-image-juxtaposition-slider';
+        this.slider.classList.add('h5p-image-juxtaposition-slider');
         this.slider.classList.add('h5p-image-juxtaposition-' + this.options.mode);
         this.slider.setAttribute('draggable', 'false');
         this.slider.appendChild(this.handle);
