@@ -107,8 +107,11 @@
       * Unfortunately, the iPhone requires a special treatment as it doesn't
       * work with the measuring the container, and it also requires individual
       * treatment for landscape and portrait orientation.
+      *
+      * TODO: Check positioning on iPad after pinching
       */
       if (H5P.isFullscreen) {
+        // TODO: Check for iPad and Surface as well => might be an issue, Surface said to lack "exit fullscreen" button on Surface
         if (isMobileDevice() && (/iPhone/.test(navigator.userAgent))) {
           if (Math.abs(window.orientation) === 90) {
             maximumWidth = screen.height;
@@ -133,6 +136,7 @@
       // Scale to width or to height, whatever leads to a bigger image.
       var maxRatio = maximumWidth / maximumHeight;
       if (maxRatio <= this.imageRatio) {
+        // TODO: Check whether flooring causes the bug -> should ...
         targetWidth = Math.min(Math.floor(window.innerWidth), maximumWidth);
         targetHeight = Math.round(targetWidth / this.imageRatio);
       }
@@ -163,6 +167,7 @@
       this.imgAfter.image.setAttribute('height', targetHeight);
 
       // Resize iframe if image's height is too small or too high.
+      // TODO: Does this fail in IE11 on reload?
       var windowHeight = window.innerHeight;
       var titleHeight = (document.querySelector('.h5p-image-juxtaposition-title')) ? document.querySelector('.h5p-image-juxtaposition-title').offsetHeight : 0;
       var actionBar = document.querySelector('.h5p-actions');
@@ -185,6 +190,7 @@
         this.imgBefore.image.setAttribute('unselectable', 'on');
         this.imgBefore.image.setAttribute('onselectstart', 'return false;');
         this.imgBefore.image.setAttribute('onmousedown', 'return false;');
+        // TODO: Check if we can allow right clicks on image without breaking functionality
 
         this.leftImage = document.createElement("div");
         this.leftImage.classList.add('h5p-image-juxtaposition-image', 'h5p-image-juxtaposition-left');
@@ -297,6 +303,7 @@
       });
 
       // Event Listeners for Mouse Interface
+      // TODO: Check whether this really doesn't work on IE11?
       document.addEventListener("mousemove", function (e) {
         if (that.animate) {
           that.updateSlider(e, false);
@@ -313,6 +320,8 @@
       });
 
       // Event Listeners for Touch Interface
+      // TODO: Activate pinch gesture if touched with two (or more) fingers
+      // TODO: Check on Surface with Edge - said to fail
       this.slider.addEventListener('touchstart', function (e) {
         e = e || window.event;
         e.preventDefault();
@@ -335,6 +344,7 @@
         var position = 0;
 
         // Handler left
+        // TODO: Get 2nd opinion. Should vertical sliders use up/down and override the usual browser scrolling?
         if (key === 37) {
           position = Math.max(0, ariaValue - 1);
           that.updateSlider(position, false);
