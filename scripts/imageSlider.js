@@ -7,6 +7,8 @@
  * There's not much left of the original code though ...
  */
 
+ // TODO: Clean up code after the removal of onloaded() and init(), will probably be much simpler
+
 (function (ImageJuxtaposition) {
   'use strict';
 
@@ -26,21 +28,214 @@
    * @param {number} options.startingPosition - StartingPosition of the slider.
    * @param {object} parent - Parent class.
    */
-  ImageJuxtaposition.ImageSlider = function (selector, images, options, parent) {
+  ImageJuxtaposition.ImageSlider = function (selector, images, labels, options, parent) {
+    var that = this;
+
     this.selector = selector;
-    this.images = images;
     this.options = options;
     this.parent = parent;
 
     this.mousedown = false;
 
-    if (images.length === 2) {
-      this.imgBefore = new Graphic(images[0], this);
-      this.imgAfter = new Graphic(images[1], this);
+    if (images.length !== 2) {
+      console.warn("The images parameter takes two Image objects.");
+      return;
+    }
+
+    this.imgBefore = new Graphic(images[0], labels[0]);
+    this.imgAfter = new Graphic(images[1], labels[1]);
+
+    // Create the DOM.
+    this.imgBefore.image.classList.add('h5p-image-juxtaposition-leftimg');
+    // Prevent dragging, etc. when leaving iframe.
+    this.imgBefore.image.setAttribute('draggable', 'false');
+    this.imgBefore.image.setAttribute('unselectable', 'on');
+    this.imgBefore.image.setAttribute('onselectstart', 'return false;');
+    this.imgBefore.image.setAttribute('onmousedown', 'return false;');
+    // TODO: Check if we can allow right clicks on image without breaking functionality
+
+    this.leftImage = document.createElement("div");
+    this.leftImage.classList.add('h5p-image-juxtaposition-image', 'h5p-image-juxtaposition-left');
+    this.leftImage.setAttribute('draggable', 'false');
+    this.leftImage.appendChild(this.imgBefore.image);
+
+    if (this.imgBefore.label) {
+      var leftLabel = document.createElement("div");
+      leftLabel.classList.add('h5p-image-juxtaposition-label');
+      leftLabel.setAttribute('unselectable', 'on');
+      leftLabel.setAttribute('onselectstart', 'return false;');
+      leftLabel.setAttribute('onmousedown', 'return false;');
+      leftLabel.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
+      leftLabel.innerText = this.imgBefore.label;
+      this.leftImage.appendChild(leftLabel);
+    }
+
+    this.imgAfter.image.classList.add('h5p-image-juxtaposition-rightimg');
+    // Prevent dragging, etc. when leaving iframe.
+    this.imgAfter.image.setAttribute('draggable', 'false');
+    this.imgAfter.image.setAttribute('unselectable', 'on');
+    this.imgAfter.image.setAttribute('onselectstart', 'return false;');
+    this.imgAfter.image.setAttribute('onmousedown', 'return false;');
+
+    this.rightImage = document.createElement("div");
+    this.rightImage.classList.add('h5p-image-juxtaposition-image', 'h5p-image-juxtaposition-right');
+    this.rightImage.setAttribute('draggable', 'false');
+    this.rightImage.appendChild(this.imgAfter.image);
+
+    if (this.imgAfter.label) {
+      var rightLabel = document.createElement("div");
+      rightLabel.classList.add('h5p-image-juxtaposition-label');
+      rightLabel.setAttribute('unselectable', 'on');
+      rightLabel.setAttribute('onselectstart', 'return false;');
+      rightLabel.setAttribute('onmousedown', 'return false;');
+      rightLabel.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
+      rightLabel.innerText = this.imgAfter.label;
+      this.rightImage.appendChild(rightLabel);
+    }
+
+    this.leftArrow = document.createElement("div");
+    this.leftArrow.classList.add('h5p-image-juxtaposition-arrow', 'h5p-image-juxtaposition-left');
+    this.leftArrow.setAttribute('draggable', 'false');
+    this.rightArrow = document.createElement("div");
+    this.rightArrow.classList.add('h5p-image-juxtaposition-arrow', 'h5p-image-juxtaposition-right');
+    this.rightArrow.setAttribute('draggable', 'false');
+
+    if (this.options.mode === 'horizontal') {
+      this.leftArrow.style.borderRightColor = this.options.sliderColor;
+      this.rightArrow.style.borderLeftColor = this.options.sliderColor;
     }
     else {
-      console.warn("The images parameter takes two Image objects.");
+      this.leftArrow.style.borderBottomColor = this.options.sliderColor;
+      this.rightArrow.style.borderTopColor = this.options.sliderColor;
     }
+
+    this.controller = document.createElement("div");
+    this.controller.classList.add('h5p-image-juxtaposition-controller');
+    this.controller.setAttribute('draggable', 'false');
+    this.controller.style.backgroundColor = this.options.sliderColor;
+    this.controller.setAttribute('tabindex', 0);
+    this.controller.setAttribute('role', 'slider');
+    this.controller.setAttribute('aria-valuenow', parseInt(this.options.startingPosition));
+    this.controller.setAttribute('aria-valuemin', 0);
+    this.controller.setAttribute('aria-valuemax', 100);
+
+    this.control = document.createElement("div");
+    this.control.classList.add('h5p-image-juxtaposition-control');
+    this.control.setAttribute('draggable', 'false');
+    this.control.style.backgroundColor = this.options.sliderColor;
+    this.control.appendChild(this.controller);
+
+    this.handle = document.createElement("div");
+    this.handle.classList.add('h5p-image-juxtaposition-handle');
+    this.handle.setAttribute('draggable', 'false');
+    this.handle.appendChild(this.leftArrow);
+    this.handle.appendChild(this.control);
+    this.handle.appendChild(this.rightArrow);
+
+    this.slider = document.createElement("div");
+    this.slider.classList.add('h5p-image-juxtaposition-slider');
+    this.slider.classList.add('h5p-image-juxtaposition-' + this.options.mode);
+    this.slider.setAttribute('draggable', 'false');
+    this.slider.appendChild(this.handle);
+    this.slider.appendChild(this.leftImage);
+    this.slider.appendChild(this.rightImage);
+
+    this.wrapper = document.querySelector(this.selector);
+    this.wrapper.style.width = this.imgBefore.width;
+    this.wrapper.appendChild(this.slider);
+
+    if (this.imgBefore.ratio !== this.imgAfter.ratio) {
+      console.warn(this, "Check that the two images have the same aspect ratio for the slider to work correctly.");
+    }
+    this.imageRatio = this.imgBefore.ratio;
+
+    // Resize listener.
+    window.addEventListener('resize', function () {
+      that.setWrapperDimensions();
+    });
+
+    // Event Listeners for Mouse Interface
+    // TODO: Check whether this really doesn't work on IE11?
+    document.addEventListener("mousemove", function (e) {
+      if (that.animate) {
+        that.updateSlider(e, false);
+      }
+    });
+    document.addEventListener('mouseup', function () {
+      that.mousedown = false;
+    });
+    this.slider.addEventListener("mousedown", function (e) {
+      e = e || window.event;
+      that.mousedown = true;
+      that.updateSlider(e, true);
+      that.animate = true;
+    });
+
+    // Event Listeners for Touch Interface
+    // TODO: Activate pinch gesture if touched with two (or more) fingers
+    // TODO: Check on Surface with Edge - said to fail
+    this.slider.addEventListener('touchstart', function (e) {
+      e = e || window.event;
+      e.preventDefault();
+      e.stopPropagation();
+      that.updateSlider(e, true);
+
+      this.addEventListener('touchmove', function (e) {
+        e = e || window.event;
+        e.preventDefault();
+        e.stopPropagation();
+        that.updateSlider(e, false);
+      });
+    });
+
+    // Event Listeners for Keyboard on handle
+    this.handle.addEventListener('keydown', function (e) {
+      e = e || window.event;
+      var key = e.which || e.keyCode;
+      var ariaValue = parseFloat(this.style.left || this.style.top);
+      var position = 0;
+
+      // Handler left
+      // TODO: Get 2nd opinion. Should vertical sliders use up/down and override the usual browser scrolling?
+      if (key === 37) {
+        position = Math.max(0, ariaValue - 1);
+        that.updateSlider(position, false);
+        that.controller.setAttribute('aria-valuenow', position);
+      }
+
+      // Handler right
+      if (key === 39) {
+        position = Math.min(100, ariaValue + 1);
+        that.updateSlider(position, false);
+        that.controller.setAttribute('aria-valuenow', position);
+      }
+    });
+
+    // Event Listeners for Keyboard on images (Space/Return)
+    this.leftImage.addEventListener('keydown', function (e) {
+      var key = e.which || e.keyCode;
+      if ((key === 13) || (key === 32)) {
+        that.updateSlider('90%', true);
+        that.controller.setAttribute('aria-valuenow', 90);
+      }
+    });
+
+    this.rightImage.addEventListener('keydown', function (e) {
+      var key = e.which || e.keyCode;
+      if ((key === 13) || (key === 32)) {
+        that.updateSlider('10%', true);
+        that.controller.setAttribute('aria-valuenow', 10);
+      }
+    });
+
+    that.updateSlider(this.options.startingPosition, false);
+    that.setWrapperDimensions();
+
+    // This is a workaround for our beloved IE that would otherwise distort the images
+    document.querySelector('.h5p-image-juxtaposition-leftimg').setAttribute('width', '');
+    document.querySelector('.h5p-image-juxtaposition-leftimg').setAttribute('height', '');
+    document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('width', '');
+    document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('height', '');
   };
 
   ImageJuxtaposition.ImageSlider.prototype = {
@@ -176,215 +371,6 @@
         this.parent.trigger('resize');
       }
     },
-
-    /**
-     * Create the DOM elements after images have loaded.
-     */
-    _onLoaded: function _onLoaded() {
-      if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
-
-        // Create the DOM.
-        this.imgBefore.image.classList.add('h5p-image-juxtaposition-leftimg');
-        // Prevent dragging, etc. when leaving iframe.
-        this.imgBefore.image.setAttribute('draggable', 'false');
-        this.imgBefore.image.setAttribute('unselectable', 'on');
-        this.imgBefore.image.setAttribute('onselectstart', 'return false;');
-        this.imgBefore.image.setAttribute('onmousedown', 'return false;');
-        // TODO: Check if we can allow right clicks on image without breaking functionality
-
-        this.leftImage = document.createElement("div");
-        this.leftImage.classList.add('h5p-image-juxtaposition-image', 'h5p-image-juxtaposition-left');
-        this.leftImage.setAttribute('draggable', 'false');
-        this.leftImage.appendChild(this.imgBefore.image);
-
-        if (this.imgBefore.label) {
-          var leftLabel = document.createElement("div");
-          leftLabel.classList.add('h5p-image-juxtaposition-label');
-          leftLabel.setAttribute('unselectable', 'on');
-          leftLabel.setAttribute('onselectstart', 'return false;');
-          leftLabel.setAttribute('onmousedown', 'return false;');
-          leftLabel.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
-          leftLabel.innerText = this.imgBefore.label;
-          this.leftImage.appendChild(leftLabel);
-        }
-
-        this.imgAfter.image.classList.add('h5p-image-juxtaposition-rightimg');
-        // Prevent dragging, etc. when leaving iframe.
-        this.imgAfter.image.setAttribute('draggable', 'false');
-        this.imgAfter.image.setAttribute('unselectable', 'on');
-        this.imgAfter.image.setAttribute('onselectstart', 'return false;');
-        this.imgAfter.image.setAttribute('onmousedown', 'return false;');
-
-        this.rightImage = document.createElement("div");
-        this.rightImage.classList.add('h5p-image-juxtaposition-image', 'h5p-image-juxtaposition-right');
-        this.rightImage.setAttribute('draggable', 'false');
-        this.rightImage.appendChild(this.imgAfter.image);
-
-        if (this.imgAfter.label) {
-          var rightLabel = document.createElement("div");
-          rightLabel.classList.add('h5p-image-juxtaposition-label');
-          rightLabel.setAttribute('unselectable', 'on');
-          rightLabel.setAttribute('onselectstart', 'return false;');
-          rightLabel.setAttribute('onmousedown', 'return false;');
-          rightLabel.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
-          rightLabel.innerText = this.imgAfter.label;
-          this.rightImage.appendChild(rightLabel);
-        }
-
-        this.leftArrow = document.createElement("div");
-        this.leftArrow.classList.add('h5p-image-juxtaposition-arrow', 'h5p-image-juxtaposition-left');
-        this.leftArrow.setAttribute('draggable', 'false');
-        this.rightArrow = document.createElement("div");
-        this.rightArrow.classList.add('h5p-image-juxtaposition-arrow', 'h5p-image-juxtaposition-right');
-        this.rightArrow.setAttribute('draggable', 'false');
-
-        if (this.options.mode === 'horizontal') {
-          this.leftArrow.style.borderRightColor = this.options.sliderColor;
-          this.rightArrow.style.borderLeftColor = this.options.sliderColor;
-        }
-        else {
-          this.leftArrow.style.borderBottomColor = this.options.sliderColor;
-          this.rightArrow.style.borderTopColor = this.options.sliderColor;
-        }
-
-        this.controller = document.createElement("div");
-        this.controller.classList.add('h5p-image-juxtaposition-controller');
-        this.controller.setAttribute('draggable', 'false');
-        this.controller.style.backgroundColor = this.options.sliderColor;
-        this.controller.setAttribute('tabindex', 0);
-        this.controller.setAttribute('role', 'slider');
-        this.controller.setAttribute('aria-valuenow', parseInt(this.options.startingPosition));
-        this.controller.setAttribute('aria-valuemin', 0);
-        this.controller.setAttribute('aria-valuemax', 100);
-
-        this.control = document.createElement("div");
-        this.control.classList.add('h5p-image-juxtaposition-control');
-        this.control.setAttribute('draggable', 'false');
-        this.control.style.backgroundColor = this.options.sliderColor;
-        this.control.appendChild(this.controller);
-
-        this.handle = document.createElement("div");
-        this.handle.classList.add('h5p-image-juxtaposition-handle');
-        this.handle.setAttribute('draggable', 'false');
-        this.handle.appendChild(this.leftArrow);
-        this.handle.appendChild(this.control);
-        this.handle.appendChild(this.rightArrow);
-
-        this.slider = document.createElement("div");
-        this.slider.classList.add('h5p-image-juxtaposition-slider');
-        this.slider.classList.add('h5p-image-juxtaposition-' + this.options.mode);
-        this.slider.setAttribute('draggable', 'false');
-        this.slider.appendChild(this.handle);
-        this.slider.appendChild(this.leftImage);
-        this.slider.appendChild(this.rightImage);
-
-        this.wrapper = document.querySelector(this.selector);
-        this.wrapper.style.width = this.imgBefore.width;
-        this.wrapper.appendChild(this.slider);
-
-        this._init();
-      }
-    },
-
-    /**
-     * Initialize Slider after DOM has been filled.
-     */
-    _init: function _init() {
-      var that = this;
-
-      if (this.imgBefore.ratio !== this.imgAfter.ratio) {
-        console.warn(this, "Check that the two images have the same aspect ratio for the slider to work correctly.");
-      }
-      this.imageRatio = this.imgBefore.ratio;
-
-      // Resize listener.
-      window.addEventListener('resize', function () {
-        that.setWrapperDimensions();
-      });
-
-      // Event Listeners for Mouse Interface
-      // TODO: Check whether this really doesn't work on IE11?
-      document.addEventListener("mousemove", function (e) {
-        if (that.animate) {
-          that.updateSlider(e, false);
-        }
-      });
-      document.addEventListener('mouseup', function () {
-        that.mousedown = false;
-      });
-      this.slider.addEventListener("mousedown", function (e) {
-        e = e || window.event;
-        that.mousedown = true;
-        that.updateSlider(e, true);
-        that.animate = true;
-      });
-
-      // Event Listeners for Touch Interface
-      // TODO: Activate pinch gesture if touched with two (or more) fingers
-      // TODO: Check on Surface with Edge - said to fail
-      this.slider.addEventListener('touchstart', function (e) {
-        e = e || window.event;
-        e.preventDefault();
-        e.stopPropagation();
-        that.updateSlider(e, true);
-
-        this.addEventListener('touchmove', function (e) {
-          e = e || window.event;
-          e.preventDefault();
-          e.stopPropagation();
-          that.updateSlider(e, false);
-        });
-      });
-
-      // Event Listeners for Keyboard on handle
-      this.handle.addEventListener('keydown', function (e) {
-        e = e || window.event;
-        var key = e.which || e.keyCode;
-        var ariaValue = parseFloat(this.style.left || this.style.top);
-        var position = 0;
-
-        // Handler left
-        // TODO: Get 2nd opinion. Should vertical sliders use up/down and override the usual browser scrolling?
-        if (key === 37) {
-          position = Math.max(0, ariaValue - 1);
-          that.updateSlider(position, false);
-          that.controller.setAttribute('aria-valuenow', position);
-        }
-
-        // Handler right
-        if (key === 39) {
-          position = Math.min(100, ariaValue + 1);
-          that.updateSlider(position, false);
-          that.controller.setAttribute('aria-valuenow', position);
-        }
-      });
-
-      // Event Listeners for Keyboard on images (Space/Return)
-      this.leftImage.addEventListener('keydown', function (e) {
-        var key = e.which || e.keyCode;
-        if ((key === 13) || (key === 32)) {
-          that.updateSlider('90%', true);
-          that.controller.setAttribute('aria-valuenow', 90);
-        }
-      });
-
-      this.rightImage.addEventListener('keydown', function (e) {
-        var key = e.which || e.keyCode;
-        if ((key === 13) || (key === 32)) {
-          that.updateSlider('10%', true);
-          that.controller.setAttribute('aria-valuenow', 10);
-        }
-      });
-
-      that.updateSlider(this.options.startingPosition, false);
-      that.setWrapperDimensions();
-
-      // This is a workaround for our beloved IE that would otherwise distort the images
-      document.querySelector('.h5p-image-juxtaposition-leftimg').setAttribute('width', '');
-      document.querySelector('.h5p-image-juxtaposition-leftimg').setAttribute('height', '');
-      document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('width', '');
-      document.querySelector('.h5p-image-juxtaposition-rightimg').setAttribute('height', '');
-    }
   };
 
   /**
@@ -394,24 +380,13 @@
    * @param {object} properties - From options.
    * @param {ImageSlider} slider - Slider to attach graphics to.
    */
-  var Graphic = function (properties, slider) {
+  var Graphic = function (image, label) {
     var that = this;
-    this.image = new Image();
-    this.width = 0;
-    this.height = 0;
-    this.ratio = 0;
-    this.loaded = false;
-
-    this.image.onload = function () {
-      that.loaded = true;
-      that.width = this.naturalWidth;
-      that.height = this.naturalHeight;
-      that.ratio = this.naturalWidth / this.naturalHeight;
-      slider._onLoaded();
-    };
-
-    this.image.src = properties.src;
-    this.label = properties.label || false;
+    this.image = image;
+    this.width = image.naturalWidth;
+    this.height = image.naturalHeight;
+    this.ratio = this.width / this.height;
+    this.label = label || false;
   };
 
   /**

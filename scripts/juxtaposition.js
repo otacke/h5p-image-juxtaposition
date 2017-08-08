@@ -27,6 +27,8 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} $container - Container to attach to.
    */
   ImageJuxtaposition.prototype.attach = function ($container) {
+    var that = this;
+
     this.container = $container.get(0);
     this.container.className = 'h5p-image-juxtaposition';
 
@@ -45,42 +47,62 @@ H5P.ImageJuxtaposition = function ($) {
       return;
     }
 
-    // The div element will be filled by Slider._onLoaded later.
-    var wrapper = document.createElement('div');
-    wrapper.className = 'h5p-image-juxtaposition-juxtapose';
-    this.container.appendChild(wrapper);
+    /**
+     * Load an Image.
+     *
+     * @param {string} path - Path to image.
+     * @param {number} id - H5P ID.
+     * @return {Promise} Promise for image being loaded.
+     */
+    function loadImage (path, id) {
+      return new Promise(function(resolve, reject)  {
+        var image = new Image();
+        image.onload = function() {
+          resolve(this);
+        };
+        image.onerror = function(error) {
+          reject(error);
+        };
+        image.src = H5P.getPath(path, id);
+      });
+    }
 
-    // Create the slider.
-    var slider = new H5P.ImageJuxtaposition.ImageSlider('.h5p-image-juxtaposition-juxtapose',
-      [
+    // Load images first before DOM is created
+    var promises = [];
+    promises.push(loadImage(this.options.imageBefore.path, this.id));
+    promises.push(loadImage(this.options.imageAfter.path, this.id));
+
+    Promise.all(promises).then(function(results) {
+      // The div element will be filled by Slider later.
+     var wrapper = document.createElement('div');
+     wrapper.className = 'h5p-image-juxtaposition-juxtapose';
+     that.container.appendChild(wrapper);
+
+      // Create the slider.
+      var slider = new H5P.ImageJuxtaposition.ImageSlider(
+        '.h5p-image-juxtaposition-juxtapose',
+        results,
+        [that.options.labelBefore, that.options.labelAfter],
         {
-          src: H5P.getPath(this.options.imageBefore.path, this.id),
-          label: this.options.labelBefore
+          startingPosition: that.options.startingPosition + '%',
+          mode: that.options.sliderOrientation,
+          sliderColor: that.options.sliderColor,
+          maximumWidth: that.options.maximumWidth,
+          maximumHeight: that.options.maximumHeight
         },
-        {
-          src: H5P.getPath(this.options.imageAfter.path, this.id),
-          label: this.options.labelAfter
-        }
-      ],
-      {
-        startingPosition: this.options.startingPosition + '%',
-        mode: this.options.sliderOrientation,
-        sliderColor: this.options.sliderColor,
-        maximumWidth: this.options.maximumWidth,
-        maximumHeight: this.options.maximumHeight
-      },
-      this);
+        that);
 
-    // In Fullscreen mode, don't show the title.
-    this.on('enterFullScreen', function() {
-      if (this.title) {
-        this.title.style.display = 'none';
-      }
-    });
-    this.on('exitFullScreen', function() {
-      if (this.title) {
-        this.title.style.display = '';
-      }
+      // In Fullscreen mode, don't show the title.
+      that.on('enterFullScreen', function() {
+        if (that.title) {
+          that.title.style.display = 'none';
+        }
+      });
+      that.on('exitFullScreen', function() {
+        if (that.title) {
+          that.title.style.display = '';
+        }
+      });
     });
   };
 

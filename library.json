@@ -20,6 +20,9 @@
     },
     {
       "path": "scripts/imageSlider.js"
+    },
+    {
+      "path": "scripts/promise-polyfill.js"
     }
   ],
   "preloadedCss": [
