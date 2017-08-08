@@ -296,6 +296,7 @@
     setWrapperDimensions: function setWrapperDimensions() {
       var maximumWidth, maximumHeight;
       var targetWidth, targetHeight;
+      var resizeNecessary = false;
 
       /*
       * Get maximum width and height that can be displayed.
@@ -355,12 +356,20 @@
 
       this.wrapper.style.height = targetHeight + 'px';
 
+      // TODO: Check if determining the resize necessity this way works in all browsers
+      resizeNecessary = parseInt(this.imgBefore.image.getAttribute('height')) !== targetHeight;
+
       // The InternetExplorer needs this explicit width and height for images.
       this.imgBefore.image.setAttribute('width', targetWidth);
       this.imgBefore.image.setAttribute('height', targetHeight);
       this.imgAfter.image.setAttribute('width', targetWidth);
       this.imgAfter.image.setAttribute('height', targetHeight);
 
+      if (resizeNecessary) {
+        this.parent.trigger('resize');
+      }
+
+      /*
       // Resize iframe if image's height is too small or too high.
       // TODO: Does this fail in IE11 on reload?
       var windowHeight = window.innerHeight;
@@ -370,6 +379,7 @@
       if (titleHeight + targetHeight + actionBarHeight + 1 !== windowHeight) {
         this.parent.trigger('resize');
       }
+      */
     },
   };
 
@@ -381,7 +391,6 @@
    * @param {ImageSlider} slider - Slider to attach graphics to.
    */
   var Graphic = function (image, label) {
-    var that = this;
     this.image = image;
     this.width = image.naturalWidth;
     this.height = image.naturalHeight;
