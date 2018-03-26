@@ -1,0 +1,70 @@
+{
+  "semantics": [
+    {
+      "label": "Titel",
+      "placeholder": "Hier kun je optioneel een titel invoegen.",
+      "description": "De titel, die je graag wilt tonen voor/ na de afbeelding"
+    },
+    {
+      "label": "Eerste afbeelding",
+      "fields": [
+        {
+          "label": "Eerste afbeelding",
+          "description": "De eerste afbeelding. Zorg ervoor dat deze dezelfde grootte heeft als de tweede."
+        },
+        {
+          "label": "Label voor de eerste afbeelding",
+          "description": "Het label dat op de eerste afbeelding wordt getoond"
+        }
+      ]
+    },
+    {
+      "label": "Tweede afbeelding",
+      "fields": [
+        {
+          "label": "Tweede afbeelding",
+          "description": "De tweede afbeelding. Zorg ervoor dat deze dezelfde grootte heeft als de eerste."
+        },
+        {
+          "label": "Label voor de tweede afbeelding",
+          "description": "Het label dat op de tweede afbeelding wordt getoond"
+        }
+      ]
+    },
+    {
+      "label": "Gedragsinstellingen",
+      "description": "Met deze opties kun je een aantal gegevens instellen.",
+      "fields": [
+        {
+          "label": "De beginpositie van de schuif in %",
+          "description": "Dit stelt de beginpositie in van de schuif"
+        },
+        {
+          "label": "De richting van de schuif",
+          "description": "Horizontaal beweegt naar links en rechts, verticaal beweegt naar boven en beneden",
+          "options": [
+            {
+              "label": "Horizontaal"
+            },
+            {
+              "label": "Verticaal"
+            }
+          ],
+          "default": "horizontaal"
+        },
+        {
+          "label": "Kleur van de schuif",
+          "description": "De kleur van de schuif"
+        },
+        {
+          "label": "Maximale breedte",
+          "description": "Indien niet opgegeven, worden de afbeeldingen tot de maximale breedte van de pagina geschaald. Dat kan hier worden beperkt."
+        },
+        {
+          "label": "Maximale hoogte",
+          "description": "Indien niet opgegeven, worden de afbeeldingen tot de maximale hoogte van de pagina geschaald. Dat kan hier worden beperkt."
+        }
+      ]
+    }
+  ]
+}
