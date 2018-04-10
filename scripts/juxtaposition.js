@@ -19,7 +19,7 @@ H5P.ImageJuxtaposition = function ($) {
     this.extras = extras;
     // Extend defaults with provided options
     this.options = $.extend(true, {}, {
-      title: this.getTitle(),
+      title: (this.extras.metadata && this.extras.metadata.title) ? this.extras.metadata.title : 'Image Juxtaposition',
       imageBefore: {
         imageBefore: undefined,
         labelBefore: ''
@@ -49,7 +49,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @return {string} title.
    */
   C.prototype.getTitle = function () {
-    return (this.extras.metadata && this.extras.metadata.title) ? this.extras.metadata.title : 'Image Juxtaposition';
+    return H5P.createTitle((this.extras.metadata && this.extras.metadata.title) ? this.extras.metadata.title : 'Image Juxtaposition');
   };
 
   /**
