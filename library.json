@@ -2,7 +2,7 @@
   "title": "Image Juxtaposition",
   "description": "Displays an interactive before/after image",
   "majorVersion": 1,
-  "minorVersion": 1,
+  "minorVersion": 2,
   "patchVersion": 0,
   "runnable": 1,
   "embedTypes": ["iframe"],
@@ -11,7 +11,7 @@
   "machineName": "H5P.ImageJuxtaposition",
   "coreApi": {
     "majorVersion": 1,
-    "minorVersion": 0
+    "minorVersion": 15
   },
   "preloadedJs": [
     { "path": "scripts/juxtaposition.js" }

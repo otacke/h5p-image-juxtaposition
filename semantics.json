@@ -1,14 +1,5 @@
 [
   {
-    "name": "title",
-    "label": "Title",
-    "importance": "high",
-    "type": "text",
-    "optional": true,
-    "placeholder": "Here you can add an optional title.",
-    "description": "The title you'd like to show before the befort/after image"
-  },
-  {
     "name": "imageBefore",
     "type": "group",
     "label": "First image",
@@ -67,6 +58,14 @@
     "optional": true,
     "fields": [
       {
+        "name": "showTitle",
+        "importance": "medium",
+        "type": "boolean",
+        "label": "Show title",
+        "description": "Show the title above the images",
+        "default": false
+      },
+      {
         "name": "startingPosition",
         "type": "number",
         "label": "Slider start position in %",
@@ -82,15 +81,15 @@
         "label": "Slider orientation",
         "description": "Horizontal will move left and right, vertical will move up and down.",
         "options": [
-            {
-              "value": "horizontal",
-              "label": "Horizontal"
-            },
-            {
-              "value": "vertical",
-              "label": "Vertical"
-            }
-          ],
+          {
+            "value": "horizontal",
+            "label": "Horizontal"
+          },
+          {
+            "value": "vertical",
+            "label": "Vertical"
+          }
+        ],
         "default": "horizontal"
       }
     ]
