@@ -1,11 +1,6 @@
 {
   "semantics": [
     {
-      "label": "Titel",
-      "placeholder": "Hier kannst du optional einen Titel angeben.",
-      "description": "Der Titel, den du gerne vor dem Vorher/Nachher-Bild haben möchtest"
-    },
-    {
       "label": "Erstes Bild",
       "fields": [
         {
@@ -35,6 +30,10 @@
       "label": "Verhaltenseinstellungen",
       "description": "Mit diesem Optionen kannst du ein paar Details einstellen",
       "fields": [
+        {
+          "label": "Titel anzeigen",
+          "description": "Zeige den Titel oberhalb der Bilder"
+        },
         {
           "label": "Startposition des Schiebereglers in %",
           "description": "Stelle die Startposition des Schiebereglers ein"

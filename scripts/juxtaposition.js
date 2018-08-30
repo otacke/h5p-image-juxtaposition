@@ -15,10 +15,11 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} options from semantics.json.
    * @param {number} content id.
    */
-  function C(options, id) {
+  function C(options, id, extras) {
+    this.extras = extras;
     // Extend defaults with provided options
     this.options = $.extend(true, {}, {
-      title: '',
+      title: (this.extras.metadata && this.extras.metadata.title) ? this.extras.metadata.title : 'Image Juxtaposition',
       imageBefore: {
         imageBefore: undefined,
         labelBefore: ''
@@ -28,6 +29,7 @@ H5P.ImageJuxtaposition = function ($) {
         labelAfter: ''
       },
       behavior: {
+        showTitle: false,
         startingPosition: 50,
         sliderOrientation: 'horizontal' }
     }, options);
@@ -42,6 +44,15 @@ H5P.ImageJuxtaposition = function ($) {
   C.prototype.constructor = C;
 
   /**
+   * Get the content type title.
+   *
+   * @return {string} title.
+   */
+  C.prototype.getTitle = function () {
+    return H5P.createTitle((this.extras.metadata && this.extras.metadata.title) ? this.extras.metadata.title : 'Image Juxtaposition');
+  };
+
+  /**
    * Attach function called by H5P framework to insert H5P content into page.
    *
    * @param {jQuery} container to attach to.
@@ -49,7 +60,7 @@ H5P.ImageJuxtaposition = function ($) {
   C.prototype.attach = function ($container) {
     this.container = $container;
     $container.addClass("h5p-image-juxtaposition");
-    if (this.options.title) {
+    if (this.options.behavior.showTitle) {
       $container.append('<div class="h5p-image-juxtaposition-title">' + this.options.title + '</div>');
     }
 
