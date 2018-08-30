@@ -36,12 +36,12 @@
       "description": "Position de démarrage du curseur en %",
       "fields": [
         {
-          "label": "Position de démarrage du curseur en %",
-          "description": "Entrer la position de départ du curseur."
+          "label": "Orientation du curseur",
+          "description": "Horizontal pour un déplacement vers la gauche ou vers la droite, Vertical pour un déplacement vers le haut ou vers le bas"
         },
         {
-          "label": "Orientation du curseur",
-          "description": "Horizontal pour un déplacement vers la gauche ou vers la droite, Vertical pour un déplacement vers le haut ou vers le bas",
+          "label": "Slider orientation",
+          "description": "Horizontal will move left and right, vertical will move up and down.",
           "options": [
             {
               "label": "Horizontal"
@@ -49,8 +49,7 @@
             {
               "label": "Vertical"
             }
-          ],
-          "default": "horizontal"
+          ]
         }
       ]
     }

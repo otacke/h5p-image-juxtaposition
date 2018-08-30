@@ -36,12 +36,12 @@
       "description": "Estas opciones te permitirán establecer algunos detalles",
       "fields": [
         {
-          "label": "Posición de inicio del control deslizante en %",
-          "description": "Establece la posición de inicio del control deslizante"
+          "label": "Orientación del control deslizante",
+          "description": "Horizontal se moverá hacia la izquierda y hacia la derecha, la vertical se moverá hacia arriba y hacia abajo."
         },
         {
-          "label": "Orientación del control deslizante",
-          "description": "Horizontal se moverá hacia la izquierda y hacia la derecha, la vertical se moverá hacia arriba y hacia abajo.",
+          "label": "Slider orientation",
+          "description": "Horizontal will move left and right, vertical will move up and down.",
           "options": [
             {
               "label": "Horizontal"
@@ -49,8 +49,7 @@
             {
               "label": "Vertical"
             }
-          ],
-          "default": "horizontal"
+          ]
         }
       ]
     }

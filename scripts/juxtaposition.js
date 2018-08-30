@@ -18,8 +18,8 @@ H5P.ImageJuxtaposition = function ($) {
   function C(options, id, extras) {
     this.extras = extras;
     // Extend defaults with provided options
-    this.options = $.extend(true, {}, {
-      title: (this.extras.metadata && this.extras.metadata.title) ? this.extras.metadata.title : 'Image Juxtaposition',
+    this.options = $.extend(true, {
+      title: '',
       imageBefore: {
         imageBefore: undefined,
         labelBefore: ''
@@ -29,7 +29,6 @@ H5P.ImageJuxtaposition = function ($) {
         labelAfter: ''
       },
       behavior: {
-        showTitle: false,
         startingPosition: 50,
         sliderOrientation: 'horizontal' }
     }, options);
@@ -60,7 +59,7 @@ H5P.ImageJuxtaposition = function ($) {
   C.prototype.attach = function ($container) {
     this.container = $container;
     $container.addClass("h5p-image-juxtaposition");
-    if (this.options.behavior.showTitle) {
+    if (this.options.title) {
       $container.append('<div class="h5p-image-juxtaposition-title">' + this.options.title + '</div>');
     }
 

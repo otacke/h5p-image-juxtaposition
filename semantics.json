@@ -1,5 +1,14 @@
 [
   {
+    "name": "title",
+    "label": "Title",
+    "importance": "high",
+    "type": "text",
+    "optional": true,
+    "placeholder": "Here you can add an optional title.",
+    "description": "The title you'd like to show before the befort/after image"
+  },
+  {
     "name": "imageBefore",
     "type": "group",
     "label": "First image",
@@ -57,14 +66,6 @@
     "description": "These options will let you set some details",
     "optional": true,
     "fields": [
-      {
-        "name": "showTitle",
-        "importance": "medium",
-        "type": "boolean",
-        "label": "Show title",
-        "description": "Show the title above the images",
-        "default": false
-      },
       {
         "name": "startingPosition",
         "type": "number",

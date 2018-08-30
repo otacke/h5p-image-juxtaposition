@@ -49,8 +49,7 @@
             {
               "label": "Vertical"
             }
-          ],
-          "default": "horizontal"
+          ]
         }
       ]
     }

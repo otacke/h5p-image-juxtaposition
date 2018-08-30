@@ -36,21 +36,20 @@
       "description": "Met deze opties kun je een aantal gegevens instellen.",
       "fields": [
         {
-          "label": "De beginpositie van de schuif in %",
-          "description": "Dit stelt de beginpositie in van de schuif"
+          "label": "De richting van de schuif",
+          "description": "Horizontaal beweegt naar links en rechts, verticaal beweegt naar boven en beneden"
         },
         {
-          "label": "De richting van de schuif",
-          "description": "Horizontaal beweegt naar links en rechts, verticaal beweegt naar boven en beneden",
+          "label": "Slider orientation",
+          "description": "Horizontal will move left and right, vertical will move up and down.",
           "options": [
             {
-              "label": "Horizontaal"
+              "label": "Horizontal"
             },
             {
-              "label": "Verticaal"
+              "label": "Vertical"
             }
-          ],
-          "default": "horizontaal"
+          ]
         }
       ]
     }

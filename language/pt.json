@@ -36,12 +36,12 @@
       "description": "Estas opções controlam como a atividade se comporta",
       "fields": [
         {
-          "label": "Posição de partida da barra de deslizamento em %",
-          "description": "Define a posição de partida da barra de deslizamento"
+          "label": "Orientação da barra de deslizamento",
+          "description": "Horizontal move a barra da esquerda para a direita, enquanto que Vertical move a barra de cima para baixo."
         },
         {
-          "label": "Orientação da barra de deslizamento",
-          "description": "Horizontal move a barra da esquerda para a direita, enquanto que Vertical move a barra de cima para baixo.",
+          "label": "Slider orientation",
+          "description": "Horizontal will move left and right, vertical will move up and down.",
           "options": [
             {
               "label": "Horizontal"
@@ -49,8 +49,7 @@
             {
               "label": "Vertical"
             }
-          ],
-          "default": "horizontal"
+          ]
         }
       ]
     }
