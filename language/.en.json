@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Title",
-      "placeholder": "Here you can add an optional title.",
-      "description": "The title you'd like to show before the befort/after image"
+      "label": "Heading",
+      "placeholder": "Here you can add an optional heading.",
+      "description": "The heading you'd like to show before the befort/after image"
     },
     {
       "label": "First image",
