@@ -3,9 +3,11 @@
   "description": "Displays an interactive before/after image",
   "majorVersion": 1,
   "minorVersion": 2,
-  "patchVersion": 0,
+  "patchVersion": 1,
   "runnable": 1,
-  "embedTypes": ["iframe"],
+  "embedTypes": [
+    "iframe"
+  ],
   "author": "Oliver Tacke",
   "license": "MPL",
   "machineName": "H5P.ImageJuxtaposition",
@@ -14,9 +16,13 @@
     "minorVersion": 15
   },
   "preloadedJs": [
-    { "path": "scripts/juxtaposition.js" }
+    {
+      "path": "scripts/juxtaposition.js"
+    }
   ],
   "preloadedCss": [
-    { "path": "styles/juxtaposition.css" }
+    {
+      "path": "styles/juxtaposition.css"
+    }
   ]
 }
