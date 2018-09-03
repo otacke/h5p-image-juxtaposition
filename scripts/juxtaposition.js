@@ -15,9 +15,10 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} options from semantics.json.
    * @param {number} content id.
    */
-  function C(options, id) {
+  function C(options, id, extras) {
+    this.extras = extras;
     // Extend defaults with provided options
-    this.options = $.extend(true, {}, {
+    this.options = $.extend(true, {
       title: '',
       imageBefore: {
         imageBefore: undefined,
@@ -40,6 +41,15 @@ H5P.ImageJuxtaposition = function ($) {
   // Extends the event dispatcher
   C.prototype = Object.create(H5P.EventDispatcher.prototype);
   C.prototype.constructor = C;
+
+  /**
+   * Get the content type title.
+   *
+   * @return {string} title.
+   */
+  C.prototype.getTitle = function () {
+    return H5P.createTitle((this.extras.metadata && this.extras.metadata.title) ? this.extras.metadata.title : 'Image Juxtaposition');
+  };
 
   /**
    * Attach function called by H5P framework to insert H5P content into page.

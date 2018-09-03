@@ -1,0 +1,57 @@
+{
+  "semantics": [
+    {
+      "label": "Heading",
+      "placeholder": "Here you can add an optional heading.",
+      "description": "The heading you'd like to show before the befort/after image"
+    },
+    {
+      "label": "First image",
+      "fields": [
+        {
+          "label": "First image",
+          "description": "The first image. Please make sure that it has the same size as the second image."
+        },
+        {
+          "label": "Label for first image",
+          "description": "Label to put over first image"
+        }
+      ]
+    },
+    {
+      "label": "Second image",
+      "fields": [
+        {
+          "label": "Second image",
+          "description": "The second image. Please make sure that it has the same size as the first image."
+        },
+        {
+          "label": "Label for second image",
+          "description": "Label to put over second image"
+        }
+      ]
+    },
+    {
+      "label": "Behavioral settings",
+      "description": "These options will let you set some details",
+      "fields": [
+        {
+          "label": "Slider start position in %",
+          "description": "Sets the start position of the slider"
+        },
+        {
+          "label": "Slider orientation",
+          "description": "Horizontal will move left and right, vertical will move up and down.",
+          "options": [
+            {
+              "label": "Horizontal"
+            },
+            {
+              "label": "Vertical"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
