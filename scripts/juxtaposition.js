@@ -338,7 +338,8 @@ H5P.ImageJuxtaposition = function ($) {
           this.handle.classList.add('transition');
           this.leftImage.classList.add('transition');
           this.rightImage.classList.add('transition');
-        } else {
+        }
+        else {
           this.handle.classList.remove('transition');
           this.leftImage.classList.remove('transition');
           this.rightImage.classList.remove('transition');
