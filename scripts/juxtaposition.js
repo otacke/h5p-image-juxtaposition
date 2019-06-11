@@ -4,8 +4,6 @@
  * License: Mozilla Public License 2.0, https://www.mozilla.org/en-US/MPL/2.0/
  * original source code: https://github.com/NUKnightLab/juxtapose
  */
-var H5P = H5P || {};
-
 H5P.ImageJuxtaposition = function ($) {
   /**
    * Constructor function.
@@ -55,12 +53,12 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} container to attach to.
    */
   C.prototype.attach = function ($container) {
-    var container = $container.get(0);
+    const container = $container.get(0);
     container.classList.add('h5p-image-juxtaposition');
 
     // Title bar
     if (this.options.title) {
-      var title = document.createElement('div');
+      const title = document.createElement('div');
       title.classList.add('h5p-image-juxtaposition-title');
       title.innerHTML = this.options.title;
       container.appendChild(title);
@@ -68,7 +66,7 @@ H5P.ImageJuxtaposition = function ($) {
 
     // Missing image
     if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === 'undefined') {
-      var message = document.createElement('div');
+      const message = document.createElement('div');
       message.classList.add('h5p-image-juxtaposition-missing-images');
       message.innerHTML = ' really need two background images :)';
       container.appendChild(message);
@@ -77,12 +75,12 @@ H5P.ImageJuxtaposition = function ($) {
     }
 
     // The div element will be filled by JXSlider._onLoaded later
-    var content = document.createElement('div');
+    const content = document.createElement('div');
     content.classList.add('h5p-image-juxtaposition-juxtapose');
     container.appendChild(content);
 
     // Create the slider
-    var slider = new JXSlider('.h5p-image-juxtaposition-juxtapose', [{
+    const slider = new JXSlider('.h5p-image-juxtaposition-juxtapose', [{
       src: H5P.getPath(this.options.imageBefore.imageBefore.path, this.id),
       label: this.options.imageBefore.labelBefore
     }, {
@@ -106,8 +104,8 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} properties from options.
    * @return {JXSlider} slider to attach graphics to.
    */
-  var Graphic = function (properties, slider) {
-    var self = this;
+  const Graphic = function (properties, slider) {
+    const self = this;
     this.image = new Image();
 
     this.loaded = false;
@@ -127,7 +125,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} DOMelement.
    * @return {object} object containing width and height.
    */
-  var getNaturalDimensions = function (DOMelement) {
+  const getNaturalDimensions = function (DOMelement) {
     if (DOMelement.naturalWidth && DOMelement.naturalHeight) {
       return {
         width: DOMelement.naturalWidth,
@@ -135,7 +133,7 @@ H5P.ImageJuxtaposition = function ($) {
       };
     }
     // http://www.jacklmoore.com/notes/naturalwidth-and-naturalheight-in-ie/
-    var img = new Image();
+    const img = new Image();
     img.src = DOMelement.src;
     return {
       width: img.width,
@@ -150,7 +148,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} Graphic object.
    * @return {object} object containing width, height, and ratio.
    */
-  var getImageDimensions = function (img) {
+  const getImageDimensions = function (img) {
     return {
       width: getNaturalDimensions(img).width,
       height: getNaturalDimensions(img).height,
@@ -167,7 +165,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} DOM element.
    * @param {string} className to be added.
    */
-  var addClass = function (element, c) {
+  const addClass = function (element, c) {
     if (element.classList) {
       element.classList.add(c);
     }
@@ -183,7 +181,7 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} DOM element.
    * @param {string} text to be removed.
    */
-  var setText = function (element, text) {
+  const setText = function (element, text) {
     if (document.body.textContent) {
       element.textContent = text;
     }
@@ -199,8 +197,8 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} event.
    * @return {number} pageX.
    */
-  var getPageX = function (e) {
-    var pageX;
+  const getPageX = function (e) {
+    let pageX;
     if (e.pageX) {
       pageX = e.pageX;
     }
@@ -220,8 +218,8 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} event.
    * @return {number} pageY.
    */
-  var getPageY = function (e) {
-    var pageY;
+  const getPageY = function (e) {
+    let pageY;
     if (e.pageY) {
       pageY = e.pageY;
     }
@@ -241,20 +239,20 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} slider DOM object.
    * @return {number} position.
    */
-  var getLeftPercent = function (slider, input) {
-    var leftPercent;
+  const getLeftPercent = function (slider, input) {
+    let leftPercent;
     if (typeof input === "string" || typeof input === "number") {
       leftPercent = parseInt(input, 10);
     }
     else {
-      var sliderRect = slider.getBoundingClientRect();
-      var offset = {
+      const sliderRect = slider.getBoundingClientRect();
+      const offset = {
         top: sliderRect.top + document.body.scrollTop,
         left: sliderRect.left + document.body.scrollLeft
       };
-      var width = slider.offsetWidth;
-      var pageX = getPageX(input);
-      var relativeX = pageX - offset.left;
+      const width = slider.offsetWidth;
+      const pageX = getPageX(input);
+      const relativeX = pageX - offset.left;
       leftPercent = relativeX / width * 100;
     }
     if (leftPercent === 0) {
@@ -273,20 +271,20 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {object} slider DOM object.
    * @return {number} position.
    */
-  var getTopPercent = function (slider, input) {
-    var topPercent;
+  const getTopPercent = function (slider, input) {
+    let topPercent;
     if (typeof input === "string" || typeof input === "number") {
       topPercent = parseInt(input, 10);
     }
     else {
-      var sliderRect = slider.getBoundingClientRect();
-      var offset = {
+      const sliderRect = slider.getBoundingClientRect();
+      const offset = {
         top: sliderRect.top + document.body.scrollTop,
         left: sliderRect.left + document.body.scrollLeft
       };
-      var width = slider.offsetHeight;
-      var pageY = getPageY(input);
-      var relativeY = pageY - offset.top;
+      const width = slider.offsetHeight;
+      const pageY = getPageY(input);
+      const relativeY = pageY - offset.top;
       topPercent = relativeY / width * 100;
     }
     if (topPercent === 0) {
@@ -301,7 +299,7 @@ H5P.ImageJuxtaposition = function ($) {
   /**
    * The JXSlider.
    */
-  var JXSlider = function (selector, images, options, parent) {
+  const JXSlider = function (selector, images, options, parent) {
     this.selector = selector;
     this.options = options;
     this.parent = parent;
@@ -320,7 +318,7 @@ H5P.ImageJuxtaposition = function ($) {
    */
   JXSlider.prototype = {
     updateSlider: function updateSlider(input, animate) {
-      var leftPercent, rightPercent, leftPercentNum;
+      let leftPercent, rightPercent, leftPercentNum;
 
       if (this.options.mode === "vertical") {
         leftPercent = getTopPercent(this.slider, input);
@@ -367,7 +365,7 @@ H5P.ImageJuxtaposition = function ($) {
      * Set the label for an image
      */
     displayLabel: function displayLabel(element, labelText) {
-      var label = document.createElement("div");
+      const label = document.createElement("div");
       label.className = 'h5p-image-juxtaposition-label';
       label.setAttribute('unselectable', 'on');
       label.setAttribute('onselectstart', 'return false;');
@@ -389,7 +387,7 @@ H5P.ImageJuxtaposition = function ($) {
      * Calculate the image dimensions
      */
     calculateDims: function calculateDims(width, height) {
-      var ratio = getImageDimensions(this.imgBefore.image).aspect();
+      const ratio = getImageDimensions(this.imgBefore.image).aspect();
       if (width) {
         height = width / ratio;
       }
@@ -408,8 +406,8 @@ H5P.ImageJuxtaposition = function ($) {
      * TODO: enhance for other scaling methods, e.g. for fullscreen
      */
     setWrapperDimensions: function setWrapperDimensions() {
-      var targetWidth = Math.floor(window.innerWidth - 2);
-      var targetHeight = Math.floor(targetWidth / this.imageRatio);
+      const targetWidth = Math.floor(window.innerWidth - 2);
+      const targetHeight = Math.floor(targetWidth / this.imageRatio);
 
       this.wrapper.style.width = targetWidth + 'px';
       this.wrapper.style.height = targetHeight + 'px';
@@ -529,7 +527,7 @@ H5P.ImageJuxtaposition = function ($) {
         this.displayLabel(this.rightImage, this.imgAfter.label);
       }
 
-      var self = this;
+      const self = this;
       window.addEventListener('resize', function () {
         self.setWrapperDimensions();
       });
@@ -539,7 +537,7 @@ H5P.ImageJuxtaposition = function ($) {
         e = e || window.event;
         // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
         self.updateSlider(e, true);
-        var animate = true;
+        let animate = true;
 
         this.addEventListener("mousemove", function (e) {
           e = e || window.event;
@@ -576,9 +574,9 @@ H5P.ImageJuxtaposition = function ($) {
       // Event Listeners for Keyboard on handle
       this.handle.addEventListener('keydown', function (e) {
         e = e || window.event;
-        var key = e.which || e.keyCode;
-        var ariaValue = parseFloat(this.style.left || this.style.top);
-        var position = 0;
+        const key = e.which || e.keyCode;
+        const ariaValue = parseFloat(this.style.left || this.style.top);
+        let position = 0;
 
         // handler left
         if (key === 37) {
@@ -597,7 +595,7 @@ H5P.ImageJuxtaposition = function ($) {
 
       // Event Listeners for Keyboard on images
       this.leftImage.addEventListener('keydown', function (e) {
-        var key = e.which || e.keyCode;
+        const key = e.which || e.keyCode;
         if ((key === 13) || (key === 32)) {
           self.updateSlider('90%', true);
           self.controller.setAttribute('aria-valuenow', 90);
@@ -605,7 +603,7 @@ H5P.ImageJuxtaposition = function ($) {
       });
 
       this.rightImage.addEventListener('keydown', function (e) {
-        var key = e.which || e.keyCode;
+        const key = e.which || e.keyCode;
         if ((key === 13) || (key === 32)) {
           self.updateSlider('10%', true);
           self.controller.setAttribute('aria-valuenow', 10);
