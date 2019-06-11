@@ -3,8 +3,6 @@
  * Copyright (c) 2015 Alex Duner and Northwestern University Knight Lab
  * License: Mozilla Public License 2.0, https://www.mozilla.org/en-US/MPL/2.0/
  * original source code: https://github.com/NUKnightLab/juxtapose
- *
- * TODO: Convert DOM Elements to jQuery elements
  */
 var H5P = H5P || {};
 
@@ -57,19 +55,31 @@ H5P.ImageJuxtaposition = function ($) {
    * @param {jQuery} container to attach to.
    */
   C.prototype.attach = function ($container) {
-    this.container = $container;
-    $container.addClass("h5p-image-juxtaposition");
+    var container = $container.get(0);
+    container.classList.add('h5p-image-juxtaposition');
+
+    // Title bar
     if (this.options.title) {
-      $container.append('<div class="h5p-image-juxtaposition-title">' + this.options.title + '</div>');
+      var title = document.createElement('div');
+      title.classList.add('h5p-image-juxtaposition-title');
+      title.innerHTML = this.options.title;
+      container.appendChild(title);
     }
 
+    // Missing image
     if (typeof this.options.imageBefore.imageBefore === 'undefined' || typeof this.options.imageAfter.imageAfter === 'undefined') {
-      $container.append('<div class="h5p-image-juxtaposition-missing-images">I really need two background images :)</div>');
+      var message = document.createElement('div');
+      message.classList.add('h5p-image-juxtaposition-missing-images');
+      message.innerHTML = ' really need two background images :)';
+      container.appendChild(message);
+
       return;
     }
 
     // The div element will be filled by JXSlider._onLoaded later
-    $container.append('<div class="h5p-image-juxtaposition-juxtapose"></div>');
+    var content = document.createElement('div');
+    content.classList.add('h5p-image-juxtaposition-juxtapose');
+    container.appendChild(content);
 
     // Create the slider
     var slider = new JXSlider('.h5p-image-juxtaposition-juxtapose', [{
@@ -84,7 +94,7 @@ H5P.ImageJuxtaposition = function ($) {
     }, this);
 
     // This is needed for Chrome to detect the mouseup outside the iframe
-    $(window).mouseup(function() {
+    window.addEventListener('mouseup', function () {
       slider.mouseup();
     });
   };
@@ -152,7 +162,6 @@ H5P.ImageJuxtaposition = function ($) {
 
   /**
    * Add a class to a DOM element.
-   * Could be removed if using jQuery
    *
    * @private
    * @param {object} DOM element.
@@ -169,7 +178,6 @@ H5P.ImageJuxtaposition = function ($) {
 
   /**
    * Set text to a DOM element.
-   * Could be removed if using jQuery
    *
    * @private
    * @param {object} DOM element.
@@ -329,13 +337,13 @@ H5P.ImageJuxtaposition = function ($) {
       if (leftPercentNum > 0 && leftPercentNum < 100) {
         // add animation effect
         if (animate === true) {
-          $('.h5p-image-juxtaposition-handle').addClass('transition');
-          $('.h5p-image-juxtaposition-left').addClass('transition');
-          $('.h5p-image-juxtaposition-right').addClass('transition');
+          this.handle.classList.add('transition');
+          this.leftImage.classList.add('transition');
+          this.rightImage.classList.add('transition');
         } else {
-          $('.h5p-image-juxtaposition-handle').removeClass('transition');
-          $('.h5p-image-juxtaposition-left').removeClass('transition');
-          $('.h5p-image-juxtaposition-right').removeClass('transition');
+          this.handle.classList.remove('transition');
+          this.leftImage.classList.remove('transition');
+          this.rightImage.classList.remove('transition');
         }
 
         if (this.options.mode === "vertical") {
@@ -357,7 +365,6 @@ H5P.ImageJuxtaposition = function ($) {
 
     /**
      * Set the label for an image
-     * Could be simplified and removed if using jQuery
      */
     displayLabel: function displayLabel(element, labelText) {
       var label = document.createElement("div");
@@ -440,30 +447,30 @@ H5P.ImageJuxtaposition = function ($) {
         this.rightImage = document.createElement("div");
         this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
         this.rightImage.setAttribute('draggable', 'false');
-        this.rightImageIMG = $(this.imgAfter.image)
-          .addClass('h5p-image-juxtaposition-rightimg')
-          // prevent dragging, etc. when leaving iframe
-          .attr({
-            draggable: 'false',
-            unselectable: 'on',
-            onselectstart: 'return false;',
-            onmousedown: 'return false;'
-          });
-        this.rightImage.appendChild(this.rightImageIMG[0]);
+
+        this.imgAfter.image.classList.add('h5p-image-juxtaposition-rightimg');
+
+        // TODO: Make simpler (prevent dragging, etc. when leaving iframe)
+        this.imgAfter.image.setAttribute('draggable', 'false');
+        this.imgAfter.image.setAttribute('unselectable', 'on');
+        this.imgAfter.image.setAttribute('onselectstart', 'return false;');
+        this.imgAfter.image.setAttribute('onmousedown', 'return false;');
+
+        this.rightImage.appendChild(this.imgAfter.image);
 
         this.leftImage = document.createElement("div");
         this.leftImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-left';
         this.leftImage.setAttribute('draggable', 'false');
-        this.leftImageIMG = $(this.imgBefore.image)
-          .addClass('h5p-image-juxtaposition-leftimg')
-          // prevent dragging, etc. when leaving iframe
-          .attr({
-            draggable: 'false',
-            unselectable: 'on',
-            onselectstart: 'return false;',
-            onmousedown: 'return false;'
-          });
-        this.leftImage.appendChild(this.leftImageIMG[0]);
+
+        this.imgBefore.image.classList.add('h5p-image-juxtaposition-leftimg');
+
+        // TODO: Make simpler (prevent dragging, etc. when leaving iframe)
+        this.imgBefore.image.setAttribute('draggable', 'false');
+        this.imgBefore.image.setAttribute('unselectable', 'on');
+        this.imgBefore.image.setAttribute('onselectstart', 'return false;');
+        this.imgBefore.image.setAttribute('onmousedown', 'return false;');
+
+        this.leftImage.appendChild(this.imgBefore.image);
 
         this.slider.appendChild(this.handle);
         this.slider.appendChild(this.leftImage);
@@ -609,8 +616,10 @@ H5P.ImageJuxtaposition = function ($) {
       self.setWrapperDimensions();
 
       // This is a workaround for our beloved IE that would otherwise distort the images
-      $('.h5p-image-juxtaposition-leftimg').attr({ width: '', height: '' });
-      $('.h5p-image-juxtaposition-rightimg').attr({ width: '', height: '' });
+      this.imgBefore.image.setAttribute('width', '');
+      this.imgBefore.image.setAttribute('height', '');
+      this.imgAfter.image.setAttribute('width', '');
+      this.imgAfter.image.setAttribute('height', '');
     }
   };
 
