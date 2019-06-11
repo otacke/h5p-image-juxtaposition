@@ -159,38 +159,6 @@ H5P.ImageJuxtaposition = function ($) {
   };
 
   /**
-   * Add a class to a DOM element.
-   *
-   * @private
-   * @param {object} DOM element.
-   * @param {string} className to be added.
-   */
-  const addClass = function (element, c) {
-    if (element.classList) {
-      element.classList.add(c);
-    }
-    else {
-      element.className += " " + c;
-    }
-  };
-
-  /**
-   * Set text to a DOM element.
-   *
-   * @private
-   * @param {object} DOM element.
-   * @param {string} text to be removed.
-   */
-  const setText = function (element, text) {
-    if (document.body.textContent) {
-      element.textContent = text;
-    }
-    else {
-      element.innerText = text;
-    }
-  };
-
-  /**
    * Get pageX from event.
    *
    * @private
@@ -241,7 +209,7 @@ H5P.ImageJuxtaposition = function ($) {
    */
   const getLeftPercent = function (slider, input) {
     let leftPercent;
-    if (typeof input === "string" || typeof input === "number") {
+    if (typeof input === 'string' || typeof input === 'number') {
       leftPercent = parseInt(input, 10);
     }
     else {
@@ -273,7 +241,7 @@ H5P.ImageJuxtaposition = function ($) {
    */
   const getTopPercent = function (slider, input) {
     let topPercent;
-    if (typeof input === "string" || typeof input === "number") {
+    if (typeof input === 'string' || typeof input === 'number') {
       topPercent = parseInt(input, 10);
     }
     else {
@@ -309,7 +277,7 @@ H5P.ImageJuxtaposition = function ($) {
       this.imgAfter = new Graphic(images[1], this);
     }
     else {
-      console.warn("The images parameter takes two Image objects.");
+      console.warn('The images parameter takes two Image objects.');
     }
   };
 
@@ -320,16 +288,16 @@ H5P.ImageJuxtaposition = function ($) {
     updateSlider: function updateSlider(input, animate) {
       let leftPercent, rightPercent, leftPercentNum;
 
-      if (this.options.mode === "vertical") {
+      if (this.options.mode === 'vertical') {
         leftPercent = getTopPercent(this.slider, input);
       }
       else {
         leftPercent = getLeftPercent(this.slider, input);
       }
 
-      leftPercent = leftPercent.toFixed(2) + "%";
+      leftPercent = leftPercent.toFixed(2) + '%';
       leftPercentNum = parseFloat(leftPercent);
-      rightPercent = 100 - leftPercentNum + "%";
+      rightPercent = 100 - leftPercentNum + '%';
 
       // set handler position and image areas
       if (leftPercentNum > 0 && leftPercentNum < 100) {
@@ -345,7 +313,7 @@ H5P.ImageJuxtaposition = function ($) {
           this.rightImage.classList.remove('transition');
         }
 
-        if (this.options.mode === "vertical") {
+        if (this.options.mode === 'vertical') {
           this.handle.style.top = leftPercent;
           this.leftImage.style.height = leftPercent;
           this.rightImage.style.height = rightPercent;
@@ -366,14 +334,14 @@ H5P.ImageJuxtaposition = function ($) {
      * Set the label for an image
      */
     displayLabel: function displayLabel(element, labelText) {
-      const label = document.createElement("div");
+      const label = document.createElement('div');
       label.className = 'h5p-image-juxtaposition-label';
       label.setAttribute('unselectable', 'on');
       label.setAttribute('onselectstart', 'return false;');
       label.setAttribute('onmousedown', 'return false;');
       label.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
+      label.textContent = labelText;
 
-      setText(label, labelText);
       element.appendChild(label);
     },
 
@@ -431,19 +399,17 @@ H5P.ImageJuxtaposition = function ($) {
         this.wrapper = document.querySelector(this.selector);
         this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
 
-        this.slider = document.createElement("div");
+        this.slider = document.createElement('div');
         this.slider.className = 'h5p-image-juxtaposition-slider';
+        this.slider.classList.add('h5p-image-juxtaposition-' + this.options.mode);
         this.slider.setAttribute('draggable', 'false');
         this.wrapper.appendChild(this.slider);
 
-        // set orientation
-        addClass(this.slider, 'h5p-image-juxtaposition-' + this.options.mode);
-
-        this.handle = document.createElement("div");
+        this.handle = document.createElement('div');
         this.handle.className = 'h5p-image-juxtaposition-handle';
         this.handle.setAttribute('draggable', 'false');
 
-        this.rightImage = document.createElement("div");
+        this.rightImage = document.createElement('div');
         this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
         this.rightImage.setAttribute('draggable', 'false');
 
@@ -457,7 +423,7 @@ H5P.ImageJuxtaposition = function ($) {
 
         this.rightImage.appendChild(this.imgAfter.image);
 
-        this.leftImage = document.createElement("div");
+        this.leftImage = document.createElement('div');
         this.leftImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-left';
         this.leftImage.setAttribute('draggable', 'false');
 
@@ -475,10 +441,10 @@ H5P.ImageJuxtaposition = function ($) {
         this.slider.appendChild(this.leftImage);
         this.slider.appendChild(this.rightImage);
 
-        this.leftArrow = document.createElement("div");
-        this.rightArrow = document.createElement("div");
-        this.control = document.createElement("div");
-        this.controller = document.createElement("div");
+        this.leftArrow = document.createElement('div');
+        this.rightArrow = document.createElement('div');
+        this.control = document.createElement('div');
+        this.controller = document.createElement('div');
 
         this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
         this.leftArrow.setAttribute('draggable', 'false');
@@ -517,7 +483,7 @@ H5P.ImageJuxtaposition = function ($) {
     _init: function _init() {
 
       if (this.checkImages() === false) {
-        console.warn(this, "Check that the two images have the same aspect ratio for the slider to work correctly.");
+        console.warn(this, 'Check that the two images have the same aspect ratio for the slider to work correctly.');
       }
 
       // Display labels
@@ -534,13 +500,13 @@ H5P.ImageJuxtaposition = function ($) {
       });
 
       // Event Listeners for Mouse Interface
-      this.slider.addEventListener("mousedown", function (e) {
+      this.slider.addEventListener('mousedown', function (e) {
         e = e || window.event;
         // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
         self.updateSlider(e, true);
         let animate = true;
 
-        this.addEventListener("mousemove", function (e) {
+        this.addEventListener('mousemove', function (e) {
           e = e || window.event;
           e.preventDefault();
           if (animate) {
