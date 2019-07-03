@@ -2,8 +2,8 @@
   "title": "Image Juxtaposition",
   "description": "Displays an interactive before/after image",
   "majorVersion": 1,
-  "minorVersion": 2,
-  "patchVersion": 1,
+  "minorVersion": 3,
+  "patchVersion": 0,
   "runnable": 1,
   "embedTypes": [
     "iframe"
@@ -17,12 +17,24 @@
   },
   "preloadedJs": [
     {
-      "path": "scripts/juxtaposition.js"
+      "path": "dist/h5p-image-juxtaposition.js"
     }
   ],
   "preloadedCss": [
     {
-      "path": "styles/juxtaposition.css"
+      "path": "dist/h5p-image-juxtaposition.css"
+    }
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.Question",
+      "majorVersion": 1,
+      "minorVersion": 4
+    },
+    {
+      "machineName": "H5P.JoubelUI",
+      "majorVersion": 1,
+      "minorVersion": 3
     }
   ]
 }
