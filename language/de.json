@@ -50,6 +50,9 @@
               "label": "Vertikal"
             }
           ]
+        },
+        {
+          "label": "Farbe des Schiebereglers"
         }
       ]
     }

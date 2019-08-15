@@ -50,6 +50,9 @@
               "label": "Pystysuuntainen"
             }
           ]
+        },
+        {
+          "label": "Slider color"
         }
       ]
     }

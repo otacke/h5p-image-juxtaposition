@@ -188,12 +188,16 @@ class ImageJuxtapositionSlider {
       this.controller = document.createElement('div');
 
       this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
+      this.leftArrow.style.borderColor = `transparent ${this.options.color} transparent transparent`;
       this.leftArrow.setAttribute('draggable', 'false');
       this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
+      this.rightArrow.style.borderColor = `transparent transparent transparent ${this.options.color}`;
       this.rightArrow.setAttribute('draggable', 'false');
       this.control.className = 'h5p-image-juxtaposition-control';
+      this.control.style.backgroundColor = this.options.color;
       this.control.setAttribute('draggable', 'false');
       this.controller.className = 'h5p-image-juxtaposition-controller';
+      this.controller.style.backgroundColor = this.options.color;
       this.controller.setAttribute('draggable', 'false');
 
       this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document

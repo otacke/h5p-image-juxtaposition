@@ -24,7 +24,8 @@ class ImageJuxtaposition extends H5P.Question {
       },
       behavior: {
         startingPosition: 50,
-        sliderOrientation: 'horizontal'
+        sliderOrientation: 'horizontal',
+        sliderColor: '#f3f3f3'
       }
     }, params);
 
@@ -75,7 +76,8 @@ class ImageJuxtaposition extends H5P.Question {
           ],
           {
             startingPosition: this.params.behavior.startingPosition + '%',
-            mode: this.params.behavior.sliderOrientation
+            mode: this.params.behavior.sliderOrientation,
+            color: this.params.behavior.sliderColor
           },
           this
         );
