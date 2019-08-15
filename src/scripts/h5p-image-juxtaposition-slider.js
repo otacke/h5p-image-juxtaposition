@@ -18,6 +18,8 @@ class ImageJuxtapositionSlider {
       };
 
       this.image.src = properties.src;
+      this.image.alt = properties.alt || '';
+      this.image.title = properties.title || '';
       this.label = properties.label || false;
     };
 

@@ -61,11 +61,15 @@ class ImageJuxtaposition extends H5P.Question {
           '.h5p-image-juxtaposition-juxtapose',
           [
             {
-              src: H5P.getPath(this.params.imageBefore.imageBefore.path, this.contentId),
+              src: H5P.getPath(this.params.imageBefore.imageBefore.params.file.path, this.contentId),
+              alt: this.params.imageBefore.imageBefore.params.alt,
+              title: this.params.imageBefore.imageBefore.params.title,
               label: this.params.imageBefore.labelBefore
             },
             {
-              src: H5P.getPath(this.params.imageAfter.imageAfter.path, this.contentId),
+              src: H5P.getPath(this.params.imageAfter.imageAfter.params.file.path, this.contentId),
+              alt: this.params.imageAfter.imageAfter.params.alt,
+              title: this.params.imageAfter.imageAfter.params.title,
               label: this.params.imageAfter.labelAfter
             }
           ],
