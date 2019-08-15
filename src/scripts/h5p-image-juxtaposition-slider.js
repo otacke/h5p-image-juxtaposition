@@ -3,6 +3,7 @@ class ImageJuxtapositionSlider {
     this.selector = selector;
     this.options = options;
     this.parent = parent;
+    this.internalResize = false;
 
     this.animate = false;
 
@@ -120,16 +121,12 @@ class ImageJuxtapositionSlider {
   }
 
   setWrapperDimensions() {
-    const targetWidth = Math.floor(window.innerWidth - 2);
-    const targetHeight = Math.floor(targetWidth / this.imageRatio);
+    const targetWidth = window.innerWidth - 2;
+    const targetHeight = targetWidth / this.imageRatio;
 
-    this.wrapper.style.width = targetWidth + 'px';
-    this.wrapper.style.height = targetHeight + 'px';
-
-    // resize iframe if image's height is too small or too high
-    if (((window.innerHeight - H5P.jQuery('ul.h5p-actions').outerHeight()) > 0) &&
-      ((window.innerHeight - H5P.jQuery('ul.h5p-actions').outerHeight() - 1) !== targetHeight)) {
-      this.parent.trigger('resize');
+    if (this.wrapper) {
+      this.wrapper.style.width = targetWidth + 'px';
+      this.wrapper.style.height = targetHeight + 'px';
     }
   }
 
@@ -342,9 +339,6 @@ class ImageJuxtapositionSlider {
     }
 
     const self = this;
-    window.addEventListener('resize', function () {
-      self.setWrapperDimensions();
-    });
 
     // Event Listeners for Mouse Interface
     this.slider.addEventListener('mousedown', function (e) {
@@ -424,13 +418,18 @@ class ImageJuxtapositionSlider {
     });
 
     self.updateSlider(this.options.startingPosition, false);
-    self.setWrapperDimensions();
 
     // This is a workaround for our beloved IE that would otherwise distort the images
     this.imgBefore.image.setAttribute('width', '');
     this.imgBefore.image.setAttribute('height', '');
     this.imgAfter.image.setAttribute('width', '');
     this.imgAfter.image.setAttribute('height', '');
+
+    // TODO: Find a way to get rid of that extra resize
+    self.parent.trigger('resize');
+    setTimeout(() => {
+      self.parent.trigger('resize');
+    }, 0);
   }
 }
 

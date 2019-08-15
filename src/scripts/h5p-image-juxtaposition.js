@@ -76,6 +76,10 @@ class ImageJuxtaposition extends H5P.Question {
           this
         );
 
+        this.on('resize', () => {
+          slider.setWrapperDimensions();
+        });
+
         // This is needed for Chrome to detect the mouseup outside the iframe
         window.addEventListener('mouseup', function () {
           slider.mouseup();
@@ -83,7 +87,6 @@ class ImageJuxtaposition extends H5P.Question {
       }
 
       this.setContent(container);
-
     };
 
     /**
