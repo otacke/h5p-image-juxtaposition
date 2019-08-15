@@ -429,7 +429,7 @@ class ImageJuxtapositionSlider {
     self.parent.trigger('resize');
     setTimeout(() => {
       self.parent.trigger('resize');
-    }, 0);
+    }, 1); // At least Firefox needs 1 instead of 0
   }
 }
 
