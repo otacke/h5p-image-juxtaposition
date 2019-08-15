@@ -96,7 +96,7 @@ class ImageJuxtapositionSlider {
     label.setAttribute('onselectstart', 'return false;');
     label.setAttribute('onmousedown', 'return false;');
     label.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
-    label.textContent = labelText;
+    label.innerHTML = labelText;
 
     element.appendChild(label);
   }
