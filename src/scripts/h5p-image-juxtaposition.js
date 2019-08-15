@@ -1,4 +1,5 @@
 import ImageJuxtapositionSlider from './h5p-image-juxtaposition-slider';
+import Spinner from './h5p-image-juxtaposition-spinner';
 import Util from './h5p-image-juxtaposition-util';
 
 /* This h5p content library is based on ...
@@ -35,6 +36,10 @@ class ImageJuxtaposition extends H5P.Question {
     this.registerDomElements = () => {
       const container = document.createElement('div');
       container.classList.add('h5p-image-juxtaposition-container');
+
+      // Spinner to indicate loading
+      this.spinner = new Spinner('h5p-image-juxtaposition-spinner');
+      container.appendChild(this.spinner.getDOM());
 
       // Title bar
       if (this.params.title) {

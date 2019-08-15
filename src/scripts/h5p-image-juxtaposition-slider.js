@@ -431,6 +431,9 @@ class ImageJuxtapositionSlider {
     this.imgAfter.image.setAttribute('width', '');
     this.imgAfter.image.setAttribute('height', '');
 
+    // We can hide the spinner now
+    this.parent.spinner.hide();
+
     // TODO: Find a way to get rid of that extra resize
     self.parent.trigger('resize');
     setTimeout(() => {
