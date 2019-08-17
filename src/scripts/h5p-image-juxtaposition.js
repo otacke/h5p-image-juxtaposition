@@ -2,7 +2,7 @@ import ImageJuxtapositionSlider from './h5p-image-juxtaposition-slider';
 import Spinner from './h5p-image-juxtaposition-spinner';
 import Util from './h5p-image-juxtaposition-util';
 
-/* This h5p content library is based on ...
+/* This h5p content library is loosely based on ...
  * juxtapose - v1.1.2 - 2015-07-16
  * Copyright (c) 2015 Alex Duner and Northwestern University Knight Lab
  * License: Mozilla Public License 2.0, https://www.mozilla.org/en-US/MPL/2.0/
@@ -64,27 +64,36 @@ class ImageJuxtaposition extends H5P.Question {
 
         // Create the slider
         const slider = new ImageJuxtapositionSlider(
-          '.h5p-image-juxtaposition-juxtapose',
-          [
-            {
-              src: H5P.getPath(this.params.imageBefore.imageBefore.params.file.path, this.contentId),
-              alt: this.params.imageBefore.imageBefore.params.alt,
-              title: this.params.imageBefore.imageBefore.params.title,
-              label: this.params.imageBefore.labelBefore
-            },
-            {
-              src: H5P.getPath(this.params.imageAfter.imageAfter.params.file.path, this.contentId),
-              alt: this.params.imageAfter.imageAfter.params.alt,
-              title: this.params.imageAfter.imageAfter.params.title,
-              label: this.params.imageAfter.labelAfter
-            }
-          ],
           {
+            container: content,
+            images: [
+              {
+                src: H5P.getPath(this.params.imageBefore.imageBefore.params.file.path, this.contentId),
+                alt: this.params.imageBefore.imageBefore.params.alt,
+                title: this.params.imageBefore.imageBefore.params.title,
+                label: this.params.imageBefore.labelBefore
+              },
+              {
+                src: H5P.getPath(this.params.imageAfter.imageAfter.params.file.path, this.contentId),
+                alt: this.params.imageAfter.imageAfter.params.alt,
+                title: this.params.imageAfter.imageAfter.params.title,
+                label: this.params.imageAfter.labelAfter
+              }
+            ],
             startingPosition: this.params.behavior.startingPosition + '%',
             mode: this.params.behavior.sliderOrientation,
             color: this.params.behavior.sliderColor
           },
-          this
+          () => {
+            // We can hide the spinner now
+            this.spinner.hide();
+
+            // TODO: Find a way to get rid of that extra resize
+            this.trigger('resize');
+            setTimeout(() => {
+              this.trigger('resize');
+            }, 1); // At least Firefox needs 1 instead of 0
+          }
         );
 
         this.on('resize', () => {

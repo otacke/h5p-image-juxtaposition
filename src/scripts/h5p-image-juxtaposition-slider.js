@@ -1,55 +1,70 @@
-class ImageJuxtapositionSlider {
-  constructor(selector, images, options, parent) {
-    this.selector = selector;
-    this.options = options;
-    this.parent = parent;
-    this.internalResize = false;
+import ImageJuxtapositionImage from './h5p-image-juxtaposition-image';
 
+class ImageJuxtapositionSlider {
+  constructor(params, callbackLoaded) {
+  // constructor(container, images, options, parent) {
+    this.params = params;
+    this.callbackLoaded = callbackLoaded;
     this.animate = false;
 
-    const Graphic = function (properties, slider) {
-      const self = this;
-      this.image = new Image();
+    this.isLoaded = 0;
 
-      this.loaded = false;
-      this.image.onload = function () {
-        self.loaded = true;
-        slider._onLoaded();
-      };
+    this.buildDOM();
 
-      this.image.src = properties.src;
-      this.image.alt = properties.alt || '';
-      this.image.title = properties.title || '';
-      this.label = properties.label || false;
-    };
+    this.leftImage = new ImageJuxtapositionImage(
+      {
+        image: this.params.images[0],
+        label: 'LABEL',
+        position: 'left',
+      },
+      (imageDOM) => {
+        this.leftImageDOM.parentNode.replaceChild(imageDOM, this.leftImageDOM);
+        this.leftImageDOM = imageDOM;
+        this.isLoaded++;
+        this._onLoaded();
+      }
+    );
 
-    if (images.length === 2) {
-      this.imgBefore = new Graphic(images[0], this);
-      this.imgAfter = new Graphic(images[1], this);
-    }
-    else {
-      console.warn('The images parameter takes two Image objects.');
-    }
+    this.rightImage = new ImageJuxtapositionImage(
+      {
+        image: this.params.images[1],
+        label: 'LABEL 2',
+        position: 'right',
+      },
+      (imageDOM) => {
+        this.rightImageDOM.parentNode.replaceChild(imageDOM, this.rightImageDOM);
+        this.rightImageDOM = imageDOM;
+        this.isLoaded++;
+        this._onLoaded();
+      }
+    );
   }
 
-  buildGraphic(properties, slider) {
-    const image = new Image();
-    image.loaded = false;
-    image.onload = () => {
-      image.loaded = true;
-      slider._onLoaded();
-    };
+  buildDOM() {
+    // Slider
+    this.slider = document.createElement('div');
+    this.slider.className = 'h5p-image-juxtaposition-slider';
+    this.slider.classList.add('h5p-image-juxtaposition-' + this.params.mode);
+    this.slider.setAttribute('draggable', 'false');
+    this.params.container.appendChild(this.slider);
 
-    return {
-      image: image,
-      label: properties.label || false
-    };
+    // Slider->Handle
+    this.handle = document.createElement('div');
+    this.handle.className = 'h5p-image-juxtaposition-handle';
+    this.handle.setAttribute('draggable', 'false');
+    this.slider.appendChild(this.handle);
+
+    this.leftImageDOM = document.createElement('div');
+    this.slider.appendChild(this.leftImageDOM);
+
+    this.rightImageDOM = document.createElement('div');
+    this.slider.appendChild(this.rightImageDOM);
   }
 
   updateSlider(input, animate) {
     let leftPercent, rightPercent, leftPercentNum;
 
-    if (this.options.mode === 'vertical') {
+    if (this.params.mode === 'vertical') {
       leftPercent = this.getTopPercent(this.slider, input);
     }
     else {
@@ -65,24 +80,24 @@ class ImageJuxtapositionSlider {
       // add animation effect
       if (animate === true) {
         this.handle.classList.add('transition');
-        this.leftImage.classList.add('transition');
-        this.rightImage.classList.add('transition');
+        this.leftImageDOM.classList.add('transition');
+        this.rightImageDOM.classList.add('transition');
       }
       else {
         this.handle.classList.remove('transition');
-        this.leftImage.classList.remove('transition');
-        this.rightImage.classList.remove('transition');
+        this.leftImageDOM.classList.remove('transition');
+        this.rightImageDOM.classList.remove('transition');
       }
 
-      if (this.options.mode === 'vertical') {
+      if (this.params.mode === 'vertical') {
         this.handle.style.top = leftPercent;
-        this.leftImage.style.height = leftPercent;
-        this.rightImage.style.height = rightPercent;
+        this.leftImageDOM.style.height = leftPercent;
+        this.rightImageDOM.style.height = rightPercent;
       }
       else {
         this.handle.style.left = leftPercent;
-        this.leftImage.style.width = leftPercent;
-        this.rightImage.style.width = rightPercent;
+        this.leftImageDOM.style.width = leftPercent;
+        this.rightImageDOM.style.width = rightPercent;
       }
       this.sliderPosition = leftPercent;
     }
@@ -91,163 +106,60 @@ class ImageJuxtapositionSlider {
     this.controller.setAttribute('aria-valuenow', leftPercentNum);
   }
 
-  displayLabel(element, labelText) {
-    const label = document.createElement('div');
-    label.className = 'h5p-image-juxtaposition-label';
-    label.setAttribute('unselectable', 'on');
-    label.setAttribute('onselectstart', 'return false;');
-    label.setAttribute('onmousedown', 'return false;');
-    label.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
-    label.innerHTML = labelText;
-
-    element.appendChild(label);
-  }
-
-  checkImages() {
-    return this.getImageDimensions(this.imgBefore.image).aspect() === this.getImageDimensions(this.imgAfter.image).aspect() ? true : false;
-  }
-
-  calculateDims(width, height) {
-    const ratio = this.getImageDimensions(this.imgBefore.image).aspect();
-    if (width) {
-      height = width / ratio;
-    }
-    else if (height) {
-      width = height * ratio;
-    }
-    return {
-      width: width,
-      height: height,
-      ratio: ratio
-    };
-  }
-
   setWrapperDimensions() {
     const targetWidth = window.innerWidth - 2;
     const targetHeight = targetWidth / this.imageRatio;
 
-    if (this.wrapper) {
-      this.wrapper.style.width = targetWidth + 'px';
-      this.wrapper.style.height = targetHeight + 'px';
+    if (this.params.container) {
+      this.params.container.style.width = targetWidth + 'px';
+      this.params.container.style.height = targetHeight + 'px';
     }
   }
 
   _onLoaded() {
-    if (this.imgBefore && this.imgBefore.loaded === true && this.imgAfter && this.imgAfter.loaded === true) {
-
-      this.imageRatio = this.getImageDimensions(this.imgBefore.image).aspect();
-
-      this.wrapper = document.querySelector(this.selector);
-      this.wrapper.style.width = this.getNaturalDimensions(this.imgBefore.image).width;
-
-      this.slider = document.createElement('div');
-      this.slider.className = 'h5p-image-juxtaposition-slider';
-      this.slider.classList.add('h5p-image-juxtaposition-' + this.options.mode);
-      this.slider.setAttribute('draggable', 'false');
-      this.wrapper.appendChild(this.slider);
-
-      this.handle = document.createElement('div');
-      this.handle.className = 'h5p-image-juxtaposition-handle';
-      this.handle.setAttribute('draggable', 'false');
-
-      this.rightImage = document.createElement('div');
-      this.rightImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-right';
-      this.rightImage.setAttribute('draggable', 'false');
-
-      this.imgAfter.image.classList.add('h5p-image-juxtaposition-rightimg');
-
-      // TODO: Make simpler (prevent dragging, etc. when leaving iframe)
-      this.imgAfter.image.setAttribute('draggable', 'false');
-      this.imgAfter.image.setAttribute('unselectable', 'on');
-      this.imgAfter.image.setAttribute('onselectstart', 'return false;');
-      this.imgAfter.image.setAttribute('onmousedown', 'return false;');
-
-      this.rightImage.appendChild(this.imgAfter.image);
-
-      this.leftImage = document.createElement('div');
-      this.leftImage.className = 'h5p-image-juxtaposition-image h5p-image-juxtaposition-left';
-      this.leftImage.setAttribute('draggable', 'false');
-
-      this.imgBefore.image.classList.add('h5p-image-juxtaposition-leftimg');
-
-      // TODO: Make simpler (prevent dragging, etc. when leaving iframe)
-      this.imgBefore.image.setAttribute('draggable', 'false');
-      this.imgBefore.image.setAttribute('unselectable', 'on');
-      this.imgBefore.image.setAttribute('onselectstart', 'return false;');
-      this.imgBefore.image.setAttribute('onmousedown', 'return false;');
-
-      this.leftImage.appendChild(this.imgBefore.image);
-
-      this.slider.appendChild(this.handle);
-      this.slider.appendChild(this.leftImage);
-      this.slider.appendChild(this.rightImage);
-
-      this.leftArrow = document.createElement('div');
-      this.rightArrow = document.createElement('div');
-      this.control = document.createElement('div');
-      this.controller = document.createElement('div');
-
-      this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
-      this.leftArrow.style.borderColor = `transparent ${this.options.color} transparent transparent`;
-      this.leftArrow.setAttribute('draggable', 'false');
-      this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
-      this.rightArrow.style.borderColor = `transparent transparent transparent ${this.options.color}`;
-      this.rightArrow.setAttribute('draggable', 'false');
-      this.control.className = 'h5p-image-juxtaposition-control';
-      this.control.style.backgroundColor = this.options.color;
-      this.control.setAttribute('draggable', 'false');
-      this.controller.className = 'h5p-image-juxtaposition-controller';
-      this.controller.style.backgroundColor = this.options.color;
-      this.controller.setAttribute('draggable', 'false');
-
-      this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
-      this.controller.setAttribute('role', 'slider');
-      this.controller.setAttribute('aria-valuenow', parseInt(this.options.startingPosition));
-      this.controller.setAttribute('aria-valuemin', 0);
-      this.controller.setAttribute('aria-valuemax', 100);
-
-      this.handle.appendChild(this.leftArrow);
-      this.handle.appendChild(this.control);
-      this.handle.appendChild(this.rightArrow);
-      this.control.appendChild(this.controller);
-
-      this._init();
+    if (this.isLoaded < 2) {
+      return;
     }
-  }
 
-  getNaturalDimensions(DOMelement) {
-    if (DOMelement.naturalWidth && DOMelement.naturalHeight) {
-      return {
-        width: DOMelement.naturalWidth,
-        height: DOMelement.naturalHeight
-      };
+    const dimensions = [this.leftImage.getDimensions(), this.rightImage.getDimensions()];
+    if (dimensions[0].ratio !== dimensions[1].ratio) {
+      console.warn('Make sure that both images have the same aspect ratio.');
     }
-    // http://www.jacklmoore.com/notes/naturalwidth-and-naturalheight-in-ie/
-    const img = new Image();
-    img.src = DOMelement.src;
-    return {
-      width: img.width,
-      height: img.height
-    };
-  }
 
-  /**
-   * Get dimensions for Graphics.
-   *
-   * @private
-   * @param {object} Graphic object.
-   * @return {object} object containing width, height, and ratio.
-   */
-  getImageDimensions(img) {
-    return {
-      width: this.getNaturalDimensions(img).width,
-      height: this.getNaturalDimensions(img).height,
-      aspect: function aspect() {
-        return this.width / this.height;
-      }
-    };
-  }
+    this.imageRatio = dimensions[0].ratio;
+    this.params.container.style.width = dimensions[0].width;
 
+    this.leftArrow = document.createElement('div');
+    this.rightArrow = document.createElement('div');
+    this.control = document.createElement('div');
+    this.controller = document.createElement('div');
+
+    this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
+    this.leftArrow.style.borderColor = `transparent ${this.params.color} transparent transparent`;
+    this.leftArrow.setAttribute('draggable', 'false');
+    this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
+    this.rightArrow.style.borderColor = `transparent transparent transparent ${this.params.color}`;
+    this.rightArrow.setAttribute('draggable', 'false');
+    this.control.className = 'h5p-image-juxtaposition-control';
+    this.control.style.backgroundColor = this.params.color;
+    this.control.setAttribute('draggable', 'false');
+    this.controller.className = 'h5p-image-juxtaposition-controller';
+    this.controller.style.backgroundColor = this.params.color;
+    this.controller.setAttribute('draggable', 'false');
+
+    this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
+    this.controller.setAttribute('role', 'slider');
+    this.controller.setAttribute('aria-valuenow', parseInt(this.params.startingPosition));
+    this.controller.setAttribute('aria-valuemin', 0);
+    this.controller.setAttribute('aria-valuemax', 100);
+
+    this.handle.appendChild(this.leftArrow);
+    this.handle.appendChild(this.control);
+    this.handle.appendChild(this.rightArrow);
+    this.control.appendChild(this.controller);
+
+    this._init();
+  }
 
   getLeftPercent(slider, input) {
     let leftPercent;
@@ -332,18 +244,6 @@ class ImageJuxtapositionSlider {
   }
 
   _init() {
-    if (this.checkImages() === false) {
-      console.warn(this, 'Check that the two images have the same aspect ratio for the slider to work correctly.');
-    }
-
-    // Display labels
-    if (this.imgBefore.label) {
-      this.displayLabel(this.leftImage, this.imgBefore.label);
-    }
-    if (this.imgAfter.label) {
-      this.displayLabel(this.rightImage, this.imgAfter.label);
-    }
-
     const self = this;
 
     // Event Listeners for Mouse Interface
@@ -407,7 +307,7 @@ class ImageJuxtapositionSlider {
     });
 
     // Event Listeners for Keyboard on images
-    this.leftImage.addEventListener('keydown', function (e) {
+    this.leftImageDOM.addEventListener('keydown', function (e) {
       const key = e.which || e.keyCode;
       if ((key === 13) || (key === 32)) {
         self.updateSlider('90%', true);
@@ -415,7 +315,7 @@ class ImageJuxtapositionSlider {
       }
     });
 
-    this.rightImage.addEventListener('keydown', function (e) {
+    this.rightImageDOM.addEventListener('keydown', function (e) {
       const key = e.which || e.keyCode;
       if ((key === 13) || (key === 32)) {
         self.updateSlider('10%', true);
@@ -423,22 +323,9 @@ class ImageJuxtapositionSlider {
       }
     });
 
-    self.updateSlider(this.options.startingPosition, false);
+    self.updateSlider(this.params.startingPosition, false);
 
-    // This is a workaround for our beloved IE that would otherwise distort the images
-    this.imgBefore.image.setAttribute('width', '');
-    this.imgBefore.image.setAttribute('height', '');
-    this.imgAfter.image.setAttribute('width', '');
-    this.imgAfter.image.setAttribute('height', '');
-
-    // We can hide the spinner now
-    this.parent.spinner.hide();
-
-    // TODO: Find a way to get rid of that extra resize
-    self.parent.trigger('resize');
-    setTimeout(() => {
-      self.parent.trigger('resize');
-    }, 1); // At least Firefox needs 1 instead of 0
+    this.callbackLoaded();
   }
 }
 
