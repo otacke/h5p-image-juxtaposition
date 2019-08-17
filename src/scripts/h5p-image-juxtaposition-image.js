@@ -1,34 +1,21 @@
 /** Class representing a Slider Image including a label */
 class ImageJuxtapositionImage {
-
   /**
-   * Constructor.
-   *
+   * @constructor
    * @param {object} params Parameters.
    * @param {function} callbackLoaded Callback for when image is loaded.
    */
   constructor(params, callbackLoaded) {
-    this.loaded = false;
     this.params = params;
+    this.callbackLoaded = callbackLoaded;
 
-    this.image = new Image();
-    this.image.onload = () => {
-      this.isLoaded = true;
+    this.loaded = false;
 
-      this.buildDOM();
-
-      callbackLoaded(this.getDOM());
-    };
-
-    this.image.src = params.image.src;
-    this.image.alt = params.image.alt || '';
-    this.image.title = params.image.title || '';
-    this.label = params.label || false;
+    this.buildDOM();
   }
 
   /**
    * Get DOM.
-   *
    * @return {HTMLElement} Image DOM.
    */
   getDOM() {
@@ -37,7 +24,6 @@ class ImageJuxtapositionImage {
 
   /**
    * Get width, height and aspect ratio.
-   *
    * @return {object} Object containing width, height, and ratio.
    */
   getDimensions() {
@@ -57,6 +43,27 @@ class ImageJuxtapositionImage {
   }
 
   /**
+   * Set height/width determined by slider position.
+   * @param {number} position Position.
+   * @param {boolean} [animate=false] Set animated state if true.
+   */
+  update(position, animate = false) {
+    if (animate === true) {
+      this.imageDOM.classList.add('transition');
+    }
+    else {
+      this.imageDOM.classList.remove('transition');
+    }
+
+    if (this.params.mode === 'horizontal') {
+      this.imageDOM.style.width = `${position}%`;
+    }
+    else {
+      this.imageDOM.style.height = `${position}%`;
+    }
+  }
+
+  /**
    * Build image DOM.
    */
   buildDOM() {
@@ -65,10 +72,19 @@ class ImageJuxtapositionImage {
     this.imageDOM.setAttribute('draggable', 'false');
 
     // Image
+    this.image = new Image();
+    this.image.onload = () => {
+      this.isLoaded = true;
+      this.callbackLoaded();
+    };
+
+    this.image.src = this.params.image.src;
+    this.image.alt = this.params.image.alt || '';
+    this.image.title = this.params.image.title || '';
+    this.label = this.params.label || false;
     this.image.setAttribute('draggable', 'false');
     this.image.setAttribute('unselectable', 'on');
     this.image.setAttribute('onselectstart', 'return false;');
-    this.image.setAttribute('onmousedown', 'return false;');
     // This is a workaround for our beloved IE that would otherwise distort the images
     this.image.setAttribute('width', '');
     this.image.setAttribute('height', '');

@@ -1,11 +1,10 @@
 /** Class representing a Slider handle */
 class ImageJuxtapositionHandle {
-
   /**
-   * Constructor.
-   *
+   * @constructor
    * @param {object} params Parameters.
    * @param {string} params.color Handle color as #xxxxxx.
+   * @param {string} params.mode Slider direction.
    * @param {function} callbackUpdate Callback for slider updates.
    */
   constructor(params, callbackUpdate) {
@@ -32,13 +31,17 @@ class ImageJuxtapositionHandle {
     // Left arrow
     const leftArrow = document.createElement('div');
     leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
-    leftArrow.style.borderColor = `transparent ${this.params.color} transparent transparent`;
+    leftArrow.style.borderColor = (this.params.mode === 'horizontal') ?
+      `transparent ${this.params.color} transparent transparent` :
+      `transparent transparent ${this.params.color} transparent`;
     leftArrow.setAttribute('draggable', 'false');
 
     // Right arrow
     const rightArrow = document.createElement('div');
     rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
-    rightArrow.style.borderColor = `transparent transparent transparent ${this.params.color}`;
+    rightArrow.style.borderColor = (this.params.mode === 'horizontal') ?
+      `transparent transparent transparent ${this.params.color}` :
+      `${this.params.color} transparent transparent transparent`;
     rightArrow.setAttribute('draggable', 'false');
 
     // Complete handle
@@ -69,7 +72,6 @@ class ImageJuxtapositionHandle {
 
   /**
    * Get handle DOM.
-   *
    * @return {HTMLElement} Handle DOM.
    */
   getDOM() {
@@ -77,14 +79,27 @@ class ImageJuxtapositionHandle {
   }
 
   /**
-   * Set ARIA value for slider position.
-   *
+   * Update slider position.
    * @param {number} position Position.
+   * @param {boolean} [animate=false] Set animated state if true.
    */
-  update(position) {
+  update(position, animate = false) {
+    if (animate === true) {
+      this.handle.classList.add('transition');
+    }
+    else {
+      this.handle.classList.remove('transition');
+    }
+
+    if (this.params.mode === 'horizontal') {
+      this.handle.style.left = `${position}%`;
+    }
+    else {
+      this.handle.style.top = `${position}%`;
+    }
+
     this.controller.setAttribute('aria-valuenow', position);
   }
-
 }
 
 export default ImageJuxtapositionHandle;

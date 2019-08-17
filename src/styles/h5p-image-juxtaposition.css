@@ -227,7 +227,6 @@ div.h5p-image-juxtaposition-image {
 	position: absolute;
 	height: 100%;
 	display: inline-block;
-	/* top: 0; */
 	overflow: hidden;
 	-webkit-backface-visibility: hidden;
 }

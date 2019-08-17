@@ -2,14 +2,24 @@ import ImageJuxtapositionSlider from './h5p-image-juxtaposition-slider';
 import Spinner from './h5p-image-juxtaposition-spinner';
 import Util from './h5p-image-juxtaposition-util';
 
-/* This h5p content library is loosely based on ...
+/* This h5p content library was based on ...
+ *
  * juxtapose - v1.1.2 - 2015-07-16
  * Copyright (c) 2015 Alex Duner and Northwestern University Knight Lab
  * License: Mozilla Public License 2.0, https://www.mozilla.org/en-US/MPL/2.0/
  * original source code: https://github.com/NUKnightLab/juxtapose
+ *
+ * ... but now the code has hardly anything in common anymore.
  */
 
+/** Class for utility functions */
 class ImageJuxtaposition extends H5P.Question {
+  /**
+   * @constructor
+   * @param {object} params Parameters from semantics.
+   * @param {number} contentId Content Id.
+   * @param {object} contentData Content data.
+   */
   constructor(params, contentId, contentData) {
     super('image-juxtaposition');
 
@@ -33,6 +43,9 @@ class ImageJuxtaposition extends H5P.Question {
     this.contentId = contentId;
     this.contentData = contentData;
 
+    /**
+     * Register DOM elements with H5P.Question.
+     */
     this.registerDomElements = () => {
       const container = document.createElement('div');
       container.classList.add('h5p-image-juxtaposition-container');
@@ -57,7 +70,6 @@ class ImageJuxtaposition extends H5P.Question {
         container.appendChild(message);
       }
       else {
-        // The div element will be filled by JXSlider._onLoaded later
         const content = document.createElement('div');
         content.classList.add('h5p-image-juxtaposition-juxtapose');
         container.appendChild(content);
@@ -85,28 +97,28 @@ class ImageJuxtaposition extends H5P.Question {
             color: this.params.behavior.sliderColor
           },
           () => {
-            // We can hide the spinner now
-            this.spinner.hide();
-
-            // TODO: Find a way to get rid of that extra resize
-            this.trigger('resize');
-            setTimeout(() => {
-              this.trigger('resize');
-            }, 1); // At least Firefox needs 1 instead of 0
+            this.handleLoaded();
           }
         );
 
         this.on('resize', () => {
-          slider.setWrapperDimensions();
-        });
-
-        // This is needed for Chrome to detect the mouseup outside the iframe
-        window.addEventListener('mouseup', function () {
-          slider.mouseup();
+          slider.resize();
         });
       }
 
       this.setContent(container);
+    };
+
+    /**
+     * Handle slider loaded.
+     */
+    this.handleLoaded = () => {
+      // We can hide the spinner now
+      this.spinner.hide();
+
+      setTimeout(() => {
+        this.trigger('resize');
+      }, 1); // At least Firefox needs 1 instead of 0
     };
 
     /**

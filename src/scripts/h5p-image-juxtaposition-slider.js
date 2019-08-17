@@ -2,45 +2,24 @@ import ImageJuxtapositionImage from './h5p-image-juxtaposition-image';
 import ImageJuxtapositionHandle from './h5p-image-juxtaposition-handle';
 
 class ImageJuxtapositionSlider {
+  /**
+   * @constructor
+   * @param {object} params Parameters from semantics.
+   * @param {function} callbackLoaded Callback for slider loaded.
+   */
   constructor(params, callbackLoaded) {
-  // constructor(container, images, options, parent) {
     this.params = params;
     this.callbackLoaded = callbackLoaded;
-    this.animate = false;
 
-    this.isLoaded = 0;
+    this.isSliding = false;
+    this.imagesLoaded = 0;
 
     this.buildDOM();
-
-    this.leftImage = new ImageJuxtapositionImage(
-      {
-        image: this.params.images[0],
-        label: 'LABEL',
-        position: 'left',
-      },
-      (imageDOM) => {
-        this.leftImageDOM.parentNode.replaceChild(imageDOM, this.leftImageDOM);
-        this.leftImageDOM = imageDOM;
-        this.isLoaded++;
-        this.handleImageLoaded();
-      }
-    );
-
-    this.rightImage = new ImageJuxtapositionImage(
-      {
-        image: this.params.images[1],
-        label: 'LABEL 2',
-        position: 'right',
-      },
-      (imageDOM) => {
-        this.rightImageDOM.parentNode.replaceChild(imageDOM, this.rightImageDOM);
-        this.rightImageDOM = imageDOM;
-        this.isLoaded++;
-        this.handleImageLoaded();
-      }
-    );
   }
 
+  /**
+   * Build DOM.
+   */
   buildDOM() {
     // Slider
     this.slider = document.createElement('div');
@@ -52,82 +31,89 @@ class ImageJuxtapositionSlider {
     // Slider->Handle
     this.handle = new ImageJuxtapositionHandle(
       {
-        color: this.params.color
+        color: this.params.color,
+        mode: this.params.mode
       },
       (position) => {
-        this.updateSlider(position);
+        this.update(position);
       }
     );
     this.slider.appendChild(this.handle.getDOM());
 
-    this.leftImageDOM = document.createElement('div');
-    this.slider.appendChild(this.leftImageDOM);
+    // Slider->Left image
+    this.firstImage = new ImageJuxtapositionImage(
+      {
+        image: this.params.images[0],
+        label: this.params.images[0].label,
+        mode: this.params.mode,
+        position: 'left',
+      },
+      () => {
+        this.imagesLoaded++;
+        this.handleImageLoaded();
+      }
+    );
+    this.slider.appendChild(this.firstImage.getDOM());
 
-    this.rightImageDOM = document.createElement('div');
-    this.slider.appendChild(this.rightImageDOM);
+    // Slider->Right image
+    this.secondImage = new ImageJuxtapositionImage(
+      {
+        image: this.params.images[1],
+        label: this.params.images[1].label,
+        mode: this.params.mode,
+        position: 'right',
+      },
+      () => {
+        this.imagesLoaded++;
+        this.handleImageLoaded();
+      }
+    );
+    this.slider.appendChild(this.secondImage.getDOM());
   }
 
-  updateSlider(input, animate = false) {
-    let leftPercent, rightPercent, leftPercentNum;
+  /**
+   * Update slider position.
+   * @param {Event|string|number} input Event to determine position.
+   * @param {boolean} [animate = false] If true, animate position update.
+   */
+  update(input, animate = false) {
+    const positionFirst = this.extractPosition(input).toFixed(2);
+    const positionSecond = 100 - positionFirst;
 
-    if (this.params.mode === 'vertical') {
-      leftPercent = this.getTopPercent(this.slider, input);
-    }
-    else {
-      leftPercent = this.getLeftPercent(this.slider, input);
-    }
-
-    leftPercent = leftPercent.toFixed(2) + '%';
-    leftPercentNum = parseFloat(leftPercent);
-    rightPercent = 100 - leftPercentNum + '%';
-
-    // set handler position and image areas
-    if (leftPercentNum > 0 && leftPercentNum < 100) {
-      // add animation effect
-      if (animate === true) {
-        this.handle.getDOM().classList.add('transition');
-        this.leftImageDOM.classList.add('transition');
-        this.rightImageDOM.classList.add('transition');
-      }
-      else {
-        this.handle.getDOM().classList.remove('transition');
-        this.leftImageDOM.classList.remove('transition');
-        this.rightImageDOM.classList.remove('transition');
-      }
-
-      if (this.params.mode === 'vertical') {
-        this.handle.getDOM().style.top = leftPercent;
-        this.leftImageDOM.style.height = leftPercent;
-        this.rightImageDOM.style.height = rightPercent;
-      }
-      else {
-        this.handle.getDOM().style.left = leftPercent;
-        this.leftImageDOM.style.width = leftPercent;
-        this.rightImageDOM.style.width = rightPercent;
-      }
-      this.sliderPosition = leftPercent;
+    if (positionFirst <= 0 || positionSecond >= 100) {
+      return;
     }
 
-    // update aria
-    this.handle.update(leftPercentNum);
+    // Update images' width/height
+    this.firstImage.update(positionFirst, animate);
+    this.secondImage.update(positionSecond, animate);
+
+    // update handle
+    this.handle.update(positionFirst, animate);
   }
 
-  setWrapperDimensions() {
+  /**
+   * Resize slider.
+   */
+  resize() {
     const targetWidth = window.innerWidth - 2;
     const targetHeight = targetWidth / this.imageRatio;
 
     if (this.params.container) {
-      this.params.container.style.width = targetWidth + 'px';
-      this.params.container.style.height = targetHeight + 'px';
+      this.params.container.style.width = `${targetWidth}px`;
+      this.params.container.style.height = `${targetHeight}px`;
     }
   }
 
+  /**
+   * Callback for when image has been loaded.
+   */
   handleImageLoaded() {
-    if (this.isLoaded < 2) {
+    if (this.imagesLoaded < 2) {
       return;
     }
 
-    const dimensions = [this.leftImage.getDimensions(), this.rightImage.getDimensions()];
+    const dimensions = [this.firstImage.getDimensions(), this.secondImage.getDimensions()];
     if (dimensions[0].ratio !== dimensions[1].ratio) {
       console.warn('Make sure that both images have the same aspect ratio.');
     }
@@ -136,91 +122,78 @@ class ImageJuxtapositionSlider {
     this.params.container.style.width = dimensions[0].width;
 
     this.addEventListeners();
-    this.updateSlider(this.params.startingPosition, false);
+    this.update(this.params.startingPosition, false);
 
     this.callbackLoaded();
   }
 
-  getLeftPercent(slider, input) {
-    let leftPercent;
+  /**
+   * Extract position.
+   * @param {Event|string|number} input Input to retrieve position from.
+   * @return {number} Position.
+   */
+  extractPosition(input) {
     if (typeof input === 'string' || typeof input === 'number') {
-      leftPercent = parseInt(input, 10);
+      return parseInt(input, 10);
     }
-    else {
-      const sliderRect = slider.getBoundingClientRect();
-      const offset = {
-        top: sliderRect.top + document.body.scrollTop,
-        left: sliderRect.left + document.body.scrollLeft
-      };
-      const width = slider.offsetWidth;
-      const pageX = this.getPageX(input);
-      const relativeX = pageX - offset.left;
-      leftPercent = relativeX / width * 100;
-    }
-    if (leftPercent === 0) {
-      leftPercent = 0.01;
-    }
-    if (leftPercent === 100) {
-      leftPercent = 99.99;
-    }
-    return leftPercent;
+
+    const sliderRect = this.slider.getBoundingClientRect();
+    const offset = {
+      top: sliderRect.top + document.body.scrollTop,
+      left: sliderRect.left + document.body.scrollLeft
+    };
+
+    const positionMax = (this.params.mode === 'horizontal') ?
+      this.slider.offsetWidth :
+      this.slider.offsetHeight;
+
+    const positionEvent = (this.params.mode === 'horizontal') ?
+      this.getPageX(input) :
+      this.getPageY(input);
+
+    const positionOffset = (this.params.mode === 'horizontal') ?
+      offset.left :
+      offset.top;
+
+    return (positionEvent - positionOffset) / positionMax * 100;
   }
 
-  getPageX(e) {
+  /**
+   * Get x position.
+   * @param {Event} event Event to retrieve x position from.
+   * @return {number} X position.
+   */
+  getPageX(event) {
     let pageX;
-    if (e.pageX) {
-      pageX = e.pageX;
+    if (event.pageX) {
+      pageX = event.pageX;
     }
-    else if (e.touches) {
-      pageX = e.touches[0].pageX;
+    else if (event.touches) {
+      pageX = event.touches[0].pageX;
     }
     else {
-      pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+      pageX = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
     }
     return pageX;
   }
 
-  getPageY(e) {
+  /**
+   * Get y position.
+   * @param {Event} event Event to retrieve y position from.
+   * @return {number} Y position.
+   */
+  getPageY(event) {
     let pageY;
-    if (e.pageY) {
-      pageY = e.pageY;
+    if (event.pageY) {
+      pageY = event.pageY;
     }
-    else if (e.touches) {
-      pageY = e.touches[0].pageY;
+    else if (event.touches) {
+      pageY = event.touches[0].pageY;
     }
     else {
-      pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+      pageY = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
     }
     return pageY;
-  }
-
-  getTopPercent(slider, input) {
-    let topPercent;
-    if (typeof input === 'string' || typeof input === 'number') {
-      topPercent = parseInt(input, 10);
-    }
-    else {
-      const sliderRect = slider.getBoundingClientRect();
-      const offset = {
-        top: sliderRect.top + document.body.scrollTop,
-        left: sliderRect.left + document.body.scrollLeft
-      };
-      const width = slider.offsetHeight;
-      const pageY = this.getPageY(input);
-      const relativeY = pageY - offset.top;
-      topPercent = relativeY / width * 100;
-    }
-    if (topPercent === 0) {
-      topPercent = 0.01;
-    }
-    if (topPercent === 100) {
-      topPercent = 99.99;
-    }
-    return topPercent;
-  }
-
-  mouseup() {
-    this.slider.dispatchEvent(new CustomEvent('mouseup'));
   }
 
   /**
@@ -231,23 +204,16 @@ class ImageJuxtapositionSlider {
     this.slider.addEventListener('mousedown', (event) => {
       event = event || window.event;
       // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
-      this.updateSlider(event, true);
-      this.animate = true;
+      this.update(event, true);
+      this.isSliding = true;
     });
 
     this.slider.addEventListener('mousemove', (event) => {
       event = event || window.event;
       event.preventDefault();
-      if (this.animate === true) {
-        this.updateSlider(event, false);
+      if (this.isSliding === true) {
+        this.update(event, false);
       }
-    });
-
-    this.slider.addEventListener('mouseup', (event) => {
-      event = event || window.event;
-      event.preventDefault();
-      event.stopPropagation();
-      this.animate = false;
     });
 
     // Event Listeners for Touch Interface
@@ -255,14 +221,22 @@ class ImageJuxtapositionSlider {
       event = event || window.event;
       event.preventDefault();
       event.stopPropagation();
-      this.updateSlider(event, true);
+      this.update(event, true);
     });
 
     this.slider.addEventListener('touchmove', (event) => {
       event = event || window.event;
       event.preventDefault();
       event.stopPropagation();
-      this.updateSlider(event, false);
+      this.update(event, false);
+    });
+
+    // Detect mouseup out of slider area
+    window.addEventListener('mouseup', (event) => {
+      event = event || window.event;
+      event.preventDefault();
+      event.stopPropagation();
+      this.isSliding = false;
     });
   }
 }
