@@ -1,4 +1,5 @@
 import ImageJuxtapositionImage from './h5p-image-juxtaposition-image';
+import ImageJuxtapositionHandle from './h5p-image-juxtaposition-handle';
 
 class ImageJuxtapositionSlider {
   constructor(params, callbackLoaded) {
@@ -21,7 +22,7 @@ class ImageJuxtapositionSlider {
         this.leftImageDOM.parentNode.replaceChild(imageDOM, this.leftImageDOM);
         this.leftImageDOM = imageDOM;
         this.isLoaded++;
-        this._onLoaded();
+        this.handleImageLoaded();
       }
     );
 
@@ -35,7 +36,7 @@ class ImageJuxtapositionSlider {
         this.rightImageDOM.parentNode.replaceChild(imageDOM, this.rightImageDOM);
         this.rightImageDOM = imageDOM;
         this.isLoaded++;
-        this._onLoaded();
+        this.handleImageLoaded();
       }
     );
   }
@@ -49,10 +50,15 @@ class ImageJuxtapositionSlider {
     this.params.container.appendChild(this.slider);
 
     // Slider->Handle
-    this.handle = document.createElement('div');
-    this.handle.className = 'h5p-image-juxtaposition-handle';
-    this.handle.setAttribute('draggable', 'false');
-    this.slider.appendChild(this.handle);
+    this.handle = new ImageJuxtapositionHandle(
+      {
+        color: this.params.color
+      },
+      (position) => {
+        this.updateSlider(position);
+      }
+    );
+    this.slider.appendChild(this.handle.getDOM());
 
     this.leftImageDOM = document.createElement('div');
     this.slider.appendChild(this.leftImageDOM);
@@ -61,7 +67,7 @@ class ImageJuxtapositionSlider {
     this.slider.appendChild(this.rightImageDOM);
   }
 
-  updateSlider(input, animate) {
+  updateSlider(input, animate = false) {
     let leftPercent, rightPercent, leftPercentNum;
 
     if (this.params.mode === 'vertical') {
@@ -79,23 +85,23 @@ class ImageJuxtapositionSlider {
     if (leftPercentNum > 0 && leftPercentNum < 100) {
       // add animation effect
       if (animate === true) {
-        this.handle.classList.add('transition');
+        this.handle.getDOM().classList.add('transition');
         this.leftImageDOM.classList.add('transition');
         this.rightImageDOM.classList.add('transition');
       }
       else {
-        this.handle.classList.remove('transition');
+        this.handle.getDOM().classList.remove('transition');
         this.leftImageDOM.classList.remove('transition');
         this.rightImageDOM.classList.remove('transition');
       }
 
       if (this.params.mode === 'vertical') {
-        this.handle.style.top = leftPercent;
+        this.handle.getDOM().style.top = leftPercent;
         this.leftImageDOM.style.height = leftPercent;
         this.rightImageDOM.style.height = rightPercent;
       }
       else {
-        this.handle.style.left = leftPercent;
+        this.handle.getDOM().style.left = leftPercent;
         this.leftImageDOM.style.width = leftPercent;
         this.rightImageDOM.style.width = rightPercent;
       }
@@ -103,7 +109,7 @@ class ImageJuxtapositionSlider {
     }
 
     // update aria
-    this.controller.setAttribute('aria-valuenow', leftPercentNum);
+    this.handle.update(leftPercentNum);
   }
 
   setWrapperDimensions() {
@@ -116,7 +122,7 @@ class ImageJuxtapositionSlider {
     }
   }
 
-  _onLoaded() {
+  handleImageLoaded() {
     if (this.isLoaded < 2) {
       return;
     }
@@ -129,36 +135,10 @@ class ImageJuxtapositionSlider {
     this.imageRatio = dimensions[0].ratio;
     this.params.container.style.width = dimensions[0].width;
 
-    this.leftArrow = document.createElement('div');
-    this.rightArrow = document.createElement('div');
-    this.control = document.createElement('div');
-    this.controller = document.createElement('div');
+    this.addEventListeners();
+    this.updateSlider(this.params.startingPosition, false);
 
-    this.leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
-    this.leftArrow.style.borderColor = `transparent ${this.params.color} transparent transparent`;
-    this.leftArrow.setAttribute('draggable', 'false');
-    this.rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
-    this.rightArrow.style.borderColor = `transparent transparent transparent ${this.params.color}`;
-    this.rightArrow.setAttribute('draggable', 'false');
-    this.control.className = 'h5p-image-juxtaposition-control';
-    this.control.style.backgroundColor = this.params.color;
-    this.control.setAttribute('draggable', 'false');
-    this.controller.className = 'h5p-image-juxtaposition-controller';
-    this.controller.style.backgroundColor = this.params.color;
-    this.controller.setAttribute('draggable', 'false');
-
-    this.controller.setAttribute('tabindex', 0); //put the controller in the natural tab order of the document
-    this.controller.setAttribute('role', 'slider');
-    this.controller.setAttribute('aria-valuenow', parseInt(this.params.startingPosition));
-    this.controller.setAttribute('aria-valuemin', 0);
-    this.controller.setAttribute('aria-valuemax', 100);
-
-    this.handle.appendChild(this.leftArrow);
-    this.handle.appendChild(this.control);
-    this.handle.appendChild(this.rightArrow);
-    this.control.appendChild(this.controller);
-
-    this._init();
+    this.callbackLoaded();
   }
 
   getLeftPercent(slider, input) {
@@ -243,89 +223,47 @@ class ImageJuxtapositionSlider {
     this.slider.dispatchEvent(new CustomEvent('mouseup'));
   }
 
-  _init() {
-    const self = this;
-
+  /**
+   * Add event listeners.
+   */
+  addEventListeners() {
     // Event Listeners for Mouse Interface
-    this.slider.addEventListener('mousedown', function (e) {
-      e = e || window.event;
+    this.slider.addEventListener('mousedown', (event) => {
+      event = event || window.event;
       // Don't use preventDefault or Firefox won't detect mouseup outside the iframe.
-      self.updateSlider(e, true);
+      this.updateSlider(event, true);
       this.animate = true;
     });
 
-    this.slider.addEventListener('mousemove', function (e) {
-      e = e || window.event;
-      e.preventDefault();
+    this.slider.addEventListener('mousemove', (event) => {
+      event = event || window.event;
+      event.preventDefault();
       if (this.animate === true) {
-        self.updateSlider(e, false);
+        this.updateSlider(event, false);
       }
     });
 
-    this.slider.addEventListener('mouseup', function (e) {
-      e = e || window.event;
-      e.preventDefault();
-      e.stopPropagation();
+    this.slider.addEventListener('mouseup', (event) => {
+      event = event || window.event;
+      event.preventDefault();
+      event.stopPropagation();
       this.animate = false;
     });
 
     // Event Listeners for Touch Interface
-    this.slider.addEventListener('touchstart', function (e) {
-      e = e || window.event;
-      e.preventDefault();
-      e.stopPropagation();
-      self.updateSlider(e, true);
-
-      this.addEventListener('touchmove', function (e) {
-        e = e || window.event;
-        e.preventDefault();
-        e.stopPropagation();
-        self.updateSlider(e, false);
-      });
+    this.slider.addEventListener('touchstart', (event) => {
+      event = event || window.event;
+      event.preventDefault();
+      event.stopPropagation();
+      this.updateSlider(event, true);
     });
 
-    // Event Listeners for Keyboard on handle
-    this.handle.addEventListener('keydown', function (e) {
-      e = e || window.event;
-      const key = e.which || e.keyCode;
-      const ariaValue = parseFloat(this.style.left || this.style.top);
-      let position = 0;
-
-      // handler left
-      if (key === 37) {
-        position = Math.max(0, ariaValue - 1);
-        self.updateSlider(position, false);
-        self.controller.setAttribute('aria-valuenow', position);
-      }
-
-      // handler right
-      if (key === 39) {
-        position = Math.min(100, ariaValue + 1);
-        self.updateSlider(position, false);
-        self.controller.setAttribute('aria-valuenow', position);
-      }
+    this.slider.addEventListener('touchmove', (event) => {
+      event = event || window.event;
+      event.preventDefault();
+      event.stopPropagation();
+      this.updateSlider(event, false);
     });
-
-    // Event Listeners for Keyboard on images
-    this.leftImageDOM.addEventListener('keydown', function (e) {
-      const key = e.which || e.keyCode;
-      if ((key === 13) || (key === 32)) {
-        self.updateSlider('90%', true);
-        self.controller.setAttribute('aria-valuenow', 90);
-      }
-    });
-
-    this.rightImageDOM.addEventListener('keydown', function (e) {
-      const key = e.which || e.keyCode;
-      if ((key === 13) || (key === 32)) {
-        self.updateSlider('10%', true);
-        self.controller.setAttribute('aria-valuenow', 10);
-      }
-    });
-
-    self.updateSlider(this.params.startingPosition, false);
-
-    this.callbackLoaded();
   }
 }
 
