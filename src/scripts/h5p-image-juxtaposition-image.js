@@ -74,6 +74,10 @@ class ImageJuxtapositionImage {
     // Image
     this.image = new Image();
     this.image.onload = () => {
+      // This is a workaround for our beloved IE that would otherwise distort the images
+      this.image.setAttribute('width', '');
+      this.image.setAttribute('height', '');
+
       this.isLoaded = true;
       this.callbackLoaded();
     };
@@ -85,9 +89,6 @@ class ImageJuxtapositionImage {
     this.image.setAttribute('draggable', 'false');
     this.image.setAttribute('unselectable', 'on');
     this.image.setAttribute('onselectstart', 'return false;');
-    // This is a workaround for our beloved IE that would otherwise distort the images
-    this.image.setAttribute('width', '');
-    this.image.setAttribute('height', '');
 
     this.imageDOM.appendChild(this.image);
 
