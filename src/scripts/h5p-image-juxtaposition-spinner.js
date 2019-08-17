@@ -5,8 +5,10 @@ class Spinner {
    * @param {string} classNameBase Class name base to define spinner visuals.
    */
   constructor(classNameBase) {
+    this.classNameBase = classNameBase;
+
     this.container = document.createElement('div');
-    this.container.classList.add(`${classNameBase}-container`);
+    this.container.classList.add(`${this.classNameBase}-container`);
 
     this.spinnerElement = document.createElement('div');
     this.spinnerElement.classList.add(classNameBase);
@@ -27,14 +29,14 @@ class Spinner {
    * Show spinner.
    */
   show() {
-    this.container.classList.remove('h5p-image-juxtaposition-spinner-none');
+    this.container.classList.remove(`${this.classNameBase}-none`);
   }
 
   /**
    * Hide spinner.
    */
   hide() {
-    this.container.classList.add('h5p-image-juxtaposition-spinner-none');
+    this.container.classList.add(`${this.classNameBase}-none`);
   }
 }
 
