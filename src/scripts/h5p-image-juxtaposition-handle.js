@@ -98,7 +98,7 @@ class ImageJuxtapositionHandle {
       this.handle.style.top = `${position}%`;
     }
 
-    this.controller.setAttribute('aria-valuenow', position);
+    this.controller.setAttribute('aria-valuenow', Math.round(position, 0));
   }
 }
 

@@ -28,18 +28,6 @@ class ImageJuxtapositionSlider {
     this.slider.setAttribute('draggable', 'false');
     this.params.container.appendChild(this.slider);
 
-    // Slider->Handle
-    this.handle = new ImageJuxtapositionHandle(
-      {
-        color: this.params.color,
-        mode: this.params.mode
-      },
-      (position) => {
-        this.update(position);
-      }
-    );
-    this.slider.appendChild(this.handle.getDOM());
-
     // Slider->Left image
     this.firstImage = new ImageJuxtapositionImage(
       {
@@ -69,6 +57,18 @@ class ImageJuxtapositionSlider {
       }
     );
     this.slider.appendChild(this.secondImage.getDOM());
+
+    // Slider->Handle
+    this.handle = new ImageJuxtapositionHandle(
+      {
+        color: this.params.color,
+        mode: this.params.mode
+      },
+      (position) => {
+        this.update(position);
+      }
+    );
+    this.slider.appendChild(this.handle.getDOM());
   }
 
   /**
