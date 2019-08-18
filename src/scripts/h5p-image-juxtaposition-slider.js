@@ -105,19 +105,22 @@ class ImageJuxtapositionSlider {
         targetHeight = dimensionsMax.height;
         targetWidth = targetHeight * this.imageRatio;
         paddingHorizontal = (dimensionsMax.width - targetWidth) / 2;
+        targetWidth = `${targetWidth}px`;
       }
       else {
         targetWidth = dimensionsMax.width;
         targetHeight = targetWidth / this.imageRatio;
+        targetWidth = `${targetWidth}px`;
       }
     }
     else {
       targetWidth = window.innerWidth - 2;
       targetHeight = targetWidth / this.imageRatio;
+      targetWidth = '100%';
     }
 
     if (this.params.container) {
-      this.params.container.style.width = `${targetWidth}px`;
+      this.params.container.style.width = targetWidth;
       this.params.container.style.height = `${targetHeight}px`;
       this.params.container.style.paddingLeft = `${paddingHorizontal}px`;
     }
