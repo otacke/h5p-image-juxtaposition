@@ -18,6 +18,25 @@
   z-index: 11;
 }
 
+.h5p-image-juxtaposition .h5p-content-controls .h5p-enable-fullscreen {
+  background-image: url(../images/button-fullscreen-enter-icon.svg);
+  background-repeat: no-repeat;
+  background-color: rgba(0,0,0,0.25);
+  background-size: 1em 1em;
+  background-position: 0.625em 0.415em;
+  font-size: 1em;
+  height: 1.83em;
+  width: 2.25em;
+}
+
+.h5p-image-juxtaposition .h5p-content-controls .h5p-enable-fullscreen:hover {
+  background-color: rgba(0,0,0,0.35);
+}
+
+.h5p-image-juxtaposition .h5p-content-controls .h5p-enable-fullscreen::before {
+  content: "";
+}
+
 .h5p-image-juxtaposition .h5p-image-juxtaposition-spinner-container {
   width: 100%;
   display: flex;
