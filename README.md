@@ -3,6 +3,12 @@ Put two images side by side with a slideable overlay effect, e.g. to create an i
 
 This content type is based on [Juxtapose](https://github.com/NUKnightLab/juxtapose) that was created by Alex Duner and Northwestern University Knight Lab, but was heavily modified. It is licensed under the [Mozilla Public License 2.0](http://mozilla.org/MPL/2.0/).
 
+## Support me at patreon!
+If you like what I do, please consider to become my supporter at patreon: https://www.patreon.com/otacke
+
+## Example
+!["Image Juxtaposition for H5P"](https://ibin.co/w800/3sUVNvkmM7N8.png 'Image Juxtaposition for H5P')
+
 ## Building the distribution files
 Pull or download this archive files and go into the main folder. There run
 
