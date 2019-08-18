@@ -43,6 +43,10 @@ class ImageJuxtaposition extends H5P.Question {
     this.contentId = contentId;
     this.contentData = contentData;
 
+    this.on('exitFullScreen', () => {
+      this.trigger('resize');
+    });
+
     /**
      * Register DOM elements with H5P.Question.
      */
@@ -137,16 +141,7 @@ class ImageJuxtaposition extends H5P.Question {
       this.spinner.hide();
 
       this.trigger('resize');
-      setTimeout(() => {
-        this.trigger('resize');
-      }, 1); // At least Firefox needs 1 instead of 0
     };
-
-    this.on('exitFullScreen', () => {
-      setTimeout(() => {
-        this.trigger('resize');
-      }, 1);
-    });
 
     /**
      * Get tasks title.
