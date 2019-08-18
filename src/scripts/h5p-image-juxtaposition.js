@@ -107,7 +107,7 @@ class ImageJuxtaposition extends H5P.Question {
 
           const dimensionsMax = (fullScreenOn) ?
             {
-              height: window.innerHeight - ((this.title) ? this.title.getBoundingClientRect().height : 0),
+              height: window.innerHeight - this.titleHeight,
               width: window.innerWidth,
             } :
             undefined;
@@ -123,6 +123,16 @@ class ImageJuxtaposition extends H5P.Question {
      * Handle slider loaded.
      */
     this.handleLoaded = () => {
+      // Compute fullscreen offset for title
+      if (this.title) {
+        const styles = window.getComputedStyle(this.title);
+        const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
+        this.titleHeight = Math.ceil(this.title.offsetHeight + margin);
+      }
+      else {
+        this.titleHeight = 0;
+      }
+
       // We can hide the spinner now
       this.spinner.hide();
 
