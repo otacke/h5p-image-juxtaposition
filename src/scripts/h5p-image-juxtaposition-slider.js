@@ -95,13 +95,31 @@ class ImageJuxtapositionSlider {
   /**
    * Resize slider.
    */
-  resize() {
-    const targetWidth = window.innerWidth - 2;
-    const targetHeight = targetWidth / this.imageRatio;
+  resize(dimensionsMax) {
+    let paddingHorizontal = 0;
+    let targetHeight;
+    let targetWidth;
+
+    if (dimensionsMax) {
+      if (this.imageRatio <= (dimensionsMax.width / dimensionsMax.height)) {
+        targetHeight = dimensionsMax.height;
+        targetWidth = targetHeight * this.imageRatio;
+        paddingHorizontal = (dimensionsMax.width - targetWidth) / 2;
+      }
+      else {
+        targetWidth = dimensionsMax.width;
+        targetHeight = targetWidth / this.imageRatio;
+      }
+    }
+    else {
+      targetWidth = window.innerWidth - 2;
+      targetHeight = targetWidth / this.imageRatio;
+    }
 
     if (this.params.container) {
       this.params.container.style.width = `${targetWidth}px`;
       this.params.container.style.height = `${targetHeight}px`;
+      this.params.container.style.paddingLeft = `${paddingHorizontal}px`;
     }
   }
 

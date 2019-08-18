@@ -56,10 +56,10 @@ class ImageJuxtaposition extends H5P.Question {
 
       // Title bar
       if (this.params.title) {
-        const title = document.createElement('div');
-        title.classList.add('h5p-image-juxtaposition-title');
-        title.innerHTML = this.params.title;
-        container.appendChild(title);
+        this.title = document.createElement('div');
+        this.title.classList.add('h5p-image-juxtaposition-title');
+        this.title.innerHTML = this.params.title;
+        container.appendChild(this.title);
       }
 
       // Missing image
@@ -102,7 +102,17 @@ class ImageJuxtaposition extends H5P.Question {
         );
 
         this.on('resize', () => {
-          slider.resize();
+          this.containerH5P = this.containerH5P || document.querySelector('.h5p-container');
+          const fullScreenOn = this.containerH5P.classList.contains('h5p-fullscreen') || this.containerH5P.classList.contains('h5p-semi-fullscreen');
+
+          const dimensionsMax = (fullScreenOn) ?
+            {
+              height: window.innerHeight - ((this.title) ? this.title.getBoundingClientRect().height : 0),
+              width: window.innerWidth,
+            } :
+            undefined;
+
+          slider.resize(dimensionsMax);
         });
       }
 
@@ -116,10 +126,17 @@ class ImageJuxtaposition extends H5P.Question {
       // We can hide the spinner now
       this.spinner.hide();
 
+      this.trigger('resize');
       setTimeout(() => {
         this.trigger('resize');
       }, 1); // At least Firefox needs 1 instead of 0
     };
+
+    this.on('exitFullScreen', () => {
+      setTimeout(() => {
+        this.trigger('resize');
+      }, 1);
+    });
 
     /**
      * Get tasks title.

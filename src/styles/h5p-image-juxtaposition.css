@@ -13,15 +13,22 @@
   -webkit-user-select: none;
   user-select: none;
 }
+
+.h5p-image-juxtaposition .h5p-content-controls {
+  z-index: 11;
+}
+
 .h5p-image-juxtaposition .h5p-image-juxtaposition-spinner-container {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .h5p-image-juxtaposition .h5p-image-juxtaposition-spinner-container.h5p-image-juxtaposition-spinner-none {
   display: none;
 }
+
 .h5p-image-juxtaposition-spinner {
   display: inline-block;
   position: relative;
@@ -30,6 +37,7 @@
   margin-top: 1em;
   margin-bottom: 1em;
 }
+
 .h5p-image-juxtaposition-spinner div {
   box-sizing: border-box;
   display: block;
@@ -42,15 +50,19 @@
   animation: h5p-image-juxtaposition-spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #999 transparent transparent transparent;
 }
+
 .h5p-image-juxtaposition-spinner div:nth-child(1) {
   animation-delay: -0.45s;
 }
+
 .h5p-image-juxtaposition-spinner div:nth-child(2) {
   animation-delay: -0.3s;
 }
+
 .h5p-image-juxtaposition-spinner div:nth-child(3) {
   animation-delay: -0.15s;
 }
+
 @keyframes h5p-image-juxtaposition-spinner {
   0% {
     transform: rotate(0deg);
@@ -59,6 +71,7 @@
     transform: rotate(360deg);
   }
 }
+
 .h5p-image-juxtaposition .h5p-image-juxtaposition-title {
   width: auto;
   margin: 16px;
@@ -66,19 +79,20 @@
   font-weight: bold;
   line-height: 24px;
 }
+
 .h5p-image-juxtaposition .h5p-image-juxtaposition-missing-images {
   font-size: 1.5em;
   text-align: center;
   padding: 2em;
 }
 
-/* From Juxtapose */
-div.h5p-image-juxtaposition-juxtapose {
+.h5p-image-juxtaposition-juxtapose {
+  margin: 0;
+  padding: 0;
 	width: auto;
-	font-family: Helvetica, Arial, sans-serif;
 }
 
-div.h5p-image-juxtaposition-slider {
+.h5p-image-juxtaposition-slider {
 	width: 100%;
 	height: 100%;
 	position: relative;
@@ -86,7 +100,7 @@ div.h5p-image-juxtaposition-slider {
 	cursor: pointer;
 }
 
-div.h5p-image-juxtaposition-handle {
+.h5p-image-juxtaposition-handle {
 	position: absolute;
 	height: 100%;
 	width: 40px;
@@ -95,12 +109,12 @@ div.h5p-image-juxtaposition-handle {
 	margin-left: -20px;
 }
 
-div.h5p-image-juxtaposition-handle.transition {
+.h5p-image-juxtaposition-handle.transition {
 	transition: left .5s ease;
 }
 
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-handle {
 	height: 40px;
 	width: 100%;
 	cursor: row-resize;
@@ -108,11 +122,11 @@ div.h5p-image-juxtaposition-handle.transition {
 	margin-left: 0;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle.transition {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-handle.transition {
   transition: top .5s ease;
 }
 
-div.h5p-image-juxtaposition-control {
+.h5p-image-juxtaposition-control {
 	height: 100%;
 	margin-right: auto;
 	margin-left: auto;
@@ -120,7 +134,7 @@ div.h5p-image-juxtaposition-control {
 	background-color: #f3f3f3;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-control {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-control {
 	height: 3px;
 	width: 100%;
 	background-color: #f3f3f3;
@@ -129,7 +143,7 @@ div.h5p-image-juxtaposition-control {
 	transform: translateY(-50%);
 }
 
-div.h5p-image-juxtaposition-controller {
+.h5p-image-juxtaposition-controller {
 	position: absolute;
 	margin: auto;
 	top: 0;
@@ -140,7 +154,7 @@ div.h5p-image-juxtaposition-controller {
 	background-color: #f3f3f3;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-controller {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-controller {
 	height: 9px;
 	width: 100px;
 	margin-left: auto;
@@ -149,7 +163,7 @@ div.h5p-image-juxtaposition-controller {
 	position: relative;
 }
 
-.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-arrow {
+.h5p-image-juxtaposition-horizontal .h5p-image-juxtaposition-arrow {
 	position: absolute;
 	margin: auto;
 	top: 0;
@@ -159,7 +173,7 @@ div.h5p-image-juxtaposition-controller {
 	transition: all .2s ease;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-arrow {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-arrow {
 	position: absolute;
 	margin: 0 auto;
 	left: 0;
@@ -169,21 +183,21 @@ div.h5p-image-juxtaposition-controller {
 	transition: all .2s ease;
 }
 
-.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
+.h5p-image-juxtaposition-horizontal .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: 2px;
 	border-style: solid;
 	border-width: 8px 8px 8px 0;
 	border-color: transparent #f3f3f3 transparent transparent;
 }
 
-.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
+.h5p-image-juxtaposition-horizontal .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: 2px;
 	border-style: solid;
 	border-width: 8px 0 8px 8px;
 	border-color: transparent transparent transparent #f3f3f3;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: 0px;
 	top: 2px;
 	border-style: solid;
@@ -191,7 +205,7 @@ div.h5p-image-juxtaposition-controller {
 	border-color: transparent transparent #f3f3f3 transparent;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: 0px;
 	top: initial;
 	bottom: 2px;
@@ -200,30 +214,30 @@ div.h5p-image-juxtaposition-controller {
 	border-color: #f3f3f3 transparent transparent transparent;
 }
 
-div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left,
-div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
+.h5p-image-juxtaposition-handle:hover .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left,
+.h5p-image-juxtaposition-handle:active .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: -1px;
 }
 
-div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right,
-div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
+.h5p-image-juxtaposition-handle:hover .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right,
+.h5p-image-juxtaposition-handle:active .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: -1px;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left,
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-handle:hover .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left,
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-handle:active .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
 	left: 0px;
 	top: 0px;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:hover div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right,
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-handle:active div.h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-handle:hover .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right,
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-handle:active .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: 0px;
 	bottom: 0px;
 }
 
 
-div.h5p-image-juxtaposition-image {
+.h5p-image-juxtaposition-image {
 	position: absolute;
 	height: 100%;
 	display: inline-block;
@@ -231,16 +245,16 @@ div.h5p-image-juxtaposition-image {
 	-webkit-backface-visibility: hidden;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image {
 	width: 100%;
 	left: 0;
 	top: initial;
 }
 
-div.h5p-image-juxtaposition-image img {
+.h5p-image-juxtaposition-image img {
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image img {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image img {
 	height: initial;
 	width: 100%;
 	z-index: 5;
@@ -253,7 +267,7 @@ div.h5p-image-juxtaposition-image img {
 	max-width: initial;
 }
 
-.h5p-image-juxtaposition-horizontal div.h5p-image-juxtaposition-image img {
+.h5p-image-juxtaposition-horizontal .h5p-image-juxtaposition-image img {
 	height: 100%;
 	z-index: 5;
 	position: absolute;
@@ -265,65 +279,65 @@ div.h5p-image-juxtaposition-image img {
 	max-width: initial;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
 	left: 0;
 	background-position: left;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left.transition {
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left.transition {
   transition: width .5s ease;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
 	left: 0;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
 	right: 0;
 	background-position: right;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right.transition {
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right.transition {
   transition: width .5s ease;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
 	right: 0;
 	bottom: 0;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {
 	top: 0;
 	background-position: top;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left.transition {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image.h5p-image-juxtaposition-left.transition {
   transition: height .5s ease;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image.h5p-image-juxtaposition-left img {
 	top: 0;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image.h5p-image-juxtaposition-right {
 	bottom: 0;
 	background-position: bottom;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right.transition {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image.h5p-image-juxtaposition-right.transition {
   transition: height .5s ease;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image.h5p-image-juxtaposition-right img {
 	bottom: 0;
 }
 
-div.h5p-image-juxtaposition-image div.h5p-image-juxtaposition-label {
+.h5p-image-juxtaposition-image .h5p-image-juxtaposition-label {
 	font-size: 1em;
 	padding: .25em .75em;
-	position: relative;
+	position: absolute;
 	display: inline-block;
-	top: 0;
+	bottom: 0;
 	background-color: #000; /* IE 8 */
 	background-color: rgba(0,0,0,.7);
 	color: white;
@@ -333,29 +347,31 @@ div.h5p-image-juxtaposition-image div.h5p-image-juxtaposition-label {
 	vertical-align: middle;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left div.h5p-image-juxtaposition-label {
+.h5p-image-juxtaposition-left .h5p-image-juxtaposition-label {
 	float: left;
 	left: 0;
 }
 
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right div.h5p-image-juxtaposition-label {
+.h5p-image-juxtaposition-right .h5p-image-juxtaposition-label {
 	float: right;
 	right: 0;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image div.h5p-image-juxtaposition-label {
-	display: table;
-	position: absolute;
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-left .h5p-image-juxtaposition-label {
+  top: 0;
+  bottom: initial;
 }
 
-.h5p-image-juxtaposition-vertical div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right div.h5p-image-juxtaposition-label {
-	left: 0;
+.h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-right .h5p-image-juxtaposition-label {
 	bottom: 0;
+  float: left;
+  left: 0;
+  right: initial;
 	top: initial;
 }
 
-div.h5p-image-juxtaposition-controller:focus,
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left div.h5p-image-juxtaposition-label:focus,
-div.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right div.h5p-image-juxtaposition-label:focus {
+.h5p-image-juxtaposition-controller:focus,
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-left .h5p-image-juxtaposition-label:focus,
+.h5p-image-juxtaposition-image.h5p-image-juxtaposition-right .h5p-image-juxtaposition-label:focus {
   outline:none;
 }
