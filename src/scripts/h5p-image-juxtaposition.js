@@ -43,6 +43,27 @@ class ImageJuxtaposition extends H5P.Question {
     this.contentId = contentId;
     this.contentData = contentData;
 
+    // Polyfill for IE11
+    if (!Element.prototype.matches) {
+      Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+    }
+
+    // Polyfill for IE11
+    if (!Element.prototype.closest) {
+      Element.prototype.closest = function (selector) {
+        let element = this;
+
+        do {
+          if (element.matches(selector)) {
+            return element;
+          }
+          element = element.parentElement || element.parentNode;
+        } while (element !== null && element.nodeType === 1);
+
+        return null;
+      };
+    }
+
     this.on('exitFullScreen', () => {
       this.trigger('resize');
     });
@@ -106,7 +127,7 @@ class ImageJuxtaposition extends H5P.Question {
         );
 
         this.on('resize', () => {
-          this.containerH5P = this.containerH5P || document.querySelector('.h5p-container');
+          this.containerH5P = container.closest('.h5p-image-juxtaposition');
           const fullScreenOn = this.containerH5P.classList.contains('h5p-fullscreen') || this.containerH5P.classList.contains('h5p-semi-fullscreen');
 
           const dimensionsMax = (fullScreenOn) ?
