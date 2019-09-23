@@ -229,7 +229,8 @@ class ImageJuxtapositionSlider {
       this.isSliding = true;
     });
 
-    this.slider.addEventListener('mousemove', (event) => {
+    // Doesn't work on IE11 if outside of iframe
+    window.addEventListener('mousemove', (event) => {
       event = event || window.event;
       event.preventDefault();
       if (this.isSliding === true) {
@@ -252,7 +253,7 @@ class ImageJuxtapositionSlider {
       this.update(event, false);
     });
 
-    // Detect mouseup out of slider area
+    // Detect mouseup out of slider area, doesn't work on IE11
     window.addEventListener('mouseup', (event) => {
       event = event || window.event;
       event.preventDefault();
