@@ -149,20 +149,20 @@ class ImageJuxtaposition extends H5P.Question {
      * Handle slider loaded.
      */
     this.handleLoaded = () => {
-      // Compute fullscreen offset for title
+      // We can hide the spinner now and show the title
+      this.spinner.hide();
+
       if (this.title) {
-        const styles = window.getComputedStyle(this.title);
-        const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
-        this.titleHeight = Math.ceil(this.title.offsetHeight + margin);
+        this.title.classList.remove('h5p-image-juxtaposition-title-none');
+
+        setTimeout(() => {
+          const styles = window.getComputedStyle(this.title);
+          const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
+          this.titleHeight = Math.ceil(this.title.offsetHeight + margin);
+        }, 0);
       }
       else {
         this.titleHeight = 0;
-      }
-
-      // We can hide the spinner now and show the title
-      this.spinner.hide();
-      if (this.title) {
-        this.title.classList.remove('h5p-image-juxtaposition-title-none');
       }
 
       this.trigger('resize');
