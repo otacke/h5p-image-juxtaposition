@@ -59,12 +59,14 @@ class ImageJuxtapositionHandle {
       const positionPercentage = parseFloat(this.handle.style.left || this.handle.style.top);
 
       // handler left
-      if (key === 37) {
+      if (key === 37 || this.params.mode === 'vertical' && key === 38) {
+        event.preventDefault();
         this.callbackUpdate(Math.max(0, positionPercentage - 1));
       }
 
       // handler right
-      if (key === 39) {
+      if (key === 39 || this.params.mode === 'vertical' && key === 40) {
+        event.preventDefault();
         this.callbackUpdate(Math.min(100, positionPercentage + 1));
       }
     });
