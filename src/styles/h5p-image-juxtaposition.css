@@ -3,6 +3,9 @@
 }
 
 .h5p-image-juxtaposition {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: auto;
   margin: 0 auto;
   /* Will prevent flickering when sliding */
@@ -12,6 +15,10 @@
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+.h5p-image-juxtaposition.h5p-fullscreen {
+  background-color: #ffffff;
 }
 
 .h5p-image-juxtaposition .h5p-content-controls {
