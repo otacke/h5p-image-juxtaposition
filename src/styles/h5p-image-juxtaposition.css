@@ -103,6 +103,10 @@
   line-height: 24px;
 }
 
+.h5p-image-juxtaposition .h5p-image-juxtaposition-title-none {
+  display: none;
+}
+
 .h5p-image-juxtaposition .h5p-image-juxtaposition-missing-images {
   font-size: 1.5em;
   text-align: center;

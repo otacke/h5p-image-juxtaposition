@@ -83,6 +83,7 @@ class ImageJuxtaposition extends H5P.Question {
       if (this.params.title) {
         this.title = document.createElement('div');
         this.title.classList.add('h5p-image-juxtaposition-title');
+        this.title.classList.add('h5p-image-juxtaposition-title-none');
         this.title.innerHTML = this.params.title;
         container.appendChild(this.title);
       }
@@ -158,8 +159,11 @@ class ImageJuxtaposition extends H5P.Question {
         this.titleHeight = 0;
       }
 
-      // We can hide the spinner now
+      // We can hide the spinner now and show the title
       this.spinner.hide();
+      if (this.title) {
+        this.title.classList.remove('h5p-image-juxtaposition-title-none');
+      }
 
       this.trigger('resize');
     };
