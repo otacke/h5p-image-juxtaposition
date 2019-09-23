@@ -70,16 +70,20 @@
   border-color: #999 transparent transparent transparent;
 }
 
-.h5p-image-juxtaposition-spinner div:nth-child(1) {
+.h5p-image-juxtaposition-spinner .h5p-image-juxtaposition-spinner-circle-head {
   animation-delay: -0.45s;
 }
 
-.h5p-image-juxtaposition-spinner div:nth-child(2) {
+.h5p-image-juxtaposition-spinner .h5p-image-juxtaposition-spinner-circle-neck-upper {
   animation-delay: -0.3s;
 }
 
-.h5p-image-juxtaposition-spinner div:nth-child(3) {
+.h5p-image-juxtaposition-spinner .h5p-image-juxtaposition-spinner-circle-neck-lower {
   animation-delay: -0.15s;
+}
+
+.h5p-image-juxtaposition-spinner .h5p-image-juxtaposition-spinner-circle-body {
+  animation-delay: 0;
 }
 
 @keyframes h5p-image-juxtaposition-spinner {

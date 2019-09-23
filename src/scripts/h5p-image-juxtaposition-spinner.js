@@ -12,7 +12,23 @@ class Spinner {
 
     this.spinnerElement = document.createElement('div');
     this.spinnerElement.classList.add(classNameBase);
-    this.spinnerElement.innerHTML = '<div></div><div></div><div></div><div></div>';
+
+    // Circle parts with different delays for the grow/shrink animation
+    const circleHead = document.createElement('div');
+    circleHead.classList.add(`${this.classNameBase}-circle-head`);
+    this.spinnerElement.appendChild(circleHead);
+
+    const circleNeckUpper = document.createElement('div');
+    circleNeckUpper.classList.add(`${this.classNameBase}-circle-neck-upper`);
+    this.spinnerElement.appendChild(circleNeckUpper);
+
+    const circleNeckLower = document.createElement('div');
+    circleNeckLower.classList.add(`${this.classNameBase}-circle-neck-lower`);
+    this.spinnerElement.appendChild(circleNeckLower);
+
+    const circleBody = document.createElement('div');
+    circleBody.classList.add(`${this.classNameBase}-circle-body`);
+    this.spinnerElement.appendChild(circleBody);
 
     this.container.appendChild(this.spinnerElement);
   }
