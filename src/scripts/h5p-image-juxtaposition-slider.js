@@ -80,7 +80,10 @@ class ImageJuxtapositionSlider {
     const positionFirst = this.extractPosition(input).toFixed(2);
     const positionSecond = 100 - positionFirst;
 
-    if (positionFirst <= 0 || positionSecond >= 100) {
+    if (
+      (positionFirst < 0 || positionFirst > 100) ||
+      (positionSecond < 0 || positionSecond > 100)
+    ) {
       return;
     }
 
