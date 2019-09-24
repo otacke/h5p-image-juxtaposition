@@ -99,6 +99,7 @@ class ImageJuxtapositionImage {
       label.setAttribute('unselectable', 'on');
       label.setAttribute('onselectstart', 'return false;');
       label.setAttribute('onmousedown', 'return false;');
+      label.setAttribute('aria-hidden', 'true');
       label.innerHTML = this.params.label;
 
       this.imageDOM.appendChild(label);

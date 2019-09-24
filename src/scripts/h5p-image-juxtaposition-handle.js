@@ -20,6 +20,7 @@ class ImageJuxtapositionHandle {
     this.controller.setAttribute('role', 'slider');
     this.controller.setAttribute('aria-valuemin', 0);
     this.controller.setAttribute('aria-valuemax', 100);
+    this.controller.setAttribute('aria-orientation', this.params.mode);
 
     // Bar (horizontal or vertical)
     const bar = document.createElement('div');
@@ -58,16 +59,28 @@ class ImageJuxtapositionHandle {
       const key = event.which || event.keyCode;
       const positionPercentage = parseFloat(this.handle.style.left || this.handle.style.top);
 
-      // handler left
-      if (key === 37 || this.params.mode === 'vertical' && key === 38) {
-        event.preventDefault();
-        this.callbackUpdate(Math.max(0, positionPercentage - 1));
-      }
+      switch (key) {
+        case 35: // end
+          event.preventDefault();
+          this.callbackUpdate(100);
+          break;
 
-      // handler right
-      if (key === 39 || this.params.mode === 'vertical' && key === 40) {
-        event.preventDefault();
-        this.callbackUpdate(Math.min(100, positionPercentage + 1));
+        case 36: // home
+          event.preventDefault();
+          this.callbackUpdate(0);
+          break;
+
+        case 37: // left
+        case 38: // up
+          event.preventDefault();
+          this.callbackUpdate(Math.max(0, positionPercentage - 1));
+          break;
+
+        case 39: // right
+        case 40: // down
+          event.preventDefault();
+          this.callbackUpdate(Math.min(100, positionPercentage + 1));
+          break;
       }
     });
   }
@@ -100,7 +113,11 @@ class ImageJuxtapositionHandle {
       this.handle.style.top = `${position}%`;
     }
 
-    this.controller.setAttribute('aria-valuenow', Math.round(position, 0));
+    // Use aria-valuetext as advised in https://www.w3.org/TR/wai-aria-practices-1.1/#slider_roles_states_props
+    const ariaValueText = (parseInt(position, 10) > 50) ?
+      this.params.ariaValueTextAfter :
+      this.params.ariaValueTextBefore;
+    this.controller.setAttribute('aria-valuetext', ariaValueText);
   }
 }
 

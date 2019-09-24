@@ -61,6 +61,8 @@ class ImageJuxtapositionSlider {
     // Slider->Handle
     this.handle = new ImageJuxtapositionHandle(
       {
+        ariaValueTextAfter: this.buildAriaValueText(this.params.images[1].label, this.params.images[1].alt),
+        ariaValueTextBefore: this.buildAriaValueText(this.params.images[0].label, this.params.images[0].alt),
         color: this.params.color,
         mode: this.params.mode
       },
@@ -149,6 +151,16 @@ class ImageJuxtapositionSlider {
     this.update(this.params.startingPosition, false);
 
     this.callbackLoaded();
+  }
+
+  /**
+   * Build text for aria value.
+   * @param {string} [label=''] Image label.
+   * @param {string} [alt=''] Image alt text.
+   * @return {string} Aria value text.
+   */
+  buildAriaValueText(label = '', alt = '') {
+    return (label === '') ? alt : `${label}. ${alt}`;
   }
 
   /**
