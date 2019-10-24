@@ -16,12 +16,10 @@ H5PUpgrades['H5P.ImageJuxtaposition'] = (function () {
       },
       4: function (parameters, finished, extras) {
 
-        var newImage;
-
         // First image
         if (parameters.imageBefore && parameters.imageBefore.imageBefore) {
           // Create new image structure
-          newImage = {
+          parameters.imageBefore.imageBefore = {
             library: 'H5P.Image 1.1',
             // We avoid using H5P.createUUID since this is an upgrade script and H5P function may change
             subContentId: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (char) {
@@ -35,12 +33,11 @@ H5PUpgrades['H5P.ImageJuxtaposition'] = (function () {
             }
           };
         }
-        parameters.imageBefore.imageBefore = newImage;
 
         // Second image
         if (parameters.imageAfter && parameters.imageAfter.imageAfter) {
           // Create new image structure
-          newImage = {
+          parameters.imageAfter.imageAfter = {
             library: 'H5P.Image 1.1',
             // We avoid using H5P.createUUID since this is an upgrade script and H5P function may change
             subContentId: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (char) {
@@ -54,7 +51,6 @@ H5PUpgrades['H5P.ImageJuxtaposition'] = (function () {
             }
           };
         }
-        parameters.imageAfter.imageAfter = newImage;
 
         finished(null, parameters, extras);
       }
