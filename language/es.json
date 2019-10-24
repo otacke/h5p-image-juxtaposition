@@ -50,6 +50,9 @@
               "label": "Vertical"
             }
           ]
+        },
+        {
+          "label": "Slider color"
         }
       ]
     }

@@ -3,7 +3,7 @@
     {
       "label": "Heading",
       "placeholder": "Here you can add an optional heading.",
-      "description": "The heading you'd like to show before the befort/after image"
+      "description": "The heading you'd like to show above the before/after image"
     },
     {
       "label": "First image",
@@ -50,6 +50,9 @@
               "label": "Vertical"
             }
           ]
+        },
+        {
+          "label": "Slider color"
         }
       ]
     }
