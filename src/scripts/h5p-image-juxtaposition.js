@@ -89,11 +89,15 @@ class ImageJuxtaposition extends H5P.Question {
       }
 
       // Missing image
-      if (typeof this.params.imageBefore.imageBefore === 'undefined' || typeof this.params.imageAfter.imageAfter === 'undefined') {
+      if (
+        !this.params.imageBefore.imageBefore.params.file || !this.params.imageBefore.imageBefore.params.file.path ||
+        !this.params.imageAfter.imageAfter.params.file || !this.params.imageAfter.imageAfter.params.file.path
+      ) {
         const message = document.createElement('div');
         message.classList.add('h5p-image-juxtaposition-missing-images');
         message.innerHTML = 'I really need two background images :)';
         container.appendChild(message);
+        this.spinner.hide();
       }
       else {
         const content = document.createElement('div');
