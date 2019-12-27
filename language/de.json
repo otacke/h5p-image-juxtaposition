@@ -2,7 +2,7 @@
   "semantics": [
     {
       "label": "Titel",
-      "placeholder": "Hier kannst du wahlweise einen Titel eingeben.",
+      "placeholder": "Hier kannst du optional einen Titel angeben.",
       "description": "Der Titel, der über dem Vorher/Nachher-Bild angezeigt wird"
     },
     {
