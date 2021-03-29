@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Título",
-      "placeholder": "Aquí puedes agregar un título opcional.",
-      "description": "El título que te gustaría mostrar antes de la imagen antes/despúes"
+      "label": "Encabezado",
+      "placeholder": "Aquí puede añadir un encabezado opcional.",
+      "description": "El título que te gustaría mostrar antes de la imagen antes/después"
     },
     {
       "label": "Primera imagen",
@@ -37,11 +37,11 @@
       "fields": [
         {
           "label": "Orientación del control deslizante",
-          "description": "Horizontal se moverá hacia la izquierda y hacia la derecha, la vertical se moverá hacia arriba y hacia abajo."
+          "description": "Horizontal se moverá hacia la izquierda y hacia la derecha, la vertical se moverá hacia arriba y hacia abajo"
         },
         {
-          "label": "Slider orientation",
-          "description": "Horizontal will move left and right, vertical will move up and down.",
+          "label": "Orientación del deslizador",
+          "description": "Horizontal moverá izquierda y derecha, vertical moverá arriba y abajo.",
           "options": [
             {
               "label": "Horizontal"
@@ -52,7 +52,7 @@
           ]
         },
         {
-          "label": "Slider color"
+          "label": "Color del deslizador"
         }
       ]
     }
