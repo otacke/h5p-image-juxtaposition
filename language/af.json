@@ -1,0 +1,60 @@
+{
+  "semantics": [
+    {
+      "label": "Opskrif",
+      "placeholder": "Hier kan jy 'n opsionele opskrif byvoeg.",
+      "description": "Die opskrif wat jy graag wil wys bo die voor/na prent"
+    },
+    {
+      "label": "Eerste prent",
+      "fields": [
+        {
+          "label": "Eerste prent",
+          "description": "Die eerste prent. Maak asb. seker dat dit die selfde groote as die tweede prent is."
+        },
+        {
+          "label": "Etiket vir eerste prent",
+          "description": "Etiket om oor die eerste prent te plaas"
+        }
+      ]
+    },
+    {
+      "label": "Tweede beeld",
+      "fields": [
+        {
+          "label": "Tweede beeld",
+          "description": "Die tweede prent. Maak asb. seker dat dit die selfde groote as die tweede prent is."
+        },
+        {
+          "label": "Etiket vir tweede beeld",
+          "description": "Etiket om oor tweede beeld te plaas"
+        }
+      ]
+    },
+    {
+      "label": "Gedragsinstellings",
+      "description": "Hierdie opsies sal jou bepaalde besonderhede laat instel",
+      "fields": [
+        {
+          "label": "Skuiwer beginposisie in %",
+          "description": "Stel die beginposisie van die skuiwer"
+        },
+        {
+          "label": "Skuiwer oriëntasie",
+          "description": "Horisontaal wil links en regs skuif, vertikaal sal op en af skuif.",
+          "options": [
+            {
+              "label": "Horisontaal"
+            },
+            {
+              "label": "Vertikaal"
+            }
+          ]
+        },
+        {
+          "label": "Skuiwerkleur"
+        }
+      ]
+    }
+  ]
+}
