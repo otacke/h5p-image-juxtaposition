@@ -3,18 +3,18 @@
     {
       "label": "Encabezado",
       "placeholder": "Aquí puede añadir un encabezado opcional.",
-      "description": "El título que te gustaría mostrar antes de la imagen antes/después"
+      "description": "El encabezado que le gustaría mostrar arriba de la imagen antes/después"
     },
     {
       "label": "Primera imagen",
       "fields": [
         {
           "label": "Primera imagen",
-          "description": "Por favor, asegúrese de que la primera imagen tenga el mismo tamaño que la segunda imagen."
+          "description": "La primera imagen. Por favor asegúrese de que tenga el mismo tamaño que la segunda imagen."
         },
         {
-          "label": "Texto para la primera imagen",
-          "description": "Texto para poner sobre la primera imagen"
+          "label": "Etiqueta para la primera imagen",
+          "description": "Etiqueta para poner sobre la primera imagen"
         }
       ]
     },
@@ -23,24 +23,24 @@
       "fields": [
         {
           "label": "Segunda imagen",
-          "description": "Por favor, asegúrese de que la segunda imagen tenga el mismo tamaño que la primera imagen."
+          "description": "La segunda imagen. Por favor, asegúrese de que tenga el mismo tamaño que la primera imagen."
         },
         {
-          "label": "Texto para la segunda imagen",
-          "description": "Texto para poner sobre la segunda imagen"
+          "label": "Etiqueta para la segunda imagen",
+          "description": "Etiqueta para poner sobre la segunda imagen"
         }
       ]
     },
     {
-      "label": "Configuraciones de comportamiento",
-      "description": "Estas opciones te permitirán establecer algunos detalles",
+      "label": "Configuraciones del comportamiento",
+      "description": "Estas opciones le permitirán establecer algunos detalles",
       "fields": [
         {
-          "label": "Orientación del control deslizante",
-          "description": "Horizontal se moverá hacia la izquierda y hacia la derecha, la vertical se moverá hacia arriba y hacia abajo"
+          "label": "Posición del control deslizante en %",
+          "description": "Configura la posición inicial del control deslizante"
         },
         {
-          "label": "Orientación del deslizador",
+          "label": "Orientación del control deslizante",
           "description": "Horizontal moverá izquierda y derecha, vertical moverá arriba y abajo.",
           "options": [
             {
@@ -52,7 +52,7 @@
           ]
         },
         {
-          "label": "Color del deslizador"
+          "label": "Color del control deslizante"
         }
       ]
     }
