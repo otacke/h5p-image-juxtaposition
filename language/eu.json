@@ -1,0 +1,60 @@
+{
+  "semantics": [
+    {
+      "label": "Goiburua",
+      "placeholder": "Hemen aukerazko goiburua gehitu dezakezu.",
+      "description": "Irudiaren aurretik/ondoren gainean erakutsi nahi duzun goiburua"
+    },
+    {
+      "label": "Lehen irudia",
+      "fields": [
+        {
+          "label": "Lehen irudia",
+          "description": "Lehen irudia. Ziurtatu ezazu mesedez bigarren irudiaren tamaina bera duela."
+        },
+        {
+          "label": "Lehen irudiarentzako etiketa",
+          "description": "Lehen irudiaren gainean jartzeko etiketa"
+        }
+      ]
+    },
+    {
+      "label": "Bigarren irudia",
+      "fields": [
+        {
+          "label": "Bigarren irudia",
+          "description": "Bigarren irudia. Ziurtatu ezazu mesedez lehen irudiaren tamaina bera duela."
+        },
+        {
+          "label": "Bigarren irudiarentzako etiketa",
+          "description": "Bigarren irudiaren gainean jartzeko etiketa"
+        }
+      ]
+    },
+    {
+      "label": "Portaeraren ezarpenak",
+      "description": "Aukera hauek hainbat xehetasun zehaztea ahalbidetzen dute",
+      "fields": [
+        {
+          "label": "Karruselaren hasiera ehunekotan",
+          "description": "Karruselaren hasierako kokapena zehazten du"
+        },
+        {
+          "label": "Karruselaren orientazioa",
+          "description": "Horizontala ezker-eskuin mugituko da, eta bertikala gora eta behera.",
+          "options": [
+            {
+              "label": "Horizontala"
+            },
+            {
+              "label": "Bertikala"
+            }
+          ]
+        },
+        {
+          "label": "Karruselaren kolorea"
+        }
+      ]
+    }
+  ]
+}
