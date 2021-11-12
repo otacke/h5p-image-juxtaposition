@@ -1,0 +1,60 @@
+{
+  "semantics": [
+    {
+      "label": "Encapçalament",
+      "placeholder": "Aquí podeu afegir un encapçalament opcional.",
+      "description": "L'encapçalament que voleu mostrar a la part superior de la juxtaposició"
+    },
+    {
+      "label": "Primera imatge",
+      "fields": [
+        {
+          "label": "Primera imatge",
+          "description": "La primera imatge. Assegureu-vos que té les mateixes dimensions que la segona."
+        },
+        {
+          "label": "Etiqueta per a la primera imatge",
+          "description": "Etiqueta per posar-la sobre la primera imatge"
+        }
+      ]
+    },
+    {
+      "label": "Segona imatge",
+      "fields": [
+        {
+          "label": "Segona imatge",
+          "description": "La segona imatge. Assegureu-vos que té les mateixes dimensions que la primera."
+        },
+        {
+          "label": "Etiqueta per a la segona imatge",
+          "description": "Etiqueta per posar-la sobre la segona imatge"
+        }
+      ]
+    },
+    {
+      "label": "Paràmetres de comportament",
+      "description": "Aquestes opcions us permeten configurar alguns detalls",
+      "fields": [
+        {
+          "label": "Posició inicial del control lliscant en %",
+          "description": "Configura la posició inicial del control lliscant"
+        },
+        {
+          "label": "Orientació del control lliscant",
+          "description": "L'orientació horitzontal es mou de dreta a esquerra; la vertical, amunt i avall.",
+          "options": [
+            {
+              "label": "Horitzontal"
+            },
+            {
+              "label": "Vertical"
+            }
+          ]
+        },
+        {
+          "label": "Color del control lliscant"
+        }
+      ]
+    }
+  ]
+}
