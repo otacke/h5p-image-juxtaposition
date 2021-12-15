@@ -1,6 +1,6 @@
 {
   "name": "h5p-image-juxtaposition",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Put two images side by side with a slideable overlay effect, e.g. to create an interactive before/after image.",
   "scripts": {
     "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack",

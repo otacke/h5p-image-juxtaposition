@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Intestazione",
-      "placeholder": "Qui puoi aggiungere un'intestazione aggiuntiva",
-      "description": "Intestazione da mostrare sopra le due immagini (prima/dopo)"
+      "label": "Descrizione del compito",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "Prima immagine",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Colore del cursore"
+          "label": "Colore del cursore",
+          "default": "#f3f3f3"
         }
       ]
     }

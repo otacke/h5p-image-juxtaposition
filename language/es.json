@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Encabezado",
-      "placeholder": "Aquí puede añadir un encabezado opcional.",
-      "description": "El encabezado que le gustaría mostrar arriba de la imagen antes/después"
+      "label": "Descripción del trabajo",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "Primera imagen",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Color del control deslizante"
+          "label": "Color del control deslizante",
+          "default": "#f3f3f3"
         }
       ]
     }

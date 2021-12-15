@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Título",
-      "placeholder": "Adicione aqui um título opcional.",
-      "description": "O título que gostaria de mostrar antes da sobreposição de imagens"
+      "label": "Descrição da atividade",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "Primeira imagem",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Slider color"
+          "label": "Slider color",
+          "default": "#f3f3f3"
         }
       ]
     }

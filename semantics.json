@@ -1,12 +1,27 @@
 [
   {
-    "name": "title",
-    "label": "Heading",
+    "name": "taskDescription",
+    "label": "Task description",
     "importance": "high",
     "type": "text",
-    "optional": true,
-    "placeholder": "Here you can add an optional heading.",
-    "description": "The heading you'd like to show before the befort/after image"
+    "widget": "html",
+    "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+    "placeholder": "Here you can add an optional heading and/or instructions.",
+    "enterMode": "div",
+    "tags": [
+      "strong",
+      "em",
+      "u",
+      "a",
+      "ul",
+      "ol",
+      "h2",
+      "h3",
+      "hr",
+      "pre",
+      "code"
+    ],
+    "optional": true
   },
   {
     "name": "imageBefore",

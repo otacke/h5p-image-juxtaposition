@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Goiburua",
-      "placeholder": "Hemen aukerazko goiburua gehitu dezakezu.",
-      "description": "Irudiaren aurretik/ondoren gainean erakutsi nahi duzun goiburua"
+      "label": "Zereginaren deskribapena",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "Lehen irudia",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Karruselaren kolorea"
+          "label": "Karruselaren kolorea",
+          "default": "#f3f3f3"
         }
       ]
     }

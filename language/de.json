@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Überschrift",
-      "placeholder": "Hier kannst du optional einen Titel angeben.",
-      "description": "Der Titel, der über dem Vorher/Nachher-Bild angezeigt wird"
+      "label": "Aufgabenbeschreibung",
+      "description": "Füge hier die Überschrift/Aufgabe ein, die über dem Vorher/Nachher-Bild angezeigt soll.",
+      "placeholder": "Hier kannst du eine optionale Überschrift und/oder Hinweise einfügen."
     },
     {
       "label": "Erstes Bild",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Farbe des Schiebereglers"
+          "label": "Farbe des Schiebereglers",
+          "default": "#f3f3f3"
         }
       ]
     }

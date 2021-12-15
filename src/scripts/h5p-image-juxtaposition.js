@@ -25,6 +25,7 @@ class ImageJuxtaposition extends H5P.Question {
 
     this.params = Util.extend({
       title: '',
+      taskDescription: '',
       imageBefore: {
         imageBefore: undefined,
         labelBefore: ''
@@ -81,12 +82,12 @@ class ImageJuxtaposition extends H5P.Question {
     container.appendChild(this.spinner.getDOM());
 
     // Title bar
-    if (this.params.title) {
-      this.title = document.createElement('div');
-      this.title.classList.add('h5p-image-juxtaposition-title');
-      this.title.classList.add('h5p-image-juxtaposition-title-none');
-      this.title.innerHTML = this.params.title;
-      container.appendChild(this.title);
+    if (this.params.taskDescription) {
+      this.taskDescription = document.createElement('div');
+      this.taskDescription.classList.add('h5p-image-juxtaposition-task-description');
+      this.taskDescription.classList.add('h5p-image-juxtaposition-task-description-none');
+      this.taskDescription.innerHTML = this.params.taskDescription;
+      container.appendChild(this.taskDescription);
     }
 
     // Missing image
@@ -106,7 +107,7 @@ class ImageJuxtaposition extends H5P.Question {
       container.appendChild(content);
 
       // Create the slider
-      const slider = new ImageJuxtapositionSlider(
+      this.slider = new ImageJuxtapositionSlider(
         {
           container: content,
           images: [
@@ -134,16 +135,13 @@ class ImageJuxtaposition extends H5P.Question {
 
       this.on('resize', () => {
         this.containerH5P = container.closest('.h5p-image-juxtaposition');
-        const fullScreenOn = this.containerH5P.classList.contains('h5p-fullscreen') || this.containerH5P.classList.contains('h5p-semi-fullscreen');
 
-        const dimensionsMax = (fullScreenOn) ?
-          {
-            height: window.innerHeight - this.titleHeight,
-            width: window.innerWidth,
-          } :
-          undefined;
-
-        slider.resize(dimensionsMax);
+        setTimeout(() => {
+          this.setDimensions(
+            this.containerH5P.classList.contains('h5p-fullscreen') ||
+            this.containerH5P.classList.contains('h5p-semi-fullscreen')
+          );
+        }, 0);
       });
     }
 
@@ -151,23 +149,33 @@ class ImageJuxtaposition extends H5P.Question {
   }
 
   /**
+   * Set dimensions for slider.
+   * @param {boolean} isInFullScreen If true, set fullscreen dims, else not.
+   */
+  setDimensions(isInFullScreen) {
+    const styles = window.getComputedStyle(this.taskDescription);
+    const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
+    const taskDescriptionHeight = Math.ceil(this.taskDescription.offsetHeight + margin);
+
+    const dimensionsMax = (isInFullScreen) ?
+      {
+        height: window.innerHeight - taskDescriptionHeight,
+        width: window.innerWidth,
+      } :
+      undefined;
+
+    this.slider.resize(dimensionsMax);
+  }
+
+  /**
    * Handle slider loaded.
    */
   handleLoaded() {
-    // We can hide the spinner now and show the title
+    // We can hide the spinner now and show the taskDescription
     this.spinner.hide();
 
-    if (this.title) {
-      this.title.classList.remove('h5p-image-juxtaposition-title-none');
-
-      setTimeout(() => {
-        const styles = window.getComputedStyle(this.title);
-        const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
-        this.titleHeight = Math.ceil(this.title.offsetHeight + margin);
-      }, 0);
-    }
-    else {
-      this.titleHeight = 0;
+    if (this.taskDescription) {
+      this.taskDescription.classList.remove('h5p-image-juxtaposition-task-description-none');
     }
 
     this.trigger('resize');

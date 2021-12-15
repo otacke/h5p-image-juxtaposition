@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Naslov vsebine",
-      "placeholder": "Neobvezen naslov vsebine.",
-      "description": "Besedilo je prikazano nad prvo/drugo sliko."
+      "label": "Navodilo udeležencem",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "Prva slika",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Barva drsnika"
+          "label": "Barva drsnika",
+          "default": "#f3f3f3"
         }
       ]
     }

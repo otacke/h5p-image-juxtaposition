@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "헤딩",
-      "placeholder": "여기에 선택적인 제목을 추가할 수 있습니다.",
-      "description": "전/후 이미지 위에 표시할 제목"
+      "label": "과제 설명",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "첫 번째 이미지",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "슬라이더 색깔"
+          "label": "슬라이더 색깔",
+          "default": "#f3f3f3"
         }
       ]
     }

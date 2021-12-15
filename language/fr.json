@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Titre",
-      "placeholder": "Entrer ici un titre optionnel.",
-      "description": "Le titre que vous souhaiteriez afficher avant la juxtaposition."
+      "label": "Consigne",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "Première image",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Slider color"
+          "label": "Slider color",
+          "default": "#f3f3f3"
         }
       ]
     }

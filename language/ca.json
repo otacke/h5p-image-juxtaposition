@@ -1,9 +1,9 @@
 {
   "semantics": [
     {
-      "label": "Encapçalament",
-      "placeholder": "Aquí podeu afegir un encapçalament opcional.",
-      "description": "L'encapçalament que voleu mostrar a la part superior de la juxtaposició"
+      "label": "Descripció de la tasca",
+      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
+      "placeholder": "Here you can add an optional heading and/or instructions."
     },
     {
       "label": "Primera imatge",
@@ -52,7 +52,8 @@
           ]
         },
         {
-          "label": "Color del control lliscant"
+          "label": "Color del control lliscant",
+          "default": "#f3f3f3"
         }
       ]
     }
