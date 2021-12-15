@@ -89,6 +89,8 @@ class ImageJuxtapositionImage {
     this.image.setAttribute('draggable', 'false');
     this.image.setAttribute('unselectable', 'on');
     this.image.setAttribute('onselectstart', 'return false;');
+    this.image.setAttribute('onmousedown', 'return false;');
+    this.image.setAttribute('aria-hidden', 'true');
 
     this.imageDOM.appendChild(this.image);
 

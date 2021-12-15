@@ -56,31 +56,54 @@ class ImageJuxtapositionHandle {
     // Event Listeners for keyboard
     this.handle.addEventListener('keydown', (event) => {
       event = event || window.event;
-      const key = event.which || event.keyCode;
+
       const positionPercentage = parseFloat(this.handle.style.left || this.handle.style.top);
 
-      switch (key) {
-        case 35: // end
-          event.preventDefault();
-          this.callbackUpdate(100);
-          break;
-
-        case 36: // home
-          event.preventDefault();
-          this.callbackUpdate(0);
-          break;
-
-        case 37: // left
-        case 38: // up
+      /*
+       * Technically, this is a slider with just two positions, so jumping from
+       * 0% to 100% (image 1 and 2) and vice versa meets the ARIA recommendation
+       * https://www.w3.org/TR/wai-aria-practices/#slider, but the implementation
+       * also offers users without a visual deficiency to go to intermediate
+       * positions.
+       */
+      if (event.code) {
+        if (event.shiftKey && (event.code === 'ArrowLeft' || event.code === 'ArrowUp')) {
           event.preventDefault();
           this.callbackUpdate(Math.max(0, positionPercentage - 1));
-          break;
-
-        case 39: // right
-        case 40: // down
+        }
+        else if (event.shiftKey && (event.code === 'ArrowRight' || event.code === 'ArrowDown')) {
           event.preventDefault();
-          this.callbackUpdate(Math.min(100, positionPercentage + 1));
-          break;
+          this.callbackUpdate(Math.min(positionPercentage + 1, 100));
+        }
+        else if (event.code === 'Home' || event.code === 'ArrowLeft' || event.code === 'ArrowUp') {
+          event.preventDefault();
+          this.callbackUpdate(0);
+        }
+        else if (event.code === 'End' || event.code === 'ArrowRight' || event.code === 'ArrowDown') {
+          event.preventDefault();
+          this.callbackUpdate(100);
+        }
+      }
+      else {
+        // Fallback for e.g. IE11.
+        const key = event.which || event.keyCode;
+
+        if (event.shiftKey && (key === 39 || key === 40)) {
+          event.preventDefault();
+          this.callbackUpdate(Math.max(0, positionPercentage + 1));
+        }
+        else if (event.shiftKey && (key === 37 || key === 38)) {
+          event.preventDefault();
+          this.callbackUpdate(Math.max(0, positionPercentage - 1));
+        }
+        else if (key === 35 || key === 39 || key === 40) {
+          event.preventDefault();
+          this.callbackUpdate(100);
+        }
+        else if (key === 36 || key === 37 || key === 38) {
+          event.preventDefault();
+          this.callbackUpdate(0);
+        }
       }
     });
   }
@@ -106,6 +129,8 @@ class ImageJuxtapositionHandle {
       this.handle.classList.remove('transition');
     }
 
+    this.controller.setAttribute('aria-valuenow', parseInt(position));
+
     if (this.params.mode === 'horizontal') {
       this.handle.style.left = `${position}%`;
     }
@@ -113,11 +138,25 @@ class ImageJuxtapositionHandle {
       this.handle.style.top = `${position}%`;
     }
 
-    // Use aria-valuetext as advised in https://www.w3.org/TR/wai-aria-practices-1.1/#slider_roles_states_props
-    const ariaValueText = (parseInt(position, 10) > 50) ?
-      this.params.ariaValueTextAfter :
-      this.params.ariaValueTextBefore;
-    this.controller.setAttribute('aria-valuetext', ariaValueText);
+    this.setAriaValueText(position);
+  }
+
+  setAriaValueText(position) {
+    if (typeof position !== 'number') {
+      position = (this.params.mode === 'horizontal') ?
+        parseFloat(this.handle.style.left) :
+        parseFloat(this.handle.style.top);
+    }
+
+    const ariaValueText = (parseInt(position, 10) >= 50) ?
+      this.params.ariaValueTextBefore :
+      this.params.ariaValueTextAfter;
+
+    this.controller.setAttribute('aria-valuetext', ''); // Needed for re-reading
+    clearTimeout(this.updateReadTimeout);
+    this.updateReadTimeout = setTimeout(() => {
+      this.controller.setAttribute('aria-valuetext', ariaValueText);
+    }, 10); // Needed for re-reading
   }
 
   /**
@@ -125,8 +164,9 @@ class ImageJuxtapositionHandle {
    */
   focus() {
     setTimeout(() => {
+      this.controller.blur(); // Workaround for ChromeVox that steals focus
       this.controller.focus();
-    }, 0); // Needed for focus to be accepted
+    }, 100); // Workaround for ChromeVox that steals focus
   }
 }
 
