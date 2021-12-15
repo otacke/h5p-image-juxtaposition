@@ -1,0 +1,60 @@
+{
+  "semantics": [
+    {
+      "label": "",
+      "placeholder": "",
+      "description": ""
+    },
+    {
+      "label": "",
+      "fields": [
+        {
+          "label": "",
+          "description": ""
+        },
+        {
+          "label": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "label": "",
+      "fields": [
+        {
+          "label": "",
+          "description": ""
+        },
+        {
+          "label": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "label": "",
+      "description": "",
+      "fields": [
+        {
+          "label": "",
+          "description": ""
+        },
+        {
+          "label": "",
+          "description": "",
+          "options": [
+            {
+              "label": ""
+            },
+            {
+              "label": ""
+            }
+          ]
+        },
+        {
+          "label": ""
+        }
+      ]
+    }
+  ]
+}
