@@ -67,124 +67,124 @@ class ImageJuxtaposition extends H5P.Question {
     this.on('exitFullScreen', () => {
       this.trigger('resize');
     });
+  }
 
-    /**
-     * Register DOM elements with H5P.Question.
-     */
-    this.registerDomElements = () => {
-      const container = document.createElement('div');
-      container.classList.add('h5p-image-juxtaposition-container');
+  /**
+   * Register DOM elements with H5P.Question.
+   */
+  registerDomElements() {
+    const container = document.createElement('div');
+    container.classList.add('h5p-image-juxtaposition-container');
 
-      // Spinner to indicate loading
-      this.spinner = new Spinner('h5p-image-juxtaposition-spinner');
-      container.appendChild(this.spinner.getDOM());
+    // Spinner to indicate loading
+    this.spinner = new Spinner('h5p-image-juxtaposition-spinner');
+    container.appendChild(this.spinner.getDOM());
 
-      // Title bar
-      if (this.params.title) {
-        this.title = document.createElement('div');
-        this.title.classList.add('h5p-image-juxtaposition-title');
-        this.title.classList.add('h5p-image-juxtaposition-title-none');
-        this.title.innerHTML = this.params.title;
-        container.appendChild(this.title);
-      }
+    // Title bar
+    if (this.params.title) {
+      this.title = document.createElement('div');
+      this.title.classList.add('h5p-image-juxtaposition-title');
+      this.title.classList.add('h5p-image-juxtaposition-title-none');
+      this.title.innerHTML = this.params.title;
+      container.appendChild(this.title);
+    }
 
-      // Missing image
-      if (
-        !this.params.imageBefore.imageBefore.params.file || !this.params.imageBefore.imageBefore.params.file.path ||
-        !this.params.imageAfter.imageAfter.params.file || !this.params.imageAfter.imageAfter.params.file.path
-      ) {
-        const message = document.createElement('div');
-        message.classList.add('h5p-image-juxtaposition-missing-images');
-        message.innerHTML = 'I really need two background images :)';
-        container.appendChild(message);
-        this.spinner.hide();
-      }
-      else {
-        const content = document.createElement('div');
-        content.classList.add('h5p-image-juxtaposition-juxtapose');
-        container.appendChild(content);
-
-        // Create the slider
-        const slider = new ImageJuxtapositionSlider(
-          {
-            container: content,
-            images: [
-              {
-                src: H5P.getPath(this.params.imageBefore.imageBefore.params.file.path, this.contentId),
-                alt: this.params.imageBefore.imageBefore.params.alt,
-                title: this.params.imageBefore.imageBefore.params.title,
-                label: this.params.imageBefore.labelBefore
-              },
-              {
-                src: H5P.getPath(this.params.imageAfter.imageAfter.params.file.path, this.contentId),
-                alt: this.params.imageAfter.imageAfter.params.alt,
-                title: this.params.imageAfter.imageAfter.params.title,
-                label: this.params.imageAfter.labelAfter
-              }
-            ],
-            startingPosition: this.params.behavior.startingPosition + '%',
-            mode: this.params.behavior.sliderOrientation,
-            color: this.params.behavior.sliderColor
-          },
-          () => {
-            this.handleLoaded();
-          }
-        );
-
-        this.on('resize', () => {
-          this.containerH5P = container.closest('.h5p-image-juxtaposition');
-          const fullScreenOn = this.containerH5P.classList.contains('h5p-fullscreen') || this.containerH5P.classList.contains('h5p-semi-fullscreen');
-
-          const dimensionsMax = (fullScreenOn) ?
-            {
-              height: window.innerHeight - this.titleHeight,
-              width: window.innerWidth,
-            } :
-            undefined;
-
-          slider.resize(dimensionsMax);
-        });
-      }
-
-      this.setContent(container);
-    };
-
-    /**
-     * Handle slider loaded.
-     */
-    this.handleLoaded = () => {
-      // We can hide the spinner now and show the title
+    // Missing image
+    if (
+      !this.params.imageBefore.imageBefore.params.file || !this.params.imageBefore.imageBefore.params.file.path ||
+      !this.params.imageAfter.imageAfter.params.file || !this.params.imageAfter.imageAfter.params.file.path
+    ) {
+      const message = document.createElement('div');
+      message.classList.add('h5p-image-juxtaposition-missing-images');
+      message.innerHTML = 'I really need two background images :)';
+      container.appendChild(message);
       this.spinner.hide();
+    }
+    else {
+      const content = document.createElement('div');
+      content.classList.add('h5p-image-juxtaposition-juxtapose');
+      container.appendChild(content);
 
-      if (this.title) {
-        this.title.classList.remove('h5p-image-juxtaposition-title-none');
+      // Create the slider
+      const slider = new ImageJuxtapositionSlider(
+        {
+          container: content,
+          images: [
+            {
+              src: H5P.getPath(this.params.imageBefore.imageBefore.params.file.path, this.contentId),
+              alt: this.params.imageBefore.imageBefore.params.alt,
+              title: this.params.imageBefore.imageBefore.params.title,
+              label: this.params.imageBefore.labelBefore
+            },
+            {
+              src: H5P.getPath(this.params.imageAfter.imageAfter.params.file.path, this.contentId),
+              alt: this.params.imageAfter.imageAfter.params.alt,
+              title: this.params.imageAfter.imageAfter.params.title,
+              label: this.params.imageAfter.labelAfter
+            }
+          ],
+          startingPosition: this.params.behavior.startingPosition + '%',
+          mode: this.params.behavior.sliderOrientation,
+          color: this.params.behavior.sliderColor
+        },
+        () => {
+          this.handleLoaded();
+        }
+      );
 
-        setTimeout(() => {
-          const styles = window.getComputedStyle(this.title);
-          const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
-          this.titleHeight = Math.ceil(this.title.offsetHeight + margin);
-        }, 0);
-      }
-      else {
-        this.titleHeight = 0;
-      }
+      this.on('resize', () => {
+        this.containerH5P = container.closest('.h5p-image-juxtaposition');
+        const fullScreenOn = this.containerH5P.classList.contains('h5p-fullscreen') || this.containerH5P.classList.contains('h5p-semi-fullscreen');
 
-      this.trigger('resize');
-    };
+        const dimensionsMax = (fullScreenOn) ?
+          {
+            height: window.innerHeight - this.titleHeight,
+            width: window.innerWidth,
+          } :
+          undefined;
 
-    /**
-     * Get tasks title.
-     * @return {string} Title.
-     */
-    this.getTitle = () => {
-      let raw;
-      if (this.contentData && this.contentData.metadata) {
-        raw = this.contentData.metadata.title;
-      }
-      raw = raw || ImageJuxtaposition.DEFAULT_DESCRIPTION;
+        slider.resize(dimensionsMax);
+      });
+    }
 
-      return H5P.createTitle(raw);
-    };
+    this.setContent(container);
+  }
+
+  /**
+   * Handle slider loaded.
+   */
+  handleLoaded() {
+    // We can hide the spinner now and show the title
+    this.spinner.hide();
+
+    if (this.title) {
+      this.title.classList.remove('h5p-image-juxtaposition-title-none');
+
+      setTimeout(() => {
+        const styles = window.getComputedStyle(this.title);
+        const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
+        this.titleHeight = Math.ceil(this.title.offsetHeight + margin);
+      }, 0);
+    }
+    else {
+      this.titleHeight = 0;
+    }
+
+    this.trigger('resize');
+  }
+
+  /**
+   * Get tasks title.
+   * @return {string} Title.
+   */
+  getTitle() {
+    let raw;
+    if (this.contentData && this.contentData.metadata) {
+      raw = this.contentData.metadata.title;
+    }
+    raw = raw || ImageJuxtaposition.DEFAULT_DESCRIPTION;
+
+    return H5P.createTitle(raw);
   }
 }
 
