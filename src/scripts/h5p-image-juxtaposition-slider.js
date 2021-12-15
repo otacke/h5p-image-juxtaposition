@@ -95,6 +95,11 @@ class ImageJuxtapositionSlider {
 
     // update handle
     this.handle.update(positionFirst, animate);
+
+    // Give focus (back) to handle if user clicked in image
+    if (animate && input.target.tagName.toLowerCase() === 'img') {
+      this.handle.focus();
+    }
   }
 
   /**

@@ -119,6 +119,15 @@ class ImageJuxtapositionHandle {
       this.params.ariaValueTextBefore;
     this.controller.setAttribute('aria-valuetext', ariaValueText);
   }
+
+  /**
+   * Focus controller.
+   */
+  focus() {
+    setTimeout(() => {
+      this.controller.focus();
+    }, 0); // Needed for focus to be accepted
+  }
 }
 
 export default ImageJuxtapositionHandle;
