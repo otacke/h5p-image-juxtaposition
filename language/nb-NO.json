@@ -1,20 +1,26 @@
 {
   "semantics": [
     {
-      "label": "",
-      "placeholder": "",
-      "description": ""
+      "placeholder": ""
     },
     {
       "label": "",
       "fields": [
         {
-          "label": "",
           "description": ""
         },
         {
-          "label": "",
           "description": ""
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "label": ""
+        },
+        {
+          "label": ""
         }
       ]
     },
@@ -22,30 +28,11 @@
       "label": "",
       "fields": [
         {
-          "label": "",
-          "description": ""
+          "label": ""
         },
         {
           "label": "",
-          "description": ""
-        }
-      ]
-    },
-    {
-      "label": "",
-      "description": "",
-      "fields": [
-        {
-          "label": "",
-          "description": ""
-        },
-        {
-          "label": "",
-          "description": "",
           "options": [
-            {
-              "label": ""
-            },
             {
               "label": ""
             }
