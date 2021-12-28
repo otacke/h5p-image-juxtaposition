@@ -2,7 +2,6 @@
   "semantics": [
     {},
     {
-      "label": "",
       "fields": [
         {},
         {
@@ -10,25 +9,11 @@
         }
       ]
     },
-    {
-      "fields": [
-        {},
-        {
-          "label": ""
-        }
-      ]
-    },
+    {},
     {
       "fields": [
         {
           "label": ""
-        },
-        {
-          "options": [
-            {
-              "label": ""
-            }
-          ]
         }
       ]
     }
