@@ -1,16 +1,20 @@
 {
   "semantics": [
-    {
-      "placeholder": ""
-    },
+    {},
     {
       "label": "",
       "fields": [
+        {},
         {
           "description": ""
-        },
+        }
+      ]
+    },
+    {
+      "fields": [
+        {},
         {
-          "description": ""
+          "label": ""
         }
       ]
     },
@@ -20,26 +24,11 @@
           "label": ""
         },
         {
-          "label": ""
-        }
-      ]
-    },
-    {
-      "label": "",
-      "fields": [
-        {
-          "label": ""
-        },
-        {
-          "label": "",
           "options": [
             {
               "label": ""
             }
           ]
-        },
-        {
-          "label": ""
         }
       ]
     }
