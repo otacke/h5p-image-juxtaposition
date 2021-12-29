@@ -2,8 +2,8 @@
   "semantics": [
     {
       "label": "Descripción del trabajo",
-      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
-      "placeholder": "Here you can add an optional heading and/or instructions."
+      "description": "Ponga el encabezado / las instrucciones que le gustaría mostrar arriba de la imagen de antes/después de aquí.",
+      "placeholder": "Aquí puede añadir un encabezado opcional o instrucciones."
     },
     {
       "label": "Primera imagen",
