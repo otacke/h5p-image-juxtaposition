@@ -2,8 +2,8 @@
   "semantics": [
     {
       "label": "Zereginaren deskribapena",
-      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
-      "placeholder": "Here you can add an optional heading and/or instructions."
+      "description": "Zehaztu hemen aurreko/ondoko irudiaren gainean erakutsi nahi dituzun goiburua/argibideak.",
+      "placeholder": "Hemen aukerazko goiburu edo argibideak gehitu ditzakezu."
     },
     {
       "label": "Lehen irudia",
