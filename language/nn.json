@@ -1,58 +1,58 @@
 {
   "semantics": [
     {
-      "label": "Task description",
-      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
-      "placeholder": "Here you can add an optional heading and/or instructions."
+      "label": "Oppgåvebeskriving",
+      "description": "Skriv inn tekst som skal visast over før/etter-bildet.",
+      "placeholder": "Her kan du legge til ei valfri overskrift eller forklaring."
     },
     {
-      "label": "First image",
+      "label": "Bilde 1",
       "fields": [
         {
-          "label": "First image",
-          "description": "The first image. Please make sure that it has the same size as the second image."
+          "label": "Bilde 1",
+          "description": "Bilde 1. Sørg for at det er nøyaktig like stort som bilde 2."
         },
         {
-          "label": "Label for first image",
-          "description": "Label to put over first image"
+          "label": "Tittel på bilde 1",
+          "description": "Tekst som skal visast over bilde 1"
         }
       ]
     },
     {
-      "label": "Second image",
+      "label": "Bilde 2",
       "fields": [
         {
-          "label": "Second image",
-          "description": "The second image. Please make sure that it has the same size as the first image."
+          "label": "Bilde 2",
+          "description": "Bilde 2. Sørg for at det er nøyaktig like stort som bilde 1."
         },
         {
-          "label": "Label for second image",
-          "description": "Label to put over second image"
+          "label": "Tittel på bilde 2",
+          "description": "Tekst som skal visast over bilde 2"
         }
       ]
     },
     {
-      "label": "Behavioral settings",
-      "description": "These options will let you set some details",
+      "label": "Oppgåveinnstillingar",
+      "description": "Desse vala lar deg styre nokre detaljfunksjonar i oppgåva.",
       "fields": [
         {
-          "label": "Slider start position in %",
-          "description": "Sets the start position of the slider"
+          "label": "Startposisjon for skyvelinja i %",
+          "description": "Her stiller du inn startposisjonen for skyvelinja."
         },
         {
-          "label": "Slider orientation",
-          "description": "Horizontal will move left and right, vertical will move up and down.",
+          "label": "Retning for skyvelinja",
+          "description": "Vel horisontal for rørsle mot venstre og høgre, vertikal for rørsle opp og ned.",
           "options": [
             {
-              "label": "Horizontal"
+              "label": "Horisontal"
             },
             {
-              "label": "Vertical"
+              "label": "Vertikal"
             }
           ]
         },
         {
-          "label": "Slider color",
+          "label": "Farge på skyvelinja",
           "default": "#f3f3f3"
         }
       ]

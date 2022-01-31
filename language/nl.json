@@ -2,8 +2,8 @@
   "semantics": [
     {
       "label": "Beschrijving taak",
-      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
-      "placeholder": "Here you can add an optional heading and/or instructions."
+      "description": "Plaats hier de koptekst/instructies die je wilt tonen boven de voor/na afbeelding.",
+      "placeholder": "Hier kun je optionele koptekst en/of instructies toevoegen."
     },
     {
       "label": "Eerste afbeelding",
@@ -33,7 +33,7 @@
     },
     {
       "label": "Gedragsinstellingen",
-      "description": "Met deze opties kun je een aantal gegevens instellen.",
+      "description": "Met deze opties kun je een aantal gegevens instellen",
       "fields": [
         {
           "label": "Startpositie schuifregelaar in %",
@@ -52,7 +52,7 @@
           ]
         },
         {
-          "label": "Slider color",
+          "label": "Kleur van schuifregelaar",
           "default": "#f3f3f3"
         }
       ]
