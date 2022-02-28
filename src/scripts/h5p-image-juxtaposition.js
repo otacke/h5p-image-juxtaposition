@@ -153,9 +153,13 @@ class ImageJuxtaposition extends H5P.Question {
    * @param {boolean} isInFullScreen If true, set fullscreen dims, else not.
    */
   setDimensions(isInFullScreen) {
-    const styles = window.getComputedStyle(this.taskDescription);
-    const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
-    const taskDescriptionHeight = Math.ceil(this.taskDescription.offsetHeight + margin);
+    let taskDescriptionHeight = 0;
+    
+    if (this.taskDescription) {
+      const styles = window.getComputedStyle(this.taskDescription);
+      const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
+      taskDescriptionHeight = Math.ceil(this.taskDescription.offsetHeight + margin);
+    }
 
     const dimensionsMax = (isInFullScreen) ?
       {
