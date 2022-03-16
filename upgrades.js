@@ -59,14 +59,11 @@ H5PUpgrades['H5P.ImageJuxtaposition'] = (function () {
        * Turn plain title into HTML task description
        */
       5: function (parameters, finished, extras) {
-        debugger
-
         if (parameters && parameters.title) {
           parameters.taskDescription = '<h2>' + parameters.title + '</h2>';
           delete parameters.title;
         }
 
-        debugger
         finished(null, parameters, extras);
       }
     }
