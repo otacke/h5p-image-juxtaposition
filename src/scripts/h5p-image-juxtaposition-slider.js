@@ -111,6 +111,9 @@ class ImageJuxtapositionSlider {
     let targetWidth;
 
     if (dimensionsMax) {
+      this.firstImage.setSize({ width: 'auto' });
+      this.secondImage.setSize({ width: 'auto' });
+
       if (this.imageRatio <= (dimensionsMax.width / dimensionsMax.height)) {
         targetHeight = dimensionsMax.height;
         targetWidth = targetHeight * this.imageRatio;
@@ -127,6 +130,11 @@ class ImageJuxtapositionSlider {
       targetWidth = window.innerWidth - 2;
       targetHeight = targetWidth / this.imageRatio;
       targetWidth = '100%';
+
+      // For some reason necessary on Lumi
+      const width = this.slider.getBoundingClientRect().width;
+      this.firstImage.setSize({ width: `${width}px` });
+      this.secondImage.setSize({ width: `${width}px` });
     }
 
     if (this.params.container) {

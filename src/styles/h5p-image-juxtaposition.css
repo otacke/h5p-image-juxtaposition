@@ -303,11 +303,8 @@
 	z-index: 5;
 	position: absolute;
 	margin-bottom: 0;
-
-	max-height: none;
-	max-width: none;
-	max-height: initial;
-	max-width: initial;
+	max-height: inherit;
+	max-width: inherit;
 }
 
 .h5p-image-juxtaposition-horizontal .h5p-image-juxtaposition-image img {
@@ -316,10 +313,8 @@
 	position: absolute;
 	margin-bottom: 0;
 
-	max-height: none;
-	max-width: none;
-	max-height: initial;
-	max-width: initial;
+  max-height: inherit;
+	max-width: inherit;
 }
 
 .h5p-image-juxtaposition-image.h5p-image-juxtaposition-left {

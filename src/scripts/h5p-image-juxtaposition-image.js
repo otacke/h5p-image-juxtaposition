@@ -64,6 +64,28 @@ class ImageJuxtapositionImage {
   }
 
   /**
+   * Set image element size.
+   * @param {object} [dimensions={}] Dimensions.
+   * @param {string} [dimensions.height] Any CSS height value.
+   * @param {string} [dimensions.width] Any CSS width value.
+   */
+  setSize(dimensions = {}) {
+    if (dimensions.height === 'auto') {
+      this.image.style.height = '';
+    }
+    else if (dimensions.height) {
+      this.image.style.height = dimensions.width;
+    }
+
+    if (dimensions.width === 'auto') {
+      this.image.style.width = '';
+    }
+    else if (dimensions.width) {
+      this.image.style.width = dimensions.width;
+    }
+  }
+
+  /**
    * Build image DOM.
    */
   buildDOM() {

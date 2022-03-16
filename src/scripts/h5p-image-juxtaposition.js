@@ -138,11 +138,18 @@ class ImageJuxtaposition extends H5P.Question {
 
         // Container may not be ready yet, try again in a bit
         if (!this.containerH5P) {
+          clearTimeout(this.resizeTimeout);
           this.resizeTimeout = setTimeout(() => {
             this.trigger('resize');
           }, 100);
 
           return;
+        }
+        else if (this.containerH5P.offsetHeight === 0) {
+          clearTimeout(this.resizeTimeout);
+          this.resizeTimeout = setTimeout(() => {
+            this.trigger('resize');
+          }, 100);
         }
 
         setTimeout(() => {
