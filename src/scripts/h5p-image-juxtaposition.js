@@ -136,6 +136,15 @@ class ImageJuxtaposition extends H5P.Question {
       this.on('resize', () => {
         this.containerH5P = container.closest('.h5p-image-juxtaposition');
 
+        // Container may not be ready yet, try again in a bit
+        if (!this.containerH5P) {
+          this.resizeTimeout = setTimeout(() => {
+            this.trigger('resize');
+          }, 100);
+
+          return;
+        }
+
         setTimeout(() => {
           this.setDimensions(
             this.containerH5P.classList.contains('h5p-fullscreen') ||
@@ -154,7 +163,7 @@ class ImageJuxtaposition extends H5P.Question {
    */
   setDimensions(isInFullScreen) {
     let taskDescriptionHeight = 0;
-    
+
     if (this.taskDescription) {
       const styles = window.getComputedStyle(this.taskDescription);
       const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
