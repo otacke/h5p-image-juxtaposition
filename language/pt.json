@@ -1,7 +1,7 @@
 {
   "semantics": [
     {
-      "label": "Descrição da atividade",
+      "label": "Descrição da tarefa",
       "description": "Put the heading/instructions you'd like to show above the before/after image here.",
       "placeholder": "Here you can add an optional heading and/or instructions."
     },
