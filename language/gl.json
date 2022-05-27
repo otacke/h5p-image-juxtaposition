@@ -2,8 +2,8 @@
   "semantics": [
     {
       "label": "Descrición da tarefa",
-      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
-      "placeholder": "Here you can add an optional heading and/or instructions."
+      "description": "Escribe aquí a cabeceira ou instrucións que che gustaría amosar antes ou despois da imaxe.",
+      "placeholder": "Aquí podes engadir cabeceiras e/ou instrucións opcionais."
     },
     {
       "label": "Primeira imaxe",
