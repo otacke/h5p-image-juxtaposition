@@ -127,7 +127,7 @@ class ImageJuxtapositionSlider {
       }
     }
     else {
-      targetWidth = window.innerWidth - 2;
+      targetWidth = this.params.container.offsetWidth;
       targetHeight = targetWidth / this.imageRatio;
       targetWidth = '100%';
 
