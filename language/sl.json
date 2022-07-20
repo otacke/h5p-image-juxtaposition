@@ -2,8 +2,8 @@
   "semantics": [
     {
       "label": "Navodilo udeležencem",
-      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
-      "placeholder": "Here you can add an optional heading and/or instructions."
+      "description": "Dodaten naslov ali opis reševanja zadane naloge, ki je prikazan nad slikama.",
+      "placeholder": "Dodaten naslov ali navodilo za udeležence."
     },
     {
       "label": "Prva slika",
