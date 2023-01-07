@@ -408,7 +408,6 @@
 	top: initial;
 }
 
-.h5p-image-juxtaposition-controller:focus,
 .h5p-image-juxtaposition-image.h5p-image-juxtaposition-left .h5p-image-juxtaposition-label:focus,
 .h5p-image-juxtaposition-image.h5p-image-juxtaposition-right .h5p-image-juxtaposition-label:focus {
   outline:none;
