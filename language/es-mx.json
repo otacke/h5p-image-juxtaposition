@@ -36,7 +36,7 @@
       "description": "Estas opciones le permitirán establecer algunos detalles",
       "fields": [
         {
-          "label": "Posición del control deslizante en %",
+          "label": "Posición de inicio del control deslizante en %",
           "description": "Configura la posición inicial del control deslizante"
         },
         {
