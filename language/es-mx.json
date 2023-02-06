@@ -58,15 +58,15 @@
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Textos de accesibilidad",
       "fields": [
         {
-          "label": "Image visible message",
-          "default": "Image @percentage % visible",
-          "description": "@percentage is a placeholder and will be replaced with the respective value."
+          "label": "Mensaje imagen visible",
+          "default": "El @percentage % de la imagen es visible",
+          "description": "@percentage es un reemplazable que será remplazado con el valor respectivo."
         },
         {
-          "label": "Dummy"
+          "label": "Maniquí"
         }
       ]
     }
