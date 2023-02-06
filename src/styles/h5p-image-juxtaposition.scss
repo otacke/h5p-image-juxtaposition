@@ -22,6 +22,12 @@
   background-color: #ffffff;
 }
 
+.h5p-image-juxtaposition .h5p-image-juxtaposition-task-description {
+  margin: 0 0 0 16px;
+  overflow: auto;
+  width: auto;
+}
+
 .h5p-image-juxtaposition.h5p-fullscreen .h5p-image-juxtaposition-container,
 .h5p-image-juxtaposition.h5p-semi-fullscreen .h5p-image-juxtaposition-container {
   max-height: 100vh;
@@ -111,12 +117,6 @@
   100% {
     transform: rotate(360deg);
   }
-}
-
-.h5p-image-juxtaposition .h5p-image-juxtaposition-task-description {
-  margin: 0 0 0 16px;
-  overflow: auto;
-  width: auto;
 }
 
 .h5p-image-juxtaposition .h5p-image-juxtaposition-task-description-none {
@@ -285,16 +285,13 @@
 	height: 100%;
 	display: inline-block;
 	overflow: hidden;
-	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
 }
 
 .h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image {
 	width: 100%;
 	left: 0;
 	top: initial;
-}
-
-.h5p-image-juxtaposition-image img {
 }
 
 .h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-image img {
