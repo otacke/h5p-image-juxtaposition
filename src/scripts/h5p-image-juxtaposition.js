@@ -1,6 +1,7 @@
 import ImageJuxtapositionSlider from './h5p-image-juxtaposition-slider';
 import Spinner from './h5p-image-juxtaposition-spinner';
 import Util from './h5p-image-juxtaposition-util';
+import Dictionary from '@services/dictionary';
 
 /* This h5p content library was based on ...
  *
@@ -38,11 +39,17 @@ class ImageJuxtaposition extends H5P.Question {
         startingPosition: 50,
         sliderOrientation: 'horizontal',
         sliderColor: '#f3f3f3'
+      },
+      a11y: {
+        imageVisibleMessage: 'Image @percentage % visible'
       }
     }, params);
 
     this.contentId = contentId;
     this.contentData = contentData;
+
+    // Fill dictionary
+    Dictionary.fill({ a11y: this.params.a11y });
 
     // Polyfill for IE11
     if (!Element.prototype.matches) {

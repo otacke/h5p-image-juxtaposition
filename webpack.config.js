@@ -7,6 +7,11 @@ const isProd = (nodeEnv === 'production');
 
 module.exports = {
   mode: nodeEnv,
+  resolve: {
+    alias: {
+      '@services': path.resolve(__dirname, 'src/scripts/services')
+    }
+  },
   optimization: {
     minimize: isProd,
     minimizer: [

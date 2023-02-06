@@ -1,3 +1,5 @@
+import Dictionary from '@services/dictionary';
+
 /** Class representing a Slider handle */
 class ImageJuxtapositionHandle {
   /**
@@ -17,7 +19,7 @@ class ImageJuxtapositionHandle {
     this.controller.style.backgroundColor = this.params.color;
     this.controller.setAttribute('draggable', 'false');
     this.controller.setAttribute('tabindex', 0);
-    this.controller.setAttribute('role', 'slider');
+    this.controller.setAttribute('role', 'separator');
     this.controller.setAttribute('aria-valuemin', 0);
     this.controller.setAttribute('aria-valuemax', 100);
     this.controller.setAttribute('aria-orientation', this.params.mode);
@@ -148,9 +150,21 @@ class ImageJuxtapositionHandle {
         parseFloat(this.handle.style.top);
     }
 
-    const ariaValueText = (parseInt(position, 10) >= 50) ?
-      this.params.ariaValueTextBefore :
-      this.params.ariaValueTextAfter;
+    let ariaValueText;
+    if (parseInt(position) >= 50) {
+      const alt = this.params.ariaValueTextBefore;
+      const message = Dictionary.get('a11y.imageVisibleMessage')
+        .replace(/@percentage/, Math.round(position));
+
+      ariaValueText = `${alt}. ${message}`;
+    }
+    else {
+      const alt = this.params.ariaValueTextAfter;
+      const message = Dictionary.get('a11y.imageVisibleMessage')
+        .replace(/@percentage/, 100 - Math.round(position));
+
+      ariaValueText = `${alt}. ${message}`;
+    }
 
     this.controller.setAttribute('aria-valuetext', ''); // Needed for re-reading
     clearTimeout(this.updateReadTimeout);

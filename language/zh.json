@@ -2,8 +2,8 @@
   "semantics": [
     {
       "label": "标题",
-      "placeholder": "您可以在此处添加可选标题。",
-      "description": "您想在图像上方显示的标题"
+      "description": "您想在图像上方显示的标题",
+      "placeholder": "您可以在此处添加可选标题。"
     },
     {
       "label": "第一张图片",
@@ -54,6 +54,19 @@
         {
           "label": "滑块颜色",
           "default": "#f3f3f3"
+        }
+      ]
+    },
+    {
+      "label": "Accessibility texts",
+      "fields": [
+        {
+          "label": "Image visible message",
+          "default": "Image @percentage % visible",
+          "description": "@percentage is a placeholder and will be replaced with the respective value."
+        },
+        {
+          "label": "Dummy"
         }
       ]
     }

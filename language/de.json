@@ -56,6 +56,19 @@
           "default": "#f3f3f3"
         }
       ]
+    },
+    {
+      "label": "Texte für Barrierefreiheit",
+      "fields": [
+        {
+          "label": "Nachricht für die Sichtbarkeit des Bildes",
+          "default": "Bild zu @percentage % sichtbar",
+          "description": "@percentage ist ein Platzhalter und wird durch den jeweiligen Wert ersetzt."
+        },
+        {
+          "label": "Dummy"
+        }
+      ]
     }
   ]
 }

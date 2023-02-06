@@ -127,5 +127,26 @@
         }
       }
     ]
+  },
+  {
+    "name": "a11y",
+    "type": "group",
+    "label": "Accessibility texts",
+    "common": true,
+    "fields": [
+      {
+        "name": "imageVisibleMessage",
+        "type": "text",
+        "label": "Image visible message",
+        "default": "Image @percentage % visible",
+        "description": "@percentage is a placeholder and will be replaced with the respective value."
+      },
+      {
+        "name": "Dummy",
+        "type": "text",
+        "label": "Dummy",
+        "widget": "none"
+      }
+    ]
   }
 ]
