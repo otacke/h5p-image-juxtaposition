@@ -1,7 +1,7 @@
 /** Class representing a Slider Image including a label */
 class ImageJuxtapositionImage {
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters.
    * @param {function} callbackLoaded Callback for when image is loaded.
    */
@@ -16,7 +16,8 @@ class ImageJuxtapositionImage {
 
   /**
    * Get DOM.
-   * @return {HTMLElement} Image DOM.
+   *
+   * @returns {HTMLElement} Image DOM.
    */
   getDOM() {
     return this.imageDOM;
@@ -24,7 +25,8 @@ class ImageJuxtapositionImage {
 
   /**
    * Get width, height and aspect ratio.
-   * @return {object} Object containing width, height, and ratio.
+   *
+   * @returns {object} Object containing width, height, and ratio.
    */
   getDimensions() {
     if (!this.isLoaded) {
@@ -44,6 +46,7 @@ class ImageJuxtapositionImage {
 
   /**
    * Set height/width determined by slider position.
+   *
    * @param {number} position Position.
    * @param {boolean} [animate=false] Set animated state if true.
    */
@@ -65,6 +68,7 @@ class ImageJuxtapositionImage {
 
   /**
    * Set image element size.
+   *
    * @param {object} [dimensions={}] Dimensions.
    * @param {string} [dimensions.height] Any CSS height value.
    * @param {string} [dimensions.width] Any CSS width value.

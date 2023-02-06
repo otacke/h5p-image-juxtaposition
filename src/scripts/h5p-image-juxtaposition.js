@@ -16,7 +16,7 @@ import Dictionary from '@services/dictionary';
 /** Class for utility functions */
 class ImageJuxtaposition extends H5P.Question {
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters from semantics.
    * @param {number} contentId Content Id.
    * @param {object} contentData Content data.
@@ -173,6 +173,7 @@ class ImageJuxtaposition extends H5P.Question {
 
   /**
    * Set dimensions for slider.
+   *
    * @param {boolean} isInFullScreen If true, set fullscreen dims, else not.
    */
   setDimensions(isInFullScreen) {
@@ -210,7 +211,8 @@ class ImageJuxtaposition extends H5P.Question {
 
   /**
    * Get tasks title.
-   * @return {string} Title.
+   *
+   * @returns {string} Title.
    */
   getTitle() {
     let raw;

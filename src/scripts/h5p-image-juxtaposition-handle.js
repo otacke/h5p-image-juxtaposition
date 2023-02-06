@@ -3,7 +3,7 @@ import Dictionary from '@services/dictionary';
 /** Class representing a Slider handle */
 class ImageJuxtapositionHandle {
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters.
    * @param {string} params.color Handle color as #xxxxxx.
    * @param {string} params.mode Slider direction.
@@ -112,7 +112,8 @@ class ImageJuxtapositionHandle {
 
   /**
    * Get handle DOM.
-   * @return {HTMLElement} Handle DOM.
+   *
+   * @returns {HTMLElement} Handle DOM.
    */
   getDOM() {
     return this.handle;
@@ -120,6 +121,7 @@ class ImageJuxtapositionHandle {
 
   /**
    * Update slider position.
+   *
    * @param {number} position Position.
    * @param {boolean} [animate=false] Set animated state if true.
    */

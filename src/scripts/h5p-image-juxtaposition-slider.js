@@ -3,7 +3,7 @@ import ImageJuxtapositionHandle from './h5p-image-juxtaposition-handle';
 
 class ImageJuxtapositionSlider {
   /**
-   * @constructor
+   * @class
    * @param {object} params Parameters from semantics.
    * @param {function} callbackLoaded Callback for slider loaded.
    */
@@ -75,6 +75,7 @@ class ImageJuxtapositionSlider {
 
   /**
    * Update slider position.
+   *
    * @param {Event|string|number} input Event to determine position.
    * @param {boolean} [animate = false] If true, animate position update.
    */
@@ -104,6 +105,8 @@ class ImageJuxtapositionSlider {
 
   /**
    * Resize slider.
+   *
+   * @param {object} dimensionsMax Maximum dimensions.
    */
   resize(dimensionsMax) {
     let paddingHorizontal = 0;
@@ -168,9 +171,10 @@ class ImageJuxtapositionSlider {
 
   /**
    * Build text for aria value.
+   *
    * @param {string} [label=''] Image label.
    * @param {string} [alt=''] Image alt text.
-   * @return {string} Aria value text.
+   * @returns {string} Aria value text.
    */
   buildAriaValueText(label = '', alt = '') {
     return (label === '') ? alt : `${label}. ${alt}`;
@@ -178,8 +182,9 @@ class ImageJuxtapositionSlider {
 
   /**
    * Extract position.
+   *
    * @param {Event|string|number} input Input to retrieve position from.
-   * @return {number} Position.
+   * @returns {number} Position.
    */
   extractPosition(input) {
     if (typeof input === 'string' || typeof input === 'number') {
@@ -209,8 +214,9 @@ class ImageJuxtapositionSlider {
 
   /**
    * Get x position.
+   *
    * @param {Event} event Event to retrieve x position from.
-   * @return {number} X position.
+   * @returns {number} X position.
    */
   getPageX(event) {
     let pageX;
@@ -228,8 +234,9 @@ class ImageJuxtapositionSlider {
 
   /**
    * Get y position.
+   *
    * @param {Event} event Event to retrieve y position from.
-   * @return {number} Y position.
+   * @returns {number} Y position.
    */
   getPageY(event) {
     let pageY;
