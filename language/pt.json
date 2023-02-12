@@ -2,8 +2,8 @@
   "semantics": [
     {
       "label": "Descrição da tarefa",
-      "description": "Put the heading/instructions you'd like to show above the before/after image here.",
-      "placeholder": "Here you can add an optional heading and/or instructions."
+      "description": "Coloque aqui o título/instruções que você gostaria de mostrar acima da imagem antes/depois.",
+      "placeholder": "Aqui você pode adicionar um título opcional e/ou instruções."
     },
     {
       "label": "Primeira imagem",
@@ -23,7 +23,7 @@
       "fields": [
         {
           "label": "Segunda imagem",
-          "description": "A segunda imagem. Garanta que é do mesmo tamanho da primera imagem."
+          "description": "A segunda imagem. Garanta que é do mesmo tamanho da primeira imagem."
         },
         {
           "label": "Etiqueta para a segunda imagem",
@@ -37,11 +37,11 @@
       "fields": [
         {
           "label": "Orientação da barra de deslizamento",
-          "description": "Horizontal move a barra da esquerda para a direita, enquanto que Vertical move a barra de cima para baixo."
+          "description": "Define a posição inicial do controle deslizante"
         },
         {
-          "label": "Slider orientation",
-          "description": "Horizontal will move left and right, vertical will move up and down.",
+          "label": "Orientação do controle deslizante",
+          "description": "A horizontal move-se para a esquerda e para a direita, a vertical move-se para cima e para baixo.",
           "options": [
             {
               "label": "Horizontal"
@@ -52,21 +52,21 @@
           ]
         },
         {
-          "label": "Slider color",
+          "label": "Cor do controle deslizante",
           "default": "#f3f3f3"
         }
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Textos de acessibilidade",
       "fields": [
         {
-          "label": "Image visible message",
-          "default": "Image @percentage % visible",
-          "description": "@percentage is a placeholder and will be replaced with the respective value."
+          "label": "Mensagem de imagem visível",
+          "default": "Imagem @percentage % visível",
+          "description": "@percentage é um espaço reservado e será substituído pelo respectivo valor."
         },
         {
-          "label": "Dummy"
+          "label": "Fictício"
         }
       ]
     }
