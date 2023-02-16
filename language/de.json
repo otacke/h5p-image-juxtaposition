@@ -41,7 +41,7 @@
         },
         {
           "label": "Richtung des Schiebereglers",
-          "description": "Horizontal für links und rechts, vertikal für hoch und runter",
+          "description": "Horizontal für links und rechts, vertikal für hoch und runter.",
           "options": [
             {
               "label": "Horizontal"
