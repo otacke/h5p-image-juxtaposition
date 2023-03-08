@@ -145,6 +145,11 @@ class ImageJuxtapositionHandle {
     this.setAriaValueText(position);
   }
 
+  /**
+   * Set aria value text - for `separator` role that's a aria-label.
+   *
+   * @param {number} position Position to set to.
+   */
   setAriaValueText(position) {
     if (typeof position !== 'number') {
       position = (this.params.mode === 'horizontal') ?
