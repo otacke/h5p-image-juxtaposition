@@ -28,9 +28,12 @@ class ImageJuxtapositionSlider {
     this.slider.setAttribute('draggable', 'false');
     this.params.container.appendChild(this.slider);
 
+    this.imageUUIDs = [H5P.createUUID(), H5P.createUUID()];
+
     // Slider->Left image
     this.firstImage = new ImageJuxtapositionImage(
       {
+        id: this.imageUUIDs[0],
         image: this.params.images[0],
         label: this.params.images[0].label,
         mode: this.params.mode,
@@ -46,6 +49,7 @@ class ImageJuxtapositionSlider {
     // Slider->Right image
     this.secondImage = new ImageJuxtapositionImage(
       {
+        id: this.imageUUIDs[1],
         image: this.params.images[1],
         label: this.params.images[1].label,
         mode: this.params.mode,
@@ -61,6 +65,7 @@ class ImageJuxtapositionSlider {
     // Slider->Handle
     this.handle = new ImageJuxtapositionHandle(
       {
+        ids: this.imageUUIDs,
         ariaValueTextAfter: this.buildAriaValueText(this.params.images[1].label, this.params.images[1].alt),
         ariaValueTextBefore: this.buildAriaValueText(this.params.images[0].label, this.params.images[0].alt),
         color: this.params.color,

@@ -94,6 +94,7 @@ class ImageJuxtapositionImage {
    */
   buildDOM() {
     this.imageDOM = document.createElement('div');
+    this.imageDOM.setAttribute('id', this.params.id);
     this.imageDOM.className = `h5p-image-juxtaposition-image h5p-image-juxtaposition-${this.params.position}`;
     this.imageDOM.setAttribute('draggable', 'false');
 

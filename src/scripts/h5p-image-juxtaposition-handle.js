@@ -142,7 +142,30 @@ class ImageJuxtapositionHandle {
       this.handle.style.top = `${position}%`;
     }
 
+    this.setAriaControls(position);
     this.setAriaValueText(position);
+  }
+
+  /**
+   * Set aria controls.
+   *
+   * @param {number} position Position of handle.
+   */
+  setAriaControls(position) {
+    if (typeof position !== 'number') {
+      position = (this.params.mode === 'horizontal') ?
+        parseFloat(this.handle.style.left) :
+        parseFloat(this.handle.style.top);
+    }
+
+    if (typeof position !== 'number') {
+      return;
+    }
+
+    this.controller.setAttribute(
+      'aria-controls',
+      position >= 50 ? this.params.ids[0] : this.params.ids[1]
+    );
   }
 
   /**
