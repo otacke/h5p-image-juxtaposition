@@ -168,10 +168,10 @@ class ImageJuxtapositionHandle {
       ariaValueText = `${alt}. ${message}`;
     }
 
-    this.controller.setAttribute('aria-valuetext', ''); // Needed for re-reading
+    this.controller.setAttribute('aria-label', ''); // Needed for re-reading
     clearTimeout(this.updateReadTimeout);
     this.updateReadTimeout = setTimeout(() => {
-      this.controller.setAttribute('aria-valuetext', ariaValueText);
+      this.controller.setAttribute('aria-label', ariaValueText);
     }, 10); // Needed for re-reading
   }
 
