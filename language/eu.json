@@ -58,15 +58,15 @@
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Irisgarritasun testuak",
       "fields": [
         {
-          "label": "Image visible message",
-          "default": "Image @percentage % visible",
-          "description": "@percentage is a placeholder and will be replaced with the respective value."
+          "label": "Irudia ikusgai dagoen mezua",
+          "default": "Irudia ikusgai % @percentage -an",
+          "description": "@percentage behin behineko bat da eta dagokion balioarekin ordezkatuko da."
         },
         {
-          "label": "Dummy"
+          "label": "Manikia"
         }
       ]
     }

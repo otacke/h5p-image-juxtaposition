@@ -58,12 +58,12 @@
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Textes pour l'accessibilité",
       "fields": [
         {
           "label": "Image visible message",
           "default": "Image @percentage % visible",
-          "description": "@percentage is a placeholder and will be replaced with the respective value."
+          "description": "@pourcentage est un champ de substitution et sera remplacé par la valeur correspondante."
         },
         {
           "label": "Dummy"
