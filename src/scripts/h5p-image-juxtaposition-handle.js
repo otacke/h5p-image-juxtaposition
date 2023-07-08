@@ -177,14 +177,14 @@ class ImageJuxtapositionHandle {
     let ariaValueText;
     if (parseInt(position) >= 50) {
       const alt = this.params.ariaValueTextBefore;
-      const message = this.params.dictionaryget('a11y.imageVisibleMessage')
+      const message = this.params.dictionary.get('a11y.imageVisibleMessage')
         .replace(/@percentage/, Math.round(position));
 
       ariaValueText = `${alt}. ${message}`;
     }
     else {
       const alt = this.params.ariaValueTextAfter;
-      const message = this.params.dictionaryget('a11y.imageVisibleMessage')
+      const message = this.params.dictionary.get('a11y.imageVisibleMessage')
         .replace(/@percentage/, 100 - Math.round(position));
 
       ariaValueText = `${alt}. ${message}`;
