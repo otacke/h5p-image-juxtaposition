@@ -16,7 +16,6 @@ class ImageJuxtapositionImage {
 
   /**
    * Get DOM.
-   *
    * @returns {HTMLElement} Image DOM.
    */
   getDOM() {
@@ -25,7 +24,6 @@ class ImageJuxtapositionImage {
 
   /**
    * Get width, height and aspect ratio.
-   *
    * @returns {object} Object containing width, height, and ratio.
    */
   getDimensions() {
@@ -46,9 +44,8 @@ class ImageJuxtapositionImage {
 
   /**
    * Set height/width determined by slider position.
-   *
    * @param {number} position Position.
-   * @param {boolean} [animate=false] Set animated state if true.
+   * @param {boolean} [animate] Set animated state if true.
    */
   update(position, animate = false) {
     if (animate === true) {
@@ -68,8 +65,7 @@ class ImageJuxtapositionImage {
 
   /**
    * Set image element size.
-   *
-   * @param {object} [dimensions={}] Dimensions.
+   * @param {object} [dimensions] Dimensions.
    * @param {string} [dimensions.height] Any CSS height value.
    * @param {string} [dimensions.width] Any CSS width value.
    */

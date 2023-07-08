@@ -1,6 +1,6 @@
-import ImageJuxtapositionSlider from './h5p-image-juxtaposition-slider';
-import Spinner from './h5p-image-juxtaposition-spinner';
-import Util from './h5p-image-juxtaposition-util';
+import ImageJuxtapositionSlider from '@scripts/h5p-image-juxtaposition-slider';
+import Spinner from '@scripts/h5p-image-juxtaposition-spinner';
+import Util from '@scripts/h5p-image-juxtaposition-util';
 import Dictionary from '@services/dictionary';
 
 /* This h5p content library was based on ...
@@ -173,7 +173,6 @@ class ImageJuxtaposition extends H5P.Question {
 
   /**
    * Set dimensions for slider.
-   *
    * @param {boolean} isInFullScreen If true, set fullscreen dims, else not.
    */
   setDimensions(isInFullScreen) {
@@ -211,7 +210,6 @@ class ImageJuxtaposition extends H5P.Question {
 
   /**
    * Get tasks title.
-   *
    * @returns {string} Title.
    */
   getTitle() {

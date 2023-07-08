@@ -2,7 +2,6 @@
 class Util {
   /**
    * Extend an array just like JQuery's extend.
-   *
    * @returns {object} Merged objects.
    */
   static extend() {

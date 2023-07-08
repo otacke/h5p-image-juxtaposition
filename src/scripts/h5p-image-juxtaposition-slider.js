@@ -1,5 +1,5 @@
-import ImageJuxtapositionImage from './h5p-image-juxtaposition-image';
-import ImageJuxtapositionHandle from './h5p-image-juxtaposition-handle';
+import ImageJuxtapositionImage from '@scripts/h5p-image-juxtaposition-image';
+import ImageJuxtapositionHandle from '@scripts/h5p-image-juxtaposition-handle';
 
 class ImageJuxtapositionSlider {
   /**
@@ -80,9 +80,8 @@ class ImageJuxtapositionSlider {
 
   /**
    * Update slider position.
-   *
    * @param {Event|string|number} input Event to determine position.
-   * @param {boolean} [animate = false] If true, animate position update.
+   * @param {boolean} [animate] If true, animate position update.
    */
   update(input, animate = false) {
     const positionFirst = this.extractPosition(input).toFixed(2);
@@ -110,7 +109,6 @@ class ImageJuxtapositionSlider {
 
   /**
    * Resize slider.
-   *
    * @param {object} dimensionsMax Maximum dimensions.
    */
   resize(dimensionsMax) {
@@ -176,9 +174,8 @@ class ImageJuxtapositionSlider {
 
   /**
    * Build text for aria value.
-   *
-   * @param {string} [label=''] Image label.
-   * @param {string} [alt=''] Image alt text.
+   * @param {string} [label] Image label.
+   * @param {string} [alt] Image alt text.
    * @returns {string} Aria value text.
    */
   buildAriaValueText(label = '', alt = '') {
@@ -187,7 +184,6 @@ class ImageJuxtapositionSlider {
 
   /**
    * Extract position.
-   *
    * @param {Event|string|number} input Input to retrieve position from.
    * @returns {number} Position.
    */
@@ -219,7 +215,6 @@ class ImageJuxtapositionSlider {
 
   /**
    * Get x position.
-   *
    * @param {Event} event Event to retrieve x position from.
    * @returns {number} X position.
    */
@@ -239,7 +234,6 @@ class ImageJuxtapositionSlider {
 
   /**
    * Get y position.
-   *
    * @param {Event} event Event to retrieve y position from.
    * @returns {number} Y position.
    */

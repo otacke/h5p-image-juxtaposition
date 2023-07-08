@@ -112,7 +112,6 @@ class ImageJuxtapositionHandle {
 
   /**
    * Get handle DOM.
-   *
    * @returns {HTMLElement} Handle DOM.
    */
   getDOM() {
@@ -121,9 +120,8 @@ class ImageJuxtapositionHandle {
 
   /**
    * Update slider position.
-   *
    * @param {number} position Position.
-   * @param {boolean} [animate=false] Set animated state if true.
+   * @param {boolean} [animate] Set animated state if true.
    */
   update(position, animate = false) {
     if (animate === true) {
@@ -148,7 +146,6 @@ class ImageJuxtapositionHandle {
 
   /**
    * Set aria controls.
-   *
    * @param {number} position Position of handle.
    */
   setAriaControls(position) {
@@ -170,7 +167,6 @@ class ImageJuxtapositionHandle {
 
   /**
    * Set aria value text - for `separator` role that's a aria-label.
-   *
    * @param {number} position Position to set to.
    */
   setAriaValueText(position) {
