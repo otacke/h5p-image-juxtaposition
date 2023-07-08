@@ -49,7 +49,8 @@ class ImageJuxtaposition extends H5P.Question {
     this.contentData = contentData;
 
     // Fill dictionary
-    Dictionary.fill({ a11y: this.params.a11y });
+    this.dictionary = new Dictionary();
+    this.dictionary.fill({ l10n: this.params.l10n, a11y: this.params.a11y });
 
     // Polyfill for IE11
     if (!Element.prototype.matches) {
@@ -117,6 +118,7 @@ class ImageJuxtaposition extends H5P.Question {
       this.slider = new ImageJuxtapositionSlider(
         {
           container: content,
+          dictionary: this.dictionary,
           images: [
             {
               src: H5P.getPath(this.params.imageBefore.imageBefore.params.file.path, this.contentId),

@@ -65,6 +65,7 @@ class ImageJuxtapositionSlider {
     // Slider->Handle
     this.handle = new ImageJuxtapositionHandle(
       {
+        dictionary: this.params.dictionary,
         ids: this.imageUUIDs,
         ariaValueTextAfter: this.buildAriaValueText(this.params.images[1].label, this.params.images[1].alt),
         ariaValueTextBefore: this.buildAriaValueText(this.params.images[0].label, this.params.images[0].alt),

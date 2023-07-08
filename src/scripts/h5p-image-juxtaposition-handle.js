@@ -1,5 +1,3 @@
-import Dictionary from '@services/dictionary';
-
 /** Class representing a Slider handle */
 class ImageJuxtapositionHandle {
   /**
@@ -179,14 +177,14 @@ class ImageJuxtapositionHandle {
     let ariaValueText;
     if (parseInt(position) >= 50) {
       const alt = this.params.ariaValueTextBefore;
-      const message = Dictionary.get('a11y.imageVisibleMessage')
+      const message = this.params.dictionaryget('a11y.imageVisibleMessage')
         .replace(/@percentage/, Math.round(position));
 
       ariaValueText = `${alt}. ${message}`;
     }
     else {
       const alt = this.params.ariaValueTextAfter;
-      const message = Dictionary.get('a11y.imageVisibleMessage')
+      const message = this.params.dictionaryget('a11y.imageVisibleMessage')
         .replace(/@percentage/, 100 - Math.round(position));
 
       ariaValueText = `${alt}. ${message}`;
