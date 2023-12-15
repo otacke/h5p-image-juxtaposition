@@ -3,7 +3,6 @@
   "version": "1.5.3",
   "description": "Put two images side by side with a slideable overlay effect, e.g. to create an interactive before/after image.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "stylelint './src/**/*.scss' && eslint './src/**/*.js'",
     "build": "webpack --mode=production",
     "watch": "webpack --mode=development --watch"
