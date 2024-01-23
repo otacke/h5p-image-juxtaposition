@@ -58,15 +58,15 @@
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Pritaikomumo tekstai",
       "fields": [
         {
-          "label": "Image visible message",
-          "default": "Image @percentage % visible",
-          "description": "@percentage is a placeholder and will be replaced with the respective value."
+          "label": "Paveikslėlyje matoma žinutė",
+          "default": "Paveiksliukas @percentage % matomas",
+          "description": "@percentage yra pakaitos simbolis, kuris bus pakeistas atitinkama reikšme."
         },
         {
-          "label": "Dummy"
+          "label": "Maketas"
         }
       ]
     }
