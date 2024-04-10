@@ -1,5 +1,5 @@
-import ImageJuxtapositionImage from '@scripts/h5p-image-juxtaposition-image';
-import ImageJuxtapositionHandle from '@scripts/h5p-image-juxtaposition-handle';
+import ImageJuxtapositionImage from '@scripts/h5p-image-juxtaposition-image.js';
+import ImageJuxtapositionHandle from '@scripts/h5p-image-juxtaposition-handle.js';
 
 class ImageJuxtapositionSlider {
   /**

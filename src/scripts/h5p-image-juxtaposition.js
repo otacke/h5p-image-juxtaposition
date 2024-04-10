@@ -1,7 +1,7 @@
-import ImageJuxtapositionSlider from '@scripts/h5p-image-juxtaposition-slider';
-import Spinner from '@scripts/h5p-image-juxtaposition-spinner';
-import Util from '@scripts/h5p-image-juxtaposition-util';
-import Dictionary from '@services/dictionary';
+import ImageJuxtapositionSlider from '@scripts/h5p-image-juxtaposition-slider.js';
+import Spinner from '@scripts/h5p-image-juxtaposition-spinner.js';
+import Util from '@scripts/h5p-image-juxtaposition-util.js';
+import Dictionary from '@services/dictionary.js';
 
 /* This h5p content library was based on ...
  *
