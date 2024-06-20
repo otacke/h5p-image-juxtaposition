@@ -58,15 +58,15 @@
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Κείμενα προσβασιμότητας",
       "fields": [
         {
-          "label": "Image visible message",
-          "default": "Image @percentage % visible",
-          "description": "@percentage is a placeholder and will be replaced with the respective value."
+          "label": "Μήνυμα ορατής εικόνας",
+          "default": "Εικόνα @percentage % ορατή",
+          "description": "@percentage είναι μεταβλητή και θα αντικατασταθεί από την αντίστοιχη τιμή"
         },
         {
-          "label": "Dummy"
+          "label": "Μεταβλητή"
         }
       ]
     }
