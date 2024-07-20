@@ -28,7 +28,10 @@ class ImageJuxtapositionSlider {
     this.slider.setAttribute('draggable', 'false');
     this.params.container.appendChild(this.slider);
 
-    this.imageUUIDs = [H5P.createUUID(), H5P.createUUID()];
+    this.imageUUIDs = [
+      `image-${H5P.createUUID()}`,
+      `image-${H5P.createUUID()}`
+    ];
 
     // Slider->Left image
     this.firstImage = new ImageJuxtapositionImage(
