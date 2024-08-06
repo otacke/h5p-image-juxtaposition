@@ -1,5 +1,12 @@
 import ImageJuxtapositionImage from '@scripts/h5p-image-juxtaposition-image.js';
 import ImageJuxtapositionHandle from '@scripts/h5p-image-juxtaposition-handle.js';
+import { PERCENTAGE_MIN, PERCENTAGE_MAX } from '@services/constants.js';
+
+/** @constant {number} PRECISION Precision for percentage */
+const PRECISION = 2;
+
+/** @constant {number} IMAGE_COUNT Number of images */
+const IMAGE_COUNT = 2;
 
 class ImageJuxtapositionSlider {
   /**
@@ -24,7 +31,7 @@ class ImageJuxtapositionSlider {
     // Slider
     this.slider = document.createElement('div');
     this.slider.className = 'h5p-image-juxtaposition-slider';
-    this.slider.classList.add('h5p-image-juxtaposition-' + this.params.mode);
+    this.slider.classList.add(`h5p-image-juxtaposition-${this.params.mode}`);
     this.slider.setAttribute('draggable', 'false');
     this.params.container.appendChild(this.slider);
 
@@ -88,12 +95,12 @@ class ImageJuxtapositionSlider {
    * @param {boolean} [animate] If true, animate position update.
    */
   update(input, animate = false) {
-    const positionFirst = this.extractPosition(input).toFixed(2);
-    const positionSecond = 100 - positionFirst;
+    const positionFirst = this.extractPosition(input).toFixed(PRECISION);
+    const positionSecond = PERCENTAGE_MAX - positionFirst;
 
     if (
-      (positionFirst < 0 || positionFirst > 100) ||
-      (positionSecond < 0 || positionSecond > 100)
+      (positionFirst < PERCENTAGE_MIN || positionFirst > PERCENTAGE_MAX) ||
+      (positionSecond < PERCENTAGE_MIN || positionSecond > PERCENTAGE_MAX)
     ) {
       return;
     }
@@ -127,6 +134,7 @@ class ImageJuxtapositionSlider {
       if (this.imageRatio <= (dimensionsMax.width / dimensionsMax.height)) {
         targetHeight = dimensionsMax.height;
         targetWidth = targetHeight * this.imageRatio;
+        // eslint-disable-next-line no-magic-numbers
         paddingHorizontal = (dimensionsMax.width - targetWidth) / 2;
         targetWidth = `${targetWidth}px`;
       }
@@ -158,7 +166,7 @@ class ImageJuxtapositionSlider {
    * Callback for when image has been loaded.
    */
   handleImageLoaded() {
-    if (this.imagesLoaded < 2) {
+    if (this.imagesLoaded < IMAGE_COUNT) {
       return;
     }
 
@@ -214,6 +222,7 @@ class ImageJuxtapositionSlider {
       offset.left :
       offset.top;
 
+    // eslint-disable-next-line no-magic-numbers
     return (positionEvent - positionOffset) / positionMax * 100;
   }
 

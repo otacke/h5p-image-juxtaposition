@@ -13,6 +13,9 @@ import Dictionary from '@services/dictionary.js';
  * ... but now the code has hardly anything in common anymore.
  */
 
+/** @constant {number} RESIZE_TIMEOUT_MS Resize timeout in milliseconds */
+const RESIZE_TIMEOUT_MS = 100;
+
 /** Class for utility functions */
 class ImageJuxtaposition extends H5P.Question {
   /**
@@ -133,7 +136,7 @@ class ImageJuxtaposition extends H5P.Question {
               label: this.params.imageAfter.labelAfter
             }
           ],
-          startingPosition: this.params.behavior.startingPosition + '%',
+          startingPosition: `${this.params.behavior.startingPosition  }%`,
           mode: this.params.behavior.sliderOrientation,
           color: this.params.behavior.sliderColor
         },
@@ -150,7 +153,7 @@ class ImageJuxtaposition extends H5P.Question {
           clearTimeout(this.resizeTimeout);
           this.resizeTimeout = setTimeout(() => {
             this.trigger('resize');
-          }, 100);
+          }, RESIZE_TIMEOUT_MS);
 
           return;
         }
@@ -158,7 +161,7 @@ class ImageJuxtaposition extends H5P.Question {
           clearTimeout(this.resizeTimeout);
           this.resizeTimeout = setTimeout(() => {
             this.trigger('resize');
-          }, 100);
+          }, RESIZE_TIMEOUT_MS);
         }
 
         setTimeout(() => {
@@ -182,7 +185,7 @@ class ImageJuxtaposition extends H5P.Question {
 
     if (this.taskDescription) {
       const styles = window.getComputedStyle(this.taskDescription);
-      const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
+      const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
       taskDescriptionHeight = Math.ceil(this.taskDescription.offsetHeight + margin);
     }
 

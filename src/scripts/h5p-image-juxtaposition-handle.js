@@ -1,3 +1,11 @@
+import { PERCENTAGE_MIN, PERCENTAGE_MAX } from '@services/constants.js';
+
+/** @constant {number} READ_TIMEOUT_MS Screen reader delay. */
+const READ_TIMEOUT_MS = 10;
+
+/** @constant {number} CHROMEVOX_FOCUS_DELAY_MS Workaround delay for ChromeVox plugin. */
+const CHROMEVOX_FOCUS_DELAY_MS = 100;
+
 /** Class representing a Slider handle */
 class ImageJuxtapositionHandle {
   /**
@@ -18,8 +26,8 @@ class ImageJuxtapositionHandle {
     this.controller.setAttribute('draggable', 'false');
     this.controller.setAttribute('tabindex', 0);
     this.controller.setAttribute('role', 'separator');
-    this.controller.setAttribute('aria-valuemin', 0);
-    this.controller.setAttribute('aria-valuemax', 100);
+    this.controller.setAttribute('aria-valuemin', PERCENTAGE_MIN);
+    this.controller.setAttribute('aria-valuemax', PERCENTAGE_MAX);
     this.controller.setAttribute('aria-orientation', this.params.mode);
 
     // Bar (horizontal or vertical)
@@ -66,44 +74,35 @@ class ImageJuxtapositionHandle {
        * also offers users without a visual deficiency to go to intermediate
        * positions.
        */
-      if (event.code) {
-        if (event.shiftKey && (event.code === 'ArrowLeft' || event.code === 'ArrowUp')) {
-          event.preventDefault();
-          this.callbackUpdate(Math.max(0, positionPercentage - 1));
-        }
-        else if (event.shiftKey && (event.code === 'ArrowRight' || event.code === 'ArrowDown')) {
-          event.preventDefault();
-          this.callbackUpdate(Math.min(positionPercentage + 1, 100));
-        }
-        else if (event.code === 'Home' || event.code === 'ArrowLeft' || event.code === 'ArrowUp') {
-          event.preventDefault();
-          this.callbackUpdate(0);
-        }
-        else if (event.code === 'End' || event.code === 'ArrowRight' || event.code === 'ArrowDown') {
-          event.preventDefault();
-          this.callbackUpdate(100);
-        }
+      if (
+        event.shiftKey &&
+          (event.code === 'ArrowLeft' || event.code === 'ArrowUp')
+      ) {
+        event.preventDefault();
+        this.callbackUpdate(Math.max(PERCENTAGE_MIN, positionPercentage - 1));
       }
-      else {
-        // Fallback for e.g. IE11.
-        const key = event.which || event.keyCode;
-
-        if (event.shiftKey && (key === 39 || key === 40)) {
-          event.preventDefault();
-          this.callbackUpdate(Math.max(0, positionPercentage + 1));
-        }
-        else if (event.shiftKey && (key === 37 || key === 38)) {
-          event.preventDefault();
-          this.callbackUpdate(Math.max(0, positionPercentage - 1));
-        }
-        else if (key === 35 || key === 39 || key === 40) {
-          event.preventDefault();
-          this.callbackUpdate(100);
-        }
-        else if (key === 36 || key === 37 || key === 38) {
-          event.preventDefault();
-          this.callbackUpdate(0);
-        }
+      else if (
+        event.shiftKey &&
+          (event.code === 'ArrowRight' || event.code === 'ArrowDown')
+      ) {
+        event.preventDefault();
+        this.callbackUpdate(Math.min(positionPercentage + 1, PERCENTAGE_MAX));
+      }
+      else if (
+        event.code === 'Home' ||
+        event.code === 'ArrowLeft' ||
+        event.code === 'ArrowUp'
+      ) {
+        event.preventDefault();
+        this.callbackUpdate(PERCENTAGE_MIN);
+      }
+      else if (
+        event.code === 'End' ||
+        event.code === 'ArrowRight' ||
+        event.code === 'ArrowDown'
+      ) {
+        event.preventDefault();
+        this.callbackUpdate(PERCENTAGE_MAX);
       }
     });
   }
@@ -159,7 +158,7 @@ class ImageJuxtapositionHandle {
 
     this.controller.setAttribute(
       'aria-controls',
-      position >= 50 ? this.params.ids[0] : this.params.ids[1]
+      position >= PERCENTAGE_CENTER ? this.params.ids[0] : this.params.ids[1]
     );
   }
 
@@ -175,7 +174,7 @@ class ImageJuxtapositionHandle {
     }
 
     let ariaValueText;
-    if (parseInt(position) >= 50) {
+    if (parseInt(position) >= PERCENTAGE_CENTER) {
       const alt = this.params.ariaValueTextBefore;
       const message = this.params.dictionary.get('a11y.imageVisibleMessage')
         .replace(/@percentage/, Math.round(position));
@@ -185,7 +184,7 @@ class ImageJuxtapositionHandle {
     else {
       const alt = this.params.ariaValueTextAfter;
       const message = this.params.dictionary.get('a11y.imageVisibleMessage')
-        .replace(/@percentage/, 100 - Math.round(position));
+        .replace(/@percentage/, PERCENTAGE_MAX - Math.round(position));
 
       ariaValueText = `${alt}. ${message}`;
     }
@@ -194,7 +193,7 @@ class ImageJuxtapositionHandle {
     clearTimeout(this.updateReadTimeout);
     this.updateReadTimeout = setTimeout(() => {
       this.controller.setAttribute('aria-label', ariaValueText);
-    }, 10); // Needed for re-reading
+    }, READ_TIMEOUT_MS); // Needed for re-reading
   }
 
   /**
@@ -204,7 +203,7 @@ class ImageJuxtapositionHandle {
     setTimeout(() => {
       this.controller.blur(); // Workaround for ChromeVox that steals focus
       this.controller.focus();
-    }, 100); // Workaround for ChromeVox that steals focus
+    }, CHROMEVOX_FOCUS_DELAY_MS); // Workaround for ChromeVox that steals focus
   }
 }
 
