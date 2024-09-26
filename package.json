@@ -1,6 +1,6 @@
 {
   "name": "h5p-image-juxtaposition",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Put two images side by side with a slideable overlay effect, e.g. to create an interactive before/after image.",
   "scripts": {
     "lint": "stylelint './src/**/*.scss' && eslint './src/**/*.js'",
