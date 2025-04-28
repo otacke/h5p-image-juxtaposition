@@ -52,8 +52,7 @@
           ]
         },
         {
-          "label": "Barva drsnika",
-          "default": "#f3f3f3"
+          "label": "Barva drsnika"
         }
       ]
     },

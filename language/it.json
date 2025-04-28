@@ -52,8 +52,7 @@
           ]
         },
         {
-          "label": "Colore del cursore",
-          "default": "#f3f3f3"
+          "label": "Colore del cursore"
         }
       ]
     },

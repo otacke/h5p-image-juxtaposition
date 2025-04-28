@@ -52,8 +52,7 @@
           ]
         },
         {
-          "label": "Farbe des Schiebereglers",
-          "default": "#f3f3f3"
+          "label": "Farbe des Schiebereglers"
         }
       ]
     },

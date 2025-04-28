@@ -52,8 +52,7 @@
           ]
         },
         {
-          "label": "Cor do controle deslizante",
-          "default": "#f3f3f3"
+          "label": "Cor do controle deslizante"
         }
       ]
     },

@@ -52,8 +52,7 @@
           ]
         },
         {
-          "label": "Kleur van schuifregelaar",
-          "default": "#f3f3f3"
+          "label": "Kleur van schuifregelaar"
         }
       ]
     },
