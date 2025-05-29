@@ -1,4 +1,4 @@
-import { PERCENTAGE_MIN, PERCENTAGE_MAX } from '@services/constants.js';
+import { PERCENTAGE_CENTER, PERCENTAGE_MIN, PERCENTAGE_MAX } from '@services/constants.js';
 
 /** @constant {number} READ_TIMEOUT_MS Screen reader delay. */
 const READ_TIMEOUT_MS = 10;
