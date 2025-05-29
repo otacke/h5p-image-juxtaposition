@@ -16,6 +16,9 @@ import Dictionary from '@services/dictionary.js';
 /** @constant {number} RESIZE_TIMEOUT_MS Resize timeout in milliseconds */
 const RESIZE_TIMEOUT_MS = 100;
 
+/** @constant {number} FULL_SCREEN_DELAY_MEDIUM_MS Delay in milliseconds for fullscreen resize */
+const FULL_SCREEN_DELAY_MEDIUM_MS = 300;
+
 /** Class for utility functions */
 class ImageJuxtaposition extends H5P.Question {
   /**
@@ -171,6 +174,31 @@ class ImageJuxtaposition extends H5P.Question {
           );
         }, 0);
       });
+
+      // Resize fullscreen dimensions when rotating screen
+      const recomputeDimensions = () => {
+        if (H5P.isFullscreen) {
+          window.setTimeout(() => { // Needs time to rotate for window.innerHeight
+            this.trigger('resize');
+
+          }, FULL_SCREEN_DELAY_MEDIUM_MS);
+        }
+      };
+
+      if (screen?.orientation?.addEventListener) {
+        screen?.orientation?.addEventListener('change', () => {
+          recomputeDimensions();
+        });
+      }
+      else {
+        /*
+        * `orientationchange` is deprecated, but guess what browser was late to the party Screen Orientation API ...
+        * By something with fruit.
+        */
+        window.addEventListener('orientationchange', () => {
+          recomputeDimensions();
+        }, false);
+      }
     }
 
     this.setContent(container);
