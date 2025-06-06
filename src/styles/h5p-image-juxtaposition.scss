@@ -45,16 +45,20 @@
 .h5p-image-juxtaposition .h5p-content-controls .h5p-enable-fullscreen {
   background-image: url(../images/button-fullscreen-enter-icon.svg);
   background-repeat: no-repeat;
-  background-color: rgba(0,0,0,0.25);
-  background-size: 1em 1em;
-  background-position: 0.625em 0.415em;
+  background-color: rgba(0,0,0,0.75);
+  background-size: 1.25em 1.25em;
+  background-position: center;
+	border-radius: 100%;
+	box-sizing: border-box;
   font-size: 1em;
-  height: 1.83em;
+  height: 2.25em;
+	margin: 0.5em 0.5em 0 0;
   width: 2.25em;
 }
 
 .h5p-image-juxtaposition .h5p-content-controls .h5p-enable-fullscreen:hover {
-  background-color: rgba(0,0,0,0.35);
+  background-color: rgba(32,32,32,0.75);
+	border: solid 1px rgba(255,255,255,0.5);
 }
 
 .h5p-image-juxtaposition .h5p-content-controls .h5p-enable-fullscreen::before {
