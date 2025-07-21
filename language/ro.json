@@ -1,0 +1,73 @@
+{
+  "semantics": [
+    {
+      "label": "Descrierea sarcinii",
+      "description": "Puneți aici titlul/instrucțiunile pe care doriți să le afișați deasupra imaginii înainte/după.",
+      "placeholder": "Aici puteți adăuga un titlu și/sau instrucțiuni opționale."
+    },
+    {
+      "label": "Prima imagine",
+      "fields": [
+        {
+          "label": "Prima imagine",
+          "description": "Prima imagine. Vă rugăm să vă asigurați că are aceeași dimensiune ca a doua imagine."
+        },
+        {
+          "label": "Etichetă pentru prima imagine",
+          "description": "Etichetă de plasat peste prima imagine"
+        }
+      ]
+    },
+    {
+      "label": "A doua imagine",
+      "fields": [
+        {
+          "label": "A doua imagine",
+          "description": "A doua imagine. Vă rugăm să vă asigurați că are aceeași dimensiune ca prima imagine."
+        },
+        {
+          "label": "Etichetă pentru a doua imagine",
+          "description": "Etichetă de plasat peste a doua imagine"
+        }
+      ]
+    },
+    {
+      "label": "Setări de comportament",
+      "description": "Aceste opțiuni vă vor permite să setați unele detalii",
+      "fields": [
+        {
+          "label": "Poziția de pornire a glisorului în %",
+          "description": "Setează poziția de pornire a glisorului"
+        },
+        {
+          "label": "Orientarea glisorului",
+          "description": "Orizontal se va mișca stânga și dreapta, vertical se va mișca sus și jos.",
+          "options": [
+            {
+              "label": "Orizontal"
+            },
+            {
+              "label": "Vertical"
+            }
+          ]
+        },
+        {
+          "label": "Culoarea glisorului"
+        }
+      ]
+    },
+    {
+      "label": "Texte de accesibilitate",
+      "fields": [
+        {
+          "label": "Mesaj imagine vizibilă",
+          "default": "Imagine vizibilă @percentage %",
+          "description": "@percentage este un substituent și va fi înlocuit cu valoarea respectivă."
+        },
+        {
+          "label": "Provizoriu"
+        }
+      ]
+    }
+  ]
+}
