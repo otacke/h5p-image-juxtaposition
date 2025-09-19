@@ -158,7 +158,7 @@ class ImageJuxtapositionHandle {
 
     this.controller.setAttribute(
       'aria-controls',
-      position >= PERCENTAGE_CENTER ? this.params.ids[0] : this.params.ids[1]
+      position >= PERCENTAGE_CENTER ? this.params.ids[0] : this.params.ids[1],
     );
   }
 

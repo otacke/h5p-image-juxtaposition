@@ -31,14 +31,14 @@ class ImageJuxtapositionImage {
       return {
         width: 0,
         height: 0,
-        ratio: 1
+        ratio: 1,
       };
     }
 
     return {
       width: this.image.naturalWidth,
       height: this.image.naturalHeight,
-      ratio: this.image.naturalWidth / this.image.naturalHeight
+      ratio: this.image.naturalWidth / this.image.naturalHeight,
     };
   }
 

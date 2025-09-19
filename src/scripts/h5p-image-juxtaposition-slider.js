@@ -37,7 +37,7 @@ class ImageJuxtapositionSlider {
 
     this.imageUUIDs = [
       `image-${H5P.createUUID()}`,
-      `image-${H5P.createUUID()}`
+      `image-${H5P.createUUID()}`,
     ];
 
     // Slider->Left image
@@ -52,7 +52,7 @@ class ImageJuxtapositionSlider {
       () => {
         this.imagesLoaded++;
         this.handleImageLoaded();
-      }
+      },
     );
     this.slider.appendChild(this.firstImage.getDOM());
 
@@ -68,7 +68,7 @@ class ImageJuxtapositionSlider {
       () => {
         this.imagesLoaded++;
         this.handleImageLoaded();
-      }
+      },
     );
     this.slider.appendChild(this.secondImage.getDOM());
 
@@ -80,11 +80,11 @@ class ImageJuxtapositionSlider {
         ariaValueTextAfter: this.buildAriaValueText(this.params.images[1].label, this.params.images[1].alt),
         ariaValueTextBefore: this.buildAriaValueText(this.params.images[0].label, this.params.images[0].alt),
         color: this.params.color,
-        mode: this.params.mode
+        mode: this.params.mode,
       },
       (position) => {
         this.update(position);
-      }
+      },
     );
     this.slider.appendChild(this.handle.getDOM());
   }
@@ -207,7 +207,7 @@ class ImageJuxtapositionSlider {
     const sliderRect = this.slider.getBoundingClientRect();
     const offset = {
       top: sliderRect.top + document.body.scrollTop,
-      left: sliderRect.left + document.body.scrollLeft
+      left: sliderRect.left + document.body.scrollLeft,
     };
 
     const positionMax = (this.params.mode === 'horizontal') ?
@@ -222,7 +222,7 @@ class ImageJuxtapositionSlider {
       offset.left :
       offset.top;
 
-    // eslint-disable-next-line no-magic-numbers
+     
     return (positionEvent - positionOffset) / positionMax * 100;
   }
 

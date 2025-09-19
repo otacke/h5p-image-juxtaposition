@@ -35,20 +35,20 @@ class ImageJuxtaposition extends H5P.Question {
       taskDescription: '',
       imageBefore: {
         imageBefore: undefined,
-        labelBefore: ''
+        labelBefore: '',
       },
       imageAfter: {
         imageAfter: undefined,
-        labelAfter: ''
+        labelAfter: '',
       },
       behavior: {
         startingPosition: 50,
         sliderOrientation: 'horizontal',
-        sliderColor: '#f3f3f3'
+        sliderColor: '#f3f3f3',
       },
       a11y: {
-        imageVisibleMessage: 'Image @percentage % visible'
-      }
+        imageVisibleMessage: 'Image @percentage % visible',
+      },
     }, params);
 
     this.contentId = contentId;
@@ -130,22 +130,22 @@ class ImageJuxtaposition extends H5P.Question {
               src: H5P.getPath(this.params.imageBefore.imageBefore.params.file.path, this.contentId),
               alt: this.params.imageBefore.imageBefore.params.alt,
               title: this.params.imageBefore.imageBefore.params.title,
-              label: this.params.imageBefore.labelBefore
+              label: this.params.imageBefore.labelBefore,
             },
             {
               src: H5P.getPath(this.params.imageAfter.imageAfter.params.file.path, this.contentId),
               alt: this.params.imageAfter.imageAfter.params.alt,
               title: this.params.imageAfter.imageAfter.params.title,
-              label: this.params.imageAfter.labelAfter
-            }
+              label: this.params.imageAfter.labelAfter,
+            },
           ],
           startingPosition: `${this.params.behavior.startingPosition  }%`,
           mode: this.params.behavior.sliderOrientation,
-          color: this.params.behavior.sliderColor
+          color: this.params.behavior.sliderColor,
         },
         () => {
           this.handleLoaded();
-        }
+        },
       );
 
       this.on('resize', () => {
@@ -170,7 +170,7 @@ class ImageJuxtaposition extends H5P.Question {
         setTimeout(() => {
           this.setDimensions(
             this.containerH5P.classList.contains('h5p-fullscreen') ||
-            this.containerH5P.classList.contains('h5p-semi-fullscreen')
+            this.containerH5P.classList.contains('h5p-semi-fullscreen'),
           );
         }, 0);
       });
