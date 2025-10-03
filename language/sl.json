@@ -57,15 +57,15 @@
       ]
     },
     {
-      "label": "Accessibility texts",
+      "label": "Dostopnost",
       "fields": [
         {
-          "label": "Image visible message",
-          "default": "Image @percentage % visible",
-          "description": "@percentage is a placeholder and will be replaced with the respective value."
+          "label": "Besedilo o vidnosti slike",
+          "default": "Vidne je @percentage % slike",
+          "description": "@percentage je spremenljivka in jo bo nadomestila ustrezna vrednost."
         },
         {
-          "label": "Dummy"
+          "label": "Vzorec"
         }
       ]
     }
