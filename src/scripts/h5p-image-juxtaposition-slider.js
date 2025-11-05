@@ -154,12 +154,6 @@ class ImageJuxtapositionSlider {
       this.firstImage.setSize({ width: `${width}px` });
       this.secondImage.setSize({ width: `${width}px` });
     }
-
-    if (this.params.container) {
-      this.params.container.style.width = targetWidth;
-      this.params.container.style.height = `${targetHeight}px`;
-      this.params.container.style.paddingLeft = `${paddingHorizontal}px`;
-    }
   }
 
   /**
@@ -176,7 +170,7 @@ class ImageJuxtapositionSlider {
     }
 
     this.imageRatio = dimensions[0].ratio;
-    this.params.container.style.width = dimensions[0].width;
+    this.params.container.style.aspectRatio = `${this.imageRatio}`;
 
     this.addEventListeners();
     this.update(this.params.startingPosition, false);
@@ -222,7 +216,7 @@ class ImageJuxtapositionSlider {
       offset.left :
       offset.top;
 
-     
+
     return (positionEvent - positionOffset) / positionMax * 100;
   }
 
