@@ -123,7 +123,6 @@ class ImageJuxtapositionSlider {
    * @param {object} dimensionsMax Maximum dimensions.
    */
   resize(dimensionsMax) {
-    let paddingHorizontal = 0;
     let targetHeight;
     let targetWidth;
 
@@ -134,8 +133,6 @@ class ImageJuxtapositionSlider {
       if (this.imageRatio <= (dimensionsMax.width / dimensionsMax.height)) {
         targetHeight = dimensionsMax.height;
         targetWidth = targetHeight * this.imageRatio;
-        // eslint-disable-next-line no-magic-numbers
-        paddingHorizontal = (dimensionsMax.width - targetWidth) / 2;
         targetWidth = `${targetWidth}px`;
       }
       else {
@@ -154,6 +151,9 @@ class ImageJuxtapositionSlider {
       this.firstImage.setSize({ width: `${width}px` });
       this.secondImage.setSize({ width: `${width}px` });
     }
+
+    this.slider.style.width = targetWidth;
+    this.slider.style.height = `${targetHeight}px`;
   }
 
   /**

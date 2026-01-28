@@ -167,6 +167,8 @@ class ImageJuxtaposition extends H5P.Question {
 
       this.on('resize', () => {
         this.containerH5P = container.closest('.h5p-image-juxtaposition');
+        this.taskDescription = this.taskDescription ?? this.containerH5P?.querySelector('.h5p-question-introduction');
+        this.questionContent = this.questionContent ?? this.containerH5P?.querySelector('.h5p-question-content');
 
         // Container may not be ready yet, try again in a bit
         if (!this.containerH5P) {
@@ -244,7 +246,13 @@ class ImageJuxtaposition extends H5P.Question {
    * @param {boolean} isInFullScreen If true, set fullscreen dims, else not.
    */
   setDimensions(isInFullScreen) {
+    if (!isInFullScreen) {
+      this.slider.resize();
+      return;
+    }
+
     let taskDescriptionHeight = 0;
+    let questionContentPaddingInline = 0;
 
     if (this.taskDescription) {
       const styles = window.getComputedStyle(this.taskDescription);
@@ -252,12 +260,16 @@ class ImageJuxtaposition extends H5P.Question {
       taskDescriptionHeight = Math.ceil(this.taskDescription.offsetHeight + margin);
     }
 
-    const dimensionsMax = (isInFullScreen) ?
-      {
-        height: window.innerHeight - taskDescriptionHeight,
-        width: window.innerWidth,
-      } :
-      undefined;
+    if (this.questionContent) {
+      const styles = window.getComputedStyle(this.questionContent);
+      const padding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+      questionContentPaddingInline = Math.ceil(padding);
+    }
+
+    const dimensionsMax = {
+      height: window.innerHeight - taskDescriptionHeight,
+      width: window.innerWidth - questionContentPaddingInline,
+    };
 
     this.slider.resize(dimensionsMax);
   }
@@ -268,10 +280,6 @@ class ImageJuxtaposition extends H5P.Question {
   handleLoaded() {
     // We can hide the spinner now and show the taskDescription
     this.spinner.hide();
-
-    if (this.taskDescription) {
-      this.taskDescription.classList.remove('h5p-image-juxtaposition-task-description-none');
-    }
 
     this.trigger('resize');
   }

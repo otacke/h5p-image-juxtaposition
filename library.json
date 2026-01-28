@@ -10,7 +10,6 @@
   ],
   "author": "Oliver Tacke",
   "license": "MPL",
-  "fullscreen": 1,
   "machineName": "H5P.ImageJuxtaposition",
   "coreApi": {
     "majorVersion": 1,
