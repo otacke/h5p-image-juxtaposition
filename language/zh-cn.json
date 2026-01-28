@@ -65,7 +65,12 @@
           "description": "@percentage是一个占位符，将被相应的值替换。"
         },
         {
-          "label": "虚设"
+          "label": "Text for screen readers. Title for full screen button (enter)",
+          "default": "Enter full screen mode"
+        },
+        {
+          "label": "Text for screen readers. Title for full screen button (exit)",
+          "default": "Exit full screen mode"
         }
       ]
     }

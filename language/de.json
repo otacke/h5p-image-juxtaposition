@@ -65,7 +65,12 @@
           "description": "@percentage ist ein Platzhalter und wird durch den jeweiligen Wert ersetzt."
         },
         {
-          "label": "Dummy"
+          "label": "Text für Screen-Reader. Titel für Vollbild-Button (aufrufen)",
+          "default": "Vollbildmodus aufrufen"
+        },
+        {
+          "label": "Text für Screen-Reader. Titel für Vollbild-Button (beenden)",
+          "default": "Vollbildmodus beenden"
         }
       ]
     }

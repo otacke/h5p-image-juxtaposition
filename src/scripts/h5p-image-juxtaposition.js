@@ -28,7 +28,7 @@ class ImageJuxtaposition extends H5P.Question {
    * @param {object} contentData Content data.
    */
   constructor(params, contentId, contentData) {
-    super('image-juxtaposition');
+    super('image-juxtaposition', { theme: true });
 
     this.params = Util.extend({
       title: '',
@@ -48,11 +48,15 @@ class ImageJuxtaposition extends H5P.Question {
       },
       a11y: {
         imageVisibleMessage: 'Image @percentage % visible',
+        buttonFullscreenEnter: 'Enter full screen mode',
+        buttonFullscreenExit: 'Exit full screen mode',
       },
     }, params);
 
     this.contentId = contentId;
     this.contentData = contentData;
+
+    this.isFullscreenAllowed = this.isRoot() && H5P.fullscreenSupported;
 
     // Fill dictionary
     this.dictionary = new Dictionary();
@@ -79,15 +83,26 @@ class ImageJuxtaposition extends H5P.Question {
       };
     }
 
-    this.on('exitFullScreen', () => {
-      this.trigger('resize');
-    });
+    if (this.isFullscreenAllowed) {
+      this.on('enterFullScreen', () => {
+        this.trigger('resize');
+      });
+
+      this.on('exitFullScreen', () => {
+        this.trigger('resize');
+      });
+    }
   }
 
   /**
    * Register DOM elements with H5P.Question.
    */
   registerDomElements() {
+    // Title bar
+    if (this.params.taskDescription) {
+      this.setIntroduction(this.params.taskDescription);
+    }
+
     const container = document.createElement('div');
     container.classList.add('h5p-image-juxtaposition-container');
 
@@ -95,13 +110,15 @@ class ImageJuxtaposition extends H5P.Question {
     this.spinner = new Spinner('h5p-image-juxtaposition-spinner');
     container.appendChild(this.spinner.getDOM());
 
-    // Title bar
-    if (this.params.taskDescription) {
-      this.taskDescription = document.createElement('div');
-      this.taskDescription.classList.add('h5p-image-juxtaposition-task-description');
-      this.taskDescription.classList.add('h5p-image-juxtaposition-task-description-none');
-      this.taskDescription.innerHTML = this.params.taskDescription;
-      container.appendChild(this.taskDescription);
+    if (this.isFullscreenAllowed) {
+      this.fullscreenButton = document.createElement('button');
+      this.fullscreenButton.type = 'button';
+      this.fullscreenButton.classList.add('h5p-fullscreen-button');
+      this.fullscreenButton.setAttribute('aria-label', this.dictionary.get('a11y.buttonFullscreenEnter'));
+      this.fullscreenButton.addEventListener('click', () => {
+        this.toggleFullScreen();
+      });
+      container.appendChild(this.fullscreenButton);
     }
 
     // Missing image
@@ -202,6 +219,24 @@ class ImageJuxtaposition extends H5P.Question {
     }
 
     this.setContent(container);
+  }
+
+  /**
+   * Toggle fullscreen mode.
+   */
+  toggleFullScreen() {
+    if (!this.containerH5P || !this.isFullscreenAllowed) {
+      return;
+    }
+
+    if (!H5P.isFullscreen) {
+      H5P.fullScreen(H5P.jQuery(this.containerH5P), this);
+      this.fullscreenButton.setAttribute('aria-label', this.dictionary.get('a11y.buttonFullscreenExit'));
+    }
+    else {
+      H5P.exitFullScreen();
+      this.fullscreenButton.setAttribute('aria-label', this.dictionary.get('a11y.buttonFullscreenEnter'));
+    }
   }
 
   /**
