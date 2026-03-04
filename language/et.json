@@ -65,7 +65,12 @@
           "description": "@percentage is a placeholder and will be replaced with the respective value."
         },
         {
-          "label": "Dummy"
+          "label": "Text for screen readers. Title for full screen button (enter)",
+          "default": "Enter full screen mode"
+        },
+        {
+          "label": "Text for screen readers. Title for full screen button (exit)",
+          "default": "Exit full screen mode"
         }
       ]
     }

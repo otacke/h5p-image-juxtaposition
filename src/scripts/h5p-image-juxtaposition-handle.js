@@ -22,7 +22,6 @@ class ImageJuxtapositionHandle {
     // Controller that can be moved
     this.controller = document.createElement('div');
     this.controller.className = 'h5p-image-juxtaposition-controller';
-    this.controller.style.backgroundColor = this.params.color;
     this.controller.setAttribute('draggable', 'false');
     this.controller.setAttribute('tabindex', 0);
     this.controller.setAttribute('role', 'separator');
@@ -33,24 +32,17 @@ class ImageJuxtapositionHandle {
     // Bar (horizontal or vertical)
     const bar = document.createElement('div');
     bar.className = 'h5p-image-juxtaposition-control';
-    bar.style.backgroundColor = this.params.color;
     bar.setAttribute('draggable', 'false');
     bar.appendChild(this.controller);
 
     // Left arrow
     const leftArrow = document.createElement('div');
     leftArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-left';
-    leftArrow.style.borderColor = (this.params.mode === 'horizontal') ?
-      `transparent ${this.params.color} transparent transparent` :
-      `transparent transparent ${this.params.color} transparent`;
     leftArrow.setAttribute('draggable', 'false');
 
     // Right arrow
     const rightArrow = document.createElement('div');
     rightArrow.className = 'h5p-image-juxtaposition-arrow h5p-image-juxtaposition-right';
-    rightArrow.style.borderColor = (this.params.mode === 'horizontal') ?
-      `transparent transparent transparent ${this.params.color}` :
-      `${this.params.color} transparent transparent transparent`;
     rightArrow.setAttribute('draggable', 'false');
 
     // Complete handle
@@ -60,6 +52,7 @@ class ImageJuxtapositionHandle {
     this.handle.appendChild(leftArrow);
     this.handle.appendChild(bar);
     this.handle.appendChild(rightArrow);
+    this.handle.style.setProperty('--handle-color', this.params.color);
 
     // Event Listeners for keyboard
     this.handle.addEventListener('keydown', (event) => {

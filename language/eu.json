@@ -65,7 +65,12 @@
           "description": "@percentage behin behineko bat da eta dagokion balioarekin ordezkatuko da."
         },
         {
-          "label": "Manikia"
+          "label": "Text for screen readers. Title for full screen button (enter)",
+          "default": "Enter full screen mode"
+        },
+        {
+          "label": "Text for screen readers. Title for full screen button (exit)",
+          "default": "Exit full screen mode"
         }
       ]
     }
