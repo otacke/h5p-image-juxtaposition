@@ -1,5 +1,6 @@
 .h5p-image-juxtaposition .h5p-question-content {
   margin: 0;
+	padding: 0;
 }
 
 .h5p-image-juxtaposition {
@@ -27,7 +28,7 @@
   user-select: none;
 
 	.h5p-fullscreen-button {
-		background-color: var(--h5p-theme-contrast-cta-light);
+		background-color: color-mix(in srgb, var(--h5p-theme-contrast-cta-light), #ffffff 90%);
 		border: none;
 		border-radius: var(--h5p-theme-border-radius-large);
 		color: var(--h5p-theme-contrast-cta-white);
@@ -38,9 +39,10 @@
 		top: var(--h5p-theme-spacing-xs);
 		right: var(--h5p-theme-spacing-xs);
 		width: var(--fullscreen-button-size);
+		z-index: 6;
 
 		&:hover {
-			background-color: color-mix(in srgb, var(--h5p-theme-contrast-cta-light), transparent 60%);
+			background-color: color-mix(in srgb, var(--h5p-theme-contrast-cta-light), #ffffff 60%);
 			cursor: pointer;
 		}
 
