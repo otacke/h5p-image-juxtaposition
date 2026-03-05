@@ -52,7 +52,7 @@
 
 		&::before {
 			content: var(--icon-h5p-theme-expand);
-			font-family: 'h5p-theme';
+			font-family: 'h5p-theme', sans-serif;
 			font-weight: normal;
 			left: 50%;
 			position: absolute;
@@ -197,13 +197,13 @@
 	margin-right: auto;
 	margin-left: auto;
 	width: 3px;
-	background-color: var(--handle-color, --controls-fallback-color);
+	background-color: var(--handle-color, var(--controls-fallback-color));
 }
 
 .h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-control {
 	height: 3px;
 	width: 100%;
-	background-color: var(--handle-color, --controls-fallback-color);
+	background-color: var(--handle-color, var(--controls-fallback-color));
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
@@ -217,7 +217,7 @@
 	height: 60px;
 	width: 9px;
 	margin-left: -3px;
-	background-color: var(--handle-color, --controls-fallback-color);
+	background-color: var(--handle-color, var(--controls-fallback-color));
 }
 
 .h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-controller {
@@ -253,14 +253,14 @@
 	left: var(--arrow-gap);
 	border-style: solid;
 	border-width: var(--arrow-size) var(--arrow-size) var(--arrow-size) 0;
-	border-color: transparent var(--handle-color, --controls-fallback-color) transparent transparent;
+	border-color: transparent var(--handle-color, var(--controls-fallback-color)) transparent transparent;
 }
 
 .h5p-image-juxtaposition-horizontal .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-right {
 	right: var(--arrow-gap);
 	border-style: solid;
 	border-width: var(--arrow-size) 0 var(--arrow-size) var(--arrow-size);
-	border-color: transparent transparent transparent var(--handle-color, --controls-fallback-color);
+	border-color: transparent transparent transparent var(--handle-color, var(--controls-fallback-color));
 }
 
 .h5p-image-juxtaposition-vertical .h5p-image-juxtaposition-arrow.h5p-image-juxtaposition-left {
