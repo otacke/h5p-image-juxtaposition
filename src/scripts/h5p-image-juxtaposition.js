@@ -25,9 +25,9 @@ class ImageJuxtaposition extends H5P.Question {
    * @class
    * @param {object} params Parameters from semantics.
    * @param {number} contentId Content Id.
-   * @param {object} contentData Content data.
+   * @param {object} [extras] Saved state, metadata, etc.
    */
-  constructor(params, contentId, contentData) {
+  constructor(params, contentId, extras = {}) {
     super('image-juxtaposition', { theme: true });
 
     this.params = Util.extend({
@@ -54,7 +54,7 @@ class ImageJuxtaposition extends H5P.Question {
     }, params);
 
     this.contentId = contentId;
-    this.contentData = contentData;
+    this.extras = extras;
 
     this.isFullscreenAllowed = this.isRoot() && H5P.fullscreenSupported;
 
@@ -92,6 +92,14 @@ class ImageJuxtaposition extends H5P.Question {
         this.trigger('resize');
       });
     }
+  }
+
+  /**
+   * Workaround for H5P core mutating prototype to inject its isRoot, but ES6 inheritance here.
+   * @returns {boolean} True, if content type is root. Else false.
+   */
+  isRoot() {
+    return !!this.extras.standalone;
   }
 
   /**
@@ -290,8 +298,8 @@ class ImageJuxtaposition extends H5P.Question {
    */
   getTitle() {
     let raw;
-    if (this.contentData && this.contentData.metadata) {
-      raw = this.contentData.metadata.title;
+    if (this.extras && this.extras.metadata) {
+      raw = this.extras.metadata.title;
     }
     raw = raw || ImageJuxtaposition.DEFAULT_DESCRIPTION;
 
